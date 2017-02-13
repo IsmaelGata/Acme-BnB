@@ -1,20 +1,15 @@
 
 package domain;
 
-import java.util.Collection;
-
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.Embeddable;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.validation.Valid;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-@Embeddable
+@Entity
 @Access(AccessType.PROPERTY)
 public class Finder extends DomainEntity {
 
@@ -67,9 +62,7 @@ public class Finder extends DomainEntity {
 
 
 	//RelationShips
-	private Tenant					tenant;
-	private Collection<Property>	properties;
-
+	private Tenant	tenant;
 
 	@Valid
 	@OneToOne(optional = false)
@@ -79,16 +72,6 @@ public class Finder extends DomainEntity {
 
 	public void setTenant(Tenant tenant) {
 		this.tenant = tenant;
-	}
-
-	@ManyToMany()
-	@JoinTable(name = "Finder_property", joinColumns = @JoinColumn(name = "finder_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "property_id", referencedColumnName = "id"))
-	public Collection<Property> getProperties() {
-		return properties;
-	}
-
-	public void setProperties(Collection<Property> properties) {
-		this.properties = properties;
 	}
 
 }

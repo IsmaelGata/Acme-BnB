@@ -5,12 +5,12 @@ import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.Embeddable;
+import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-@Embeddable
+@Entity
 @Access(AccessType.PROPERTY)
 public class Auditor extends Actor {
 

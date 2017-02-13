@@ -5,7 +5,7 @@ import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.Embeddable;
+import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.Valid;
@@ -13,7 +13,7 @@ import javax.validation.constraints.Min;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-@Embeddable
+@Entity
 @Access(AccessType.PROPERTY)
 public class Property extends DomainEntity {
 
@@ -120,7 +120,6 @@ public class Property extends DomainEntity {
 	//RelationShips
 
 	private Collection<Audit>			audits;
-	private Collection<ExtraAttribute>	extraAttributes;
 	private Lessor						lessor;
 	private Collection<Book>			books;
 
@@ -133,16 +132,6 @@ public class Property extends DomainEntity {
 
 	public void setAudits(Collection<Audit> audits) {
 		this.audits = audits;
-	}
-
-	@Valid
-	@OneToMany(mappedBy = "property")
-	public Collection<ExtraAttribute> getExtraAttributes() {
-		return extraAttributes;
-	}
-
-	public void setExtraAttributes(Collection<ExtraAttribute> extraAttributes) {
-		this.extraAttributes = extraAttributes;
 	}
 
 	@Valid

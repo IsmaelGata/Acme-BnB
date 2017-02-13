@@ -6,7 +6,7 @@ import java.util.Collection;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
-import javax.persistence.Embeddable;
+import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.Valid;
@@ -17,7 +17,7 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import security.UserAccount;
 
-@Embeddable
+@Entity
 @Access(AccessType.PROPERTY)
 public class Actor extends DomainEntity {
 

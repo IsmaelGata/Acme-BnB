@@ -1,17 +1,22 @@
 
 package domain;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.validation.Valid;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+@Entity
+@Access(AccessType.PROPERTY)
 public class ExtraAttribute extends DomainEntity {
 
 	//Attributes
 	private String	name;
 	private boolean	isNumeric;
-	private boolean	isNumber;
+	private boolean	isBoolean;
 	private String	value;
 
 
@@ -40,11 +45,11 @@ public class ExtraAttribute extends DomainEntity {
 	}
 
 	public boolean isNumber() {
-		return isNumber;
+		return isBoolean;
 	}
 
 	public void setNumber(boolean isNumber) {
-		this.isNumber = isNumber;
+		this.isBoolean = isNumber;
 	}
 
 	@NotBlank
