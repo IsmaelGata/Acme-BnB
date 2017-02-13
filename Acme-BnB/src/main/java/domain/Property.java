@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -122,6 +123,7 @@ public class Property extends DomainEntity {
 	private Collection<Audit>			audits;
 	private Lessor						lessor;
 	private Collection<Book>			books;
+	private Collection<ExtraAttribute>	extraAttributes;
 
 
 	@Valid
@@ -152,6 +154,16 @@ public class Property extends DomainEntity {
 
 	public void setBooks(Collection<Book> books) {
 		this.books = books;
+	}
+
+	@Valid
+	@OneToMany(mappedBy = "property", cascade = CascadeType.ALL)
+	public Collection<ExtraAttribute> getExtraAttributes() {
+		return extraAttributes;
+	}
+
+	public void setExtraAttributes(Collection<ExtraAttribute> extraAttributes) {
+		this.extraAttributes = extraAttributes;
 	}
 
 }

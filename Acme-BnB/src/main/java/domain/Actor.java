@@ -65,8 +65,8 @@ public class Actor extends DomainEntity {
 		this.email = email;
 	}
 
-//	@Pattern(regexp = "\\+|00)\\d{2,4}(\\s)?\\d{9}")
-	//TODO Añadir patrón del teléfono
+	@NotBlank
+	@Pattern(regexp = "(\\+|00)\\d{2,4}(\\s)?\\d{9,13}")
 	public String getPhone() {
 		return phone;
 	}

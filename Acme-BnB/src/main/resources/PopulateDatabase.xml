@@ -24,7 +24,7 @@
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
-					<property name="authority" value="ADMIN" />
+					<property name="authority" value="ADMINISTRATOR" />
 				</bean>
 			</list>
 		</property>
@@ -32,7 +32,7 @@
 
 	<bean id="userAccount2" class="security.UserAccount">
 		<property name="username" value="auditor1" />
-		<property name="password" value="21232f297a57a5a743894a0e4a801fc3" />
+		<property name="password" value="175d2e7a63f386554a4dd66e865c3e14" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -44,7 +44,7 @@
 	
 	<bean id="userAccount3" class="security.UserAccount">
 		<property name="username" value="auditor2" />
-		<property name="password" value="21232f297a57a5a743894a0e4a801fc3" />
+		<property name="password" value="04dd94ba3212ac52ad3a1f4cbfb52d4f" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -57,7 +57,7 @@
 	
 	<bean id="userAccount4" class="security.UserAccount">
 		<property name="username" value="tenant1" />
-		<property name="password" value="21232f297a57a5a743894a0e4a801fc3" />
+		<property name="password" value="febe027753c1e6ce9acdbbd9c80a8407" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -69,7 +69,7 @@
 	
 	<bean id="userAccount5" class="security.UserAccount">
 		<property name="username" value="tenant2" />
-		<property name="password" value="21232f297a57a5a743894a0e4a801fc3" />
+		<property name="password" value="2df2c46b04b68726715c3500161133c2" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -81,7 +81,7 @@
 	
 	<bean id="userAccount6" class="security.UserAccount">
 		<property name="username" value="lessor1" />
-		<property name="password" value="21232f297a57a5a743894a0e4a801fc3" />
+		<property name="password" value="5b61d56842232fc77308dbd3e99d99d4" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -93,7 +93,7 @@
 	
 	<bean id="userAccount7" class="security.UserAccount">
 		<property name="username" value="lessor2" />
-		<property name="password" value="21232f297a57a5a743894a0e4a801fc3" />
+		<property name="password" value="f52271900bf9fb541f9dc9a4e05d722c" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -143,7 +143,7 @@
 		<property name="name" value="Pedro"/>
 		<property name="surname" value="López Blanco"/>
 		<property name="email" value="pedro.lopez.blanco@acme.com"/>
-		<!-- <property name="phone" value="+34 632145894"/> -->
+		<property name="phone" value="+36 632145894"/>
 		<property name="picture" value="www.picture.com"/>
 		<property name="socialIdentities">
 			<list>
@@ -159,7 +159,7 @@
 		<property name="name" value="Salvador"/>
 		<property name="surname" value="Rodriguez Blanco"/>
 		<property name="email" value="salva@acme.com"/>
-		<!-- <property name="phone" value="+34 632145894"/> -->
+		<property name="phone" value="+34 632732894"/>
 		<property name="picture" value="www.picture2.com"/>
 		<property name="companyName" value="company 1"/>
 		<property name="socialIdentities">
@@ -179,7 +179,7 @@
 		<property name="name" value="Rafa"/>
 		<property name="surname" value="Guerrero Blanco"/>
 		<property name="email" value="rafita@acme.com"/>
-		<!-- <property name="phone" value="+34 632145894"/> -->
+		<property name="phone" value="+34 699745841"/>
 		<property name="picture" value="www.picture3.com"/>
 		<property name="companyName" value="company 2"/>
 		<property name="socialIdentities">
@@ -202,7 +202,7 @@
 		<property name="surname" value="Rodriguez Blanco"/>
 		<property name="email" value="salva@acme.com"/>
 		<property name="totalFee" value="1.0"/>
-		<!-- <property name="phone" value="+34 632145894"/> -->
+		<property name="phone" value="+34 632365112"/>
 		<property name="picture" value="www.picture2.com"/>
 		<property name="creditCard" ref="creditCard1" />
 		<property name="fee" ref="fee1" />
@@ -230,7 +230,7 @@
 		<property name="surname" value="Rodriguez Ruiz"/>
 		<property name="email" value="ismael@acme.com"/>
 		<property name="totalFee" value="1.0"/>
-		<!-- <property name="phone" value="+34 632145894"/> -->
+		<property name="phone" value="+34 632149898"/>
 		<property name="picture" value="www.picture2.com"/>
 		<property name="creditCard" ref="creditCard2" />
 		<property name="fee" ref="fee2" />
@@ -258,7 +258,7 @@
 		<property name="name" value="Laura"/>
 		<property name="surname" value="López Blanco"/>
 		<property name="email" value="lauri@acme.com"/>
-		<!-- <property name="phone" value="+34 632145894"/> -->
+		<property name="phone" value="+34 633345894"/>
 		<property name="picture" value="www.picture.com"/>
 		<property name="finder" ref="finder1"/>
 		<property name="socialIdentities">
@@ -283,7 +283,7 @@
 		<property name="name" value="Lourdes"/>
 		<property name="surname" value="López Blanco"/>
 		<property name="email" value="lauri@acme.com"/>
-		<!-- <property name="phone" value="+34 632145894"/> -->
+		<property name="phone" value="0048632145565897"/>
 		<property name="picture" value="www.picture.com"/>
 		<property name="finder" ref="finder2"/>
 		<property name="socialIdentities">
@@ -321,5 +321,209 @@
 		<property name="tenant" ref="tenant2"/>
 	</bean>
 	
+	<!-- PROPERTY -->
+	
+	<bean id="property1" class="domain.Property">
+		<property name="name" value="Fantástico chalet adosado" />
+		<property name="rate" value="50.0" />
+		<property name="description" value="Chalet adosado perfecto para vacaciones. Zona tranquila. Chalet colindante de vecino jubilado" />
+		<property name="address" value="Calígula 24" />
+		<property name="country" value="Spain"/>
+		<property name="province" value="Seville"/>
+		<property name="state" value=""/>
+		<property name="city" value="Seville"/>
+		<property name="capability" value="6"/>
+		<property name="audits">
+			<list>
+				
+			</list>
+		</property>
+		<property name="lessor" ref="lessor1"/>
+		<property name="books">
+			<list>
+				
+			</list>
+		</property>
+		<property name="extraAttributes">
+			<list>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="property2" class="domain.Property">
+		<property name="name" value="Piso amueblado" />
+		<property name="rate" value="30.0" />
+		<property name="description" value="Piso en la sierra norte de Sevilla totalmente amueblado y equipado." />
+		<property name="address" value="Almendara 3" />
+		<property name="country" value="Spain"/>
+		<property name="province" value="Seville"/>
+		<property name="state" value=""/>
+		<property name="city" value="Seville"/>
+		<property name="capability" value="4"/>
+		<property name="audits">
+			<list>
+				
+			</list>
+		</property>
+		<property name="lessor" ref="lessor1"/>
+		<property name="books">
+			<list>
+				
+			</list>
+		</property>
+		<property name="extraAttributes">
+			<list>
+			</list>
+		</property>
+	</bean>
+		
+	<bean id="property3" class="domain.Property">
+		<property name="name" value="Apartemente vacacional" />
+		<property name="rate" value="50.0" />
+		<property name="description" value="Maravilloso apartamente para vacaciones de verano. Playa a 10min" />
+		<property name="address" value="España 10" />
+		<property name="country" value="Spain"/>
+		<property name="province" value="Málaga"/>
+		<property name="state" value=""/>
+		<property name="city" value="Marbella"/>
+		<property name="capability" value="3"/>
+		<property name="audits">
+			<list>
+				
+			</list>
+		</property>
+		<property name="lessor" ref="lessor2"/>
+		<property name="books">
+			<list>
+				
+			</list>
+		</property>
+		<property name="extraAttributes">
+			<list>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- EXTRAATTRIBUTE -->
+	
+	<bean id="extraAttribute1" class="domain.ExtraAttribute">
+		<property name="name" value="Equipamiento" />
+		<property name="isNumber" value="false" />
+		<property name="isBoolean" value="false" />
+		<property name="value" value="Amueblado" />
+		<property name="property" ref="property1"/>
+	</bean>
+	
+	<bean id="extraAttribute2" class="domain.ExtraAttribute">
+		<property name="name" value="A/C" />
+		<property name="isNumber" value="false" />
+		<property name="isBoolean" value="true" />
+		<property name="value" value="true" />
+		<property name="property" ref="property1"/>
+	</bean>
+	
+	<bean id="extraAttribute3" class="domain.ExtraAttribute">
+		<property name="name" value="Distancia centro ciudad (km)" />
+		<property name="isNumber" value="true" />
+		<property name="isBoolean" value="false" />
+		<property name="value" value="3" />
+		<property name="property" ref="property1"/>
+	</bean>
+	
+	<bean id="extraAttribute4" class="domain.ExtraAttribute">
+		<property name="name" value="Piscina" />
+		<property name="isNumber" value="false" />
+		<property name="isBoolean" value="true" />
+		<property name="value" value="true" />
+		<property name="property" ref="property1"/>
+	</bean>
+	
+	<bean id="extraAttribute5" class="domain.ExtraAttribute">
+		<property name="name" value="Animales" />
+		<property name="isNumber" value="false" />
+		<property name="isBoolean" value="true" />
+		<property name="value" value="false" />
+		<property name="property" ref="property1"/>
+	</bean>
+	
+	<bean id="extraAttribute6" class="domain.ExtraAttribute">
+		<property name="name" value="Equipamiento" />
+		<property name="isNumber" value="false" />
+		<property name="isBoolean" value="false" />
+		<property name="value" value="Amueblado" />
+		<property name="property" ref="property2"/>
+	</bean>
+	
+	<bean id="extraAttribute7" class="domain.ExtraAttribute">
+		<property name="name" value="A/C" />
+		<property name="isNumber" value="false" />
+		<property name="isBoolean" value="true" />
+		<property name="value" value="true" />
+		<property name="property" ref="property2"/>
+	</bean>
+	
+	<bean id="extraAttribute8" class="domain.ExtraAttribute">
+		<property name="name" value="Distancia centro ciudad (km)" />
+		<property name="isNumber" value="true" />
+		<property name="isBoolean" value="false" />
+		<property name="value" value="10" />
+		<property name="property" ref="property2"/>
+	</bean>
+	
+	<bean id="extraAttribute9" class="domain.ExtraAttribute">
+		<property name="name" value="Piscina" />
+		<property name="isNumber" value="false" />
+		<property name="isBoolean" value="true" />
+		<property name="value" value="false" />
+		<property name="property" ref="property2"/>
+	</bean>
+	
+	<bean id="extraAttribute10" class="domain.ExtraAttribute">
+		<property name="name" value="Animales" />
+		<property name="isNumber" value="false" />
+		<property name="isBoolean" value="true" />
+		<property name="value" value="true" />
+		<property name="property" ref="property2"/>
+	</bean>
+	
+	<bean id="extraAttribute11" class="domain.ExtraAttribute">
+		<property name="name" value="Equipamiento" />
+		<property name="isNumber" value="false" />
+		<property name="isBoolean" value="false" />
+		<property name="value" value="Amueblado" />
+		<property name="property" ref="property3"/>
+	</bean>
+	
+	<bean id="extraAttribute12" class="domain.ExtraAttribute">
+		<property name="name" value="A/C" />
+		<property name="isNumber" value="false" />
+		<property name="isBoolean" value="true" />
+		<property name="value" value="true" />
+		<property name="property" ref="property3"/>
+	</bean>
+	
+	<bean id="extraAttribute13" class="domain.ExtraAttribute">
+		<property name="name" value="Distancia centro ciudad (km)" />
+		<property name="isNumber" value="true" />
+		<property name="isBoolean" value="false" />
+		<property name="value" value="4" />
+		<property name="property" ref="property3"/>
+	</bean>
+	
+	<bean id="extraAttribute14" class="domain.ExtraAttribute">
+		<property name="name" value="Piscina" />
+		<property name="isNumber" value="false" />
+		<property name="isBoolean" value="true" />
+		<property name="value" value="true" />
+		<property name="property" ref="property3"/>
+	</bean>
+	
+	<bean id="extraAttribute15" class="domain.ExtraAttribute">
+		<property name="name" value="Animales" />
+		<property name="isNumber" value="false" />
+		<property name="isBoolean" value="true" />
+		<property name="value" value="false" />
+		<property name="property" ref="property3"/>
+	</bean>
 	
 </beans>
