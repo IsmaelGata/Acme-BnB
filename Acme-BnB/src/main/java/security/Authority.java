@@ -35,15 +35,18 @@ public class Authority implements GrantedAuthority {
 
 	// Values -----------------------------------------------------------------
 
-	public static final String ADMIN = "ADMIN";
-	public static final String CUSTOMER = "CUSTOMER";
+	public static final String ADMINISTRATOR = "ADMINISTRATOR";
+	public static final String AUDITOR = "AUDITOR";
+	public static final String LESSOR = "LESSOR";
+	public static final String TENANT = "TENANT";
+	
 
 	// Attributes -------------------------------------------------------------
 
 	private String authority;
 
 	@NotBlank
-	@Pattern(regexp = "^" + ADMIN + "|" + CUSTOMER + "$")
+	@Pattern(regexp = "^" + ADMINISTRATOR + "|" + AUDITOR + "|" + LESSOR + "|" + TENANT + "$")
 	@Override
 	public String getAuthority() {
 		return authority;
