@@ -15,7 +15,7 @@ public class ExtraAttribute extends DomainEntity {
 
 	//Attributes
 	private String	name;
-	private boolean	isNumeric;
+	private boolean	isNumber;
 	private boolean	isBoolean;
 	private String	value;
 
@@ -36,20 +36,20 @@ public class ExtraAttribute extends DomainEntity {
 		this.name = name;
 	}
 
-	public boolean isNumeric() {
-		return isNumeric;
-	}
-
-	public void setNumeric(boolean isNumeric) {
-		this.isNumeric = isNumeric;
-	}
-
 	public boolean isNumber() {
-		return isBoolean;
+		return isNumber;
 	}
 
 	public void setNumber(boolean isNumber) {
-		this.isBoolean = isNumber;
+		this.isNumber = isNumber;
+	}
+
+	public boolean isBoolean() {
+		return isBoolean;
+	}
+
+	public void setBoolean(boolean isBoolean) {
+		this.isBoolean = isBoolean;
 	}
 
 	@NotBlank
