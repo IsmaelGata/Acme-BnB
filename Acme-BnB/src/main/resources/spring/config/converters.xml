@@ -18,10 +18,36 @@
 	">
 
 	<util:list id="converters">
-		<!-- 
-			Add your own converters using entries of the following form: 
-			<bean class="converters.Class1ToClass2" /> 
-		-->
+		<bean class="converters.ActorToStringConverter" />
+		<bean class="converters.AdministratorToStringConverter" />
+		<bean class="converters.AuditorToStringConverter" />
+		<bean class="converters.AuditToStringConverter" />
+		<bean class="converters.BookToStringConverter" />
+		<bean class="converters.CommentToStringConverter" />
+		<bean class="converters.ExtraAttributeToStringConverter" />
+		<bean class="converters.FeeToStringConverter" />
+		<bean class="converters.FinderToStringConverter" />
+		<bean class="converters.InvoiceToStringConverter" />
+		<bean class="converters.LessorToStringConverter" />
+		<bean class="converters.PropertyToStringConverter" />
+		<bean class="converters.SocialIdentityToStringConverter" />
+		<bean class="converters.TenantToStringConverter" />
+		
+		
+		<bean class="converters.StringToActorConverter" />
+		<bean class="converters.StringToAdministratorConverter" />
+		<bean class="converters.StringToAuditorConverter" />
+		<bean class="converters.StringToAuditConverter" />
+		<bean class="converters.StringToBookConverter" />
+		<bean class="converters.StringToCommentConverter" />
+		<bean class="converters.StringToExtraAttributeConverter" />
+		<bean class="converters.StringToFeeConverter" />
+		<bean class="converters.StringToFinderConverter" />
+		<bean class="converters.StringToInvoiceConverter" />
+		<bean class="converters.StringToLessorConverter" />
+		<bean class="converters.StringToPropertyConverter" />
+		<bean class="converters.StringToSocialIdentityConverter" />
+		<bean class="converters.StringToTenantConverter" />
 	</util:list>
 	
 </beans>
