@@ -52,7 +52,8 @@ public class Lessor extends Actor {
 
 	private Fee						fee;
 	private Collection<Property>	properties;
-	private Collection<Comment>		comments;
+	private Collection<Comment>		commentsAuthor;
+	private Collection<Comment>		commentsRecipient;
 
 
 	@Valid
@@ -76,13 +77,23 @@ public class Lessor extends Actor {
 	}
 
 	@Valid
-	@OneToMany(mappedBy = "lessor")
-	public Collection<Comment> getComments() {
-		return comments;
+	@OneToMany(mappedBy = "lessorAuthor")
+	public Collection<Comment> getCommentsAuthor() {
+		return commentsAuthor;
 	}
 
-	public void setComments(Collection<Comment> comments) {
-		this.comments = comments;
+	public void setCommentsAuthor(Collection<Comment> commentsAuthor) {
+		this.commentsAuthor = commentsAuthor;
+	}
+
+	@Valid
+	@OneToMany(mappedBy = "lessorRecipient")
+	public Collection<Comment> getCommentsRecipient() {
+		return commentsRecipient;
+	}
+
+	public void setCommentsRecipient(Collection<Comment> commentsRecipient) {
+		this.commentsRecipient = commentsRecipient;
 	}
 
 }

@@ -26,19 +26,30 @@ public class Tenant extends Actor {
 	//Getter & setter
 
 	//RelationShips
-	private Collection<Comment>	comments;
+	private Collection<Comment>	commentsAuthor;
+	private Collection<Comment>	commentsRecipient;
 	private Finder				finder;
 	private Collection<Book>	books;
 
 
 	@Valid
-	@OneToMany(mappedBy = "tenant", cascade = CascadeType.ALL)
-	public Collection<Comment> getComments() {
-		return comments;
+	@OneToMany(mappedBy = "tenantAuthor", cascade = CascadeType.ALL)
+	public Collection<Comment> getCommentsAuthor() {
+		return commentsAuthor;
 	}
 
-	public void setComments(Collection<Comment> comments) {
-		this.comments = comments;
+	public void setCommentsAuthor(Collection<Comment> commentsAuthor) {
+		this.commentsAuthor = commentsAuthor;
+	}
+
+	@Valid
+	@OneToMany(mappedBy = "tenantRecipient", cascade = CascadeType.ALL)
+	public Collection<Comment> getCommentsRecipient() {
+		return commentsRecipient;
+	}
+
+	public void setCommentsRecipient(Collection<Comment> commentsRecipient) {
+		this.commentsRecipient = commentsRecipient;
 	}
 
 	@Valid

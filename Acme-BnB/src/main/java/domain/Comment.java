@@ -76,28 +76,50 @@ public class Comment extends DomainEntity {
 
 
 	//RelationShips
-	private Lessor	lessor;
-	private Tenant	tenant;
+	private Lessor	lessorAuthor;
+	private Lessor	lessorRecipient;
+	private Tenant	tenantAuthor;
+	private Tenant	tenantRecipient;
 
 
 	@Valid
 	@ManyToOne(optional = true)
-	public Lessor getLessor() {
-		return lessor;
+	public Lessor getLessorAuthor() {
+		return lessorAuthor;
 	}
 
-	public void setLessor(Lessor lessor) {
-		this.lessor = lessor;
+	public void setLessorAuthor(Lessor lessorAuthor) {
+		this.lessorAuthor = lessorAuthor;
 	}
 
 	@Valid
 	@ManyToOne(optional = true)
-	public Tenant getTenant() {
-		return tenant;
+	public Lessor getLessorRecipient() {
+		return lessorRecipient;
 	}
 
-	public void setTenant(Tenant tenant) {
-		this.tenant = tenant;
+	public void setLessorRecipient(Lessor lessorRecipient) {
+		this.lessorRecipient = lessorRecipient;
+	}
+
+	@Valid
+	@ManyToOne(optional = true)
+	public Tenant getTenantAuthor() {
+		return tenantAuthor;
+	}
+
+	public void setTenantAuthor(Tenant tenantAuthor) {
+		this.tenantAuthor = tenantAuthor;
+	}
+
+	@Valid
+	@ManyToOne(optional = true)
+	public Tenant getTenantRecipient() {
+		return tenantRecipient;
+	}
+
+	public void setTenantRecipient(Tenant tenantRecipient) {
+		this.tenantRecipient = tenantRecipient;
 	}
 
 }

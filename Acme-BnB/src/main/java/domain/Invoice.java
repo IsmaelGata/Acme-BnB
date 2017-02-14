@@ -6,8 +6,10 @@ import java.util.Date;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
@@ -88,5 +90,20 @@ public class Invoice extends DomainEntity {
 		this.creditCard = creditCard;
 	}
 
+
 	//RelationShips
+
+	private Book	book;
+
+
+	@Valid
+	@OneToOne(optional = false)
+	public Book getBook() {
+		return book;
+	}
+
+	public void setBook(Book book) {
+		this.book = book;
+	}
+
 }

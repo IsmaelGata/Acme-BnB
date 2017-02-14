@@ -111,10 +111,6 @@
 		<property name="amount" value="20.0" />
 	</bean>
 	
-	<bean id="fee2" class="domain.Fee">
-		<property name="amount" value="25.0" />
-	</bean>
-	
 	<!-- CREDIT CARDS -->
 
 	<bean id="creditCard1" class="domain.CreditCard">
@@ -216,9 +212,12 @@
 				
 			</list>
 		</property>
-		<property name="comments">
+		<property name="commentsAuthor">
 			<list>
-				
+			</list>
+		</property>
+		<property name="commentsRecipient">
+			<list>
 			</list>
 		</property>
 		
@@ -233,7 +232,7 @@
 		<property name="phone" value="+34 632149898"/>
 		<property name="picture" value="www.picture2.com"/>
 		<property name="creditCard" ref="creditCard2" />
-		<property name="fee" ref="fee2" />
+		<property name="fee" ref="fee1" />
 		<property name="socialIdentities">
 			<list>
 				
@@ -244,9 +243,12 @@
 				
 			</list>
 		</property>
-		<property name="comments">
+		<property name="commentsAuthor">
 			<list>
-				
+			</list>
+		</property>
+		<property name="commentsRecipient">
+			<list>
 			</list>
 		</property>
 	</bean>
@@ -266,9 +268,12 @@
 				
 			</list>
 		</property>
-		<property name="comments">
+		<property name="commentsAuthor">
 			<list>
-				
+			</list>
+		</property>
+		<property name="commentsRecipient">
+			<list>
 			</list>
 		</property>
 		<property name="books">
@@ -291,9 +296,12 @@
 				
 			</list>
 		</property>
-		<property name="comments">
+		<property name="commentsAuthor">
 			<list>
-				
+			</list>
+		</property>
+		<property name="commentsRecipient">
+			<list>
 			</list>
 		</property>
 		<property name="books">
@@ -524,6 +532,171 @@
 		<property name="isBoolean" value="true" />
 		<property name="value" value="false" />
 		<property name="property" ref="property3"/>
+	</bean>
+	
+	<!-- AUDIT -->
+	
+	<bean id="audit1" class="domain.Audit">
+		<property name="moment" value="09/01/2017" />
+		<property name="text" value="Buen arrendador, buen equipamiento" />
+		<property name="attachments" value="https://www.tripadvisor.es/Hotel_Review-g187443-d7728448-Reviews-La_Casa_de_Blas-Seville_Province_of_Seville_Andalucia.html" />
+		<property name="draft" value="false" />
+		<property name="auditor" ref="auditor1"/>
+		<property name="property" ref="property1"/>
+	</bean>
+	
+	<bean id="audit2" class="domain.Audit">
+		<property name="moment" value="03/02/2017" />
+		<property name="text" value="Malos precios" />
+		<property name="attachments" value="https://www.tripadvisor.es/Hotel_Review-g644308-d2336444-Reviews-El_Berrocal-Cazalla_de_la_Sierra_Province_of_Seville_Andalucia.html" />
+		<property name="draft" value="false" />
+		<property name="auditor" ref="auditor1"/>
+		<property name="property" ref="property1"/>
+	</bean>
+	
+	<bean id="audit3" class="domain.Audit">
+		<property name="moment" value="14/02/2017" />
+		<property name="text" value="Vistas maravillosas aunque el ruido ambiental es algo molesto" />
+		<property name="attachments" value="https://www.idealista.com/inmueble/35327466/" />
+		<property name="draft" value="false" />
+		<property name="auditor" ref="auditor2"/>
+		<property name="property" ref="property2"/>
+	</bean>
+	
+	<bean id="audit4" class="domain.Audit">
+		<property name="moment" value="14/02/2017" />
+		<property name="text" value="El equipamiento deja algo que desear" />
+		<property name="attachments" value="https://www.niumba.com/alquiler/andalucia/malaga/benalmadena-costa/754463" />
+		<property name="draft" value="true" />
+		<property name="auditor" ref="auditor1"/>
+		<property name="property" ref="property3"/>
+	</bean>
+	
+	<bean id="audit5" class="domain.Audit">
+		<property name="moment" value="11/02/2017" />
+		<property name="text" value="El aire acondicionado no funciona correctamente" />
+		<property name="attachments" value="https://www.niumba.com/alquiler/andalucia/malaga/caleta-de-velez/867698" />
+		<property name="draft" value="true" />
+		<property name="auditor" ref="auditor2"/>
+		<property name="property" ref="property3"/>
+	</bean>
+	
+	<!-- BOOK -->
+	
+	<bean id="book1" class="domain.Book">
+		<property name="checkIn" value="24/03/2017" />
+		<property name="checkOut" value="30/03/2017" />
+		<property name="smoker" value="false" />
+		<property name="creditCard" ref="creditCard1" />
+		<property name="status" value="PENDING"/>
+		<property name="invoice"><null /></property>
+		<property name="property" ref="property1"/>
+		<property name="tenant" ref="tenant1"/>
+		
+	</bean>
+	
+	<bean id="book2" class="domain.Book">
+		<property name="checkIn" value="15/03/2017" />
+		<property name="checkOut" value="20/03/2017" />
+		<property name="smoker" value="false" />
+		<property name="creditCard" ref="creditCard1" />
+		<property name="status" value="PENDING"/>
+		<property name="invoice"><null /></property>
+		<property name="property" ref="property1"/>
+		<property name="tenant" ref="tenant1"/>
+		
+	</bean>
+	
+	<bean id="book3" class="domain.Book">
+		<property name="checkIn" value="05/05/2017" />
+		<property name="checkOut" value="15/05/2017" />
+		<property name="smoker" value="true" />
+		<property name="creditCard" ref="creditCard2" />
+		<property name="status" value="ACEPTED"/>
+		<property name="invoice"><null /></property>
+		<property name="property" ref="property2"/>
+		<property name="tenant" ref="tenant2"/>
+		
+	</bean>
+	
+	<!-- INVOICE -->
+	
+	<bean id="invoice1" class="domain.Invoice">
+		<property name="moment" value="02/13/2017 00:00" />
+		<property name="vatNumber" value="21.0" />
+		<property name="details" value="Se llegará por la mañana" />
+		<property name="information" value="La salida se producirá a las 17:00 del último día" />
+		<property name="totalAmount" value="3000.0"/>
+		<property name="creditCard" ref="creditCard2"/>
+		<property name="book" ref="book3"/>
+	</bean>
+	
+	<!-- COMMENT -->
+	
+	<bean id="comment1" class="domain.Comment">
+		<property name="title" value="Genial" />
+		<property name="moment" value="02/10/2017" />
+		<property name="text" value="Trato excelente" />
+		<property name="stars" value="5" />
+		<property name="lessorAuthor"><null/></property>
+		<property name="lessorRecipient" ref="lessor1"/>
+		<property name="tenantAuthor" ref="tenant1"/>
+		<property name="tenantRecipient"><null/></property>
+	</bean>
+	
+	<bean id="comment2" class="domain.Comment">
+		<property name="title" value="Bien pero..." />
+		<property name="moment" value="02/09/2017" />
+		<property name="text" value="El trato fue excelente pero hubo problemas con la transferencia" />
+		<property name="stars" value="4" />
+		<property name="lessorAuthor" ref="lessor1"/>
+		<property name="lessorRecipient"><null/></property>
+		<property name="tenantAuthor"><null/></property>
+		<property name="tenantRecipient" ref="tenant1"/>
+	</bean>
+	
+	<bean id="comment3" class="domain.Comment">
+		<property name="title" value="Mal" />
+		<property name="moment" value="02/05/2017" />
+		<property name="text" value="El arrendador deja mucho que desear en cuanto a comunicación" />
+		<property name="stars" value="1" />
+		<property name="lessorAuthor"><null/></property>
+		<property name="lessorRecipient" ref="lessor2"/>
+		<property name="tenantAuthor" ref="tenant1"/>
+		<property name="tenantRecipient"><null/></property>
+	</bean>
+	
+	<bean id="comment4" class="domain.Comment">
+		<property name="title" value="Genial" />
+		<property name="moment" value="02/10/2017" />
+		<property name="text" value="Trato excelente y muy buen alojamiento" />
+		<property name="stars" value="5" />
+		<property name="lessorAuthor"><null/></property>
+		<property name="lessorRecipient" ref="lessor1"/>
+		<property name="tenantAuthor" ref="tenant1"/>
+		<property name="tenantRecipient"><null/></property>
+	</bean>
+	
+	<bean id="comment5" class="domain.Comment">
+		<property name="title" value="No muy bien" />
+		<property name="moment" value="02/10/2017" />
+		<property name="text" value="La comunicación con el arrendador no fue la mejor del mundo." />
+		<property name="stars" value="3" />
+		<property name="lessorAuthor"><null/></property>
+		<property name="lessorRecipient" ref="lessor2"/>
+		<property name="tenantAuthor" ref="tenant2"/>
+		<property name="tenantRecipient"><null/></property>
+	</bean>
+	
+	<bean id="comment6" class="domain.Comment">
+		<property name="title" value="Genial" />
+		<property name="moment" value="02/10/2017" />
+		<property name="text" value="Trato excelente" />
+		<property name="stars" value="5" />
+		<property name="lessorAuthor"><null/></property>
+		<property name="lessorRecipient" ref="lessor1"/>
+		<property name="tenantAuthor" ref="tenant2"/>
+		<property name="tenantRecipient"><null/></property>
 	</bean>
 	
 </beans>

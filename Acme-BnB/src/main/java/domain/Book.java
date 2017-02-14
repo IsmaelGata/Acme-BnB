@@ -11,7 +11,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
-import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -35,7 +34,6 @@ public class Book extends DomainEntity {
 
 	//Getter & setter
 
-	@Future
 	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "MM/dd/yyyy HH:mm")
@@ -47,7 +45,6 @@ public class Book extends DomainEntity {
 		this.checkIn = checkIn;
 	}
 
-	@Future
 	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "MM/dd/yyyy HH:mm")
@@ -94,7 +91,7 @@ public class Book extends DomainEntity {
 
 
 	@Valid
-	@OneToOne(optional = true)
+	@OneToOne(optional = true, mappedBy="book")
 	public Invoice getInvoice() {
 		return invoice;
 	}
