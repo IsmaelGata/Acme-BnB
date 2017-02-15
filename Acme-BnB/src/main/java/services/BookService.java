@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.Collection;
@@ -5,43 +6,93 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import repositories.BookRepository;
 import domain.Book;
+import domain.Lessor;
+import domain.Property;
+import domain.Status;
+import domain.Tenant;
 
 @Service
 @Transactional
 public class BookService {
-	
+
+	//Managed repository
+
 	@Autowired
-	private BookRepository bookRepository;
+	private BookRepository	bookRepository;
+
+	//Supported services
+
+	@Autowired
+	private LessorService	lessorService;
+
+	@Autowired
+	private TenantService	tenantService;
+
+
+	//Constructor
 
 	public BookService() {
 		super();
 	}
-	
-	public Book create(){
-		return null;
-	}
-	
 
-	public Collection<Book> findAll(){
+	//Simple CRUD methods
+
+	public Book create(Property property) {
+		Tenant tenant = tenantService.findByPrincipal();
+		Assert.notNull(tenant);
+		Assert.notNull(property);
+
+		Book result = new Book();
+		result.setProperty(property);
+		result.setTenant(tenant);
+		result.setStatus(Status.PENDING);
+
+		return result;
+	}
+
+	public Collection<Book> findAll() {
 		return bookRepository.findAll();
 	}
-	
-	public Book findOne(int id_book){
+
+	public Book findOne(int id_book) {
 		return bookRepository.findOne(id_book);
-		
+
 	}
-	
-	public void save(Book book){
-		bookRepository.save(book);
+
+	public Book save(Book book) {
+		Assert.notNull(book);
+		Tenant tenant = tenantService.findByPrincipal();
+		Assert.isTrue(tenant.equals(book.getTenant()));
+
+		Book result = bookRepository.save(book);
+		return result;
 	}
-	
-	public void delete(Book book){
+
+	public void delete(Book book) {
+		Assert.notNull(book);
+		Tenant tenant = tenantService.findByPrincipal();
+		Assert.isTrue(tenant.equals(book.getTenant()));
+
 		bookRepository.delete(book);
 	}
-	
+
 	//Other business methods
+
+	public void changeStatus(Book book, Status status) {
+		Assert.notNull(book);
+
+		Lessor lessor = lessorService.findByPrincipal();
+		Property property = book.getProperty();
+
+		Assert.notNull(property);
+		Assert.isTrue(lessor.equals(property.getLessor()));
+
+		book.setStatus(status);
+		save(book);
+	}
 
 }

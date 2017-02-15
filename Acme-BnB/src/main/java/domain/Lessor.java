@@ -20,6 +20,7 @@ public class Lessor extends Actor {
 	//Attributes
 	private CreditCard	creditCard;
 	private double		totalFee;
+	private double		paid;
 
 
 	//Constructor
@@ -45,6 +46,14 @@ public class Lessor extends Actor {
 
 	public void setTotalFee(double totalFee) {
 		this.totalFee = totalFee;
+	}
+
+	public double getPaid() {
+		return paid;
+	}
+
+	public void setPaid(double paid) {
+		this.paid = paid;
 	}
 
 

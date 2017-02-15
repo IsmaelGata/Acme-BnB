@@ -1,5 +1,7 @@
+
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,74 +10,109 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.TenantRepository;
+import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import domain.Book;
+import domain.Finder;
+import domain.SocialIdentity;
 import domain.Tenant;
 
 @Service
 @Transactional
 public class TenantService {
-	
+
+	//Managed repository
+
 	@Autowired
-	private TenantRepository tenantRepository;
+	private TenantRepository	tenantRepository;
+
+
+	//Supported services
+
+	//Constructor
 
 	public TenantService() {
 		super();
 	}
-	
-	public Tenant create(){
-		return null;
-	}
-	
 
-	public Collection<Tenant> findAll(){
+	//Simple CRUD methods
+
+	public Tenant create() {
+		Tenant result = new Tenant();
+
+		Authority authority = new Authority();
+		UserAccount userAccount = new UserAccount();
+
+		//Configuring authority & userAccount
+		authority.setAuthority("TENANT");
+		userAccount.addAuthority(authority);
+		result.setUserAccount(userAccount);
+
+		Finder finder = new Finder();
+		result.setFinder(finder);
+
+		Collection<Book> books = new ArrayList<>();
+		result.setBooks(books);
+
+		Collection<SocialIdentity> socialIdentities = new ArrayList<>();
+		result.setSocialIdentities(socialIdentities);
+
+		return result;
+	}
+
+	public Collection<Tenant> findAll() {
 		return tenantRepository.findAll();
 	}
-	
-	public Tenant findOne(int id_tenant){
+
+	public Tenant findOne(int id_tenant) {
 		return tenantRepository.findOne(id_tenant);
-		
+
 	}
-	
-	public void save(Tenant tenant){
-		tenantRepository.save(tenant);
+
+	public Tenant save(Tenant tenant) {
+		Assert.notNull(tenant);
+		Tenant result = tenantRepository.save(tenant);
+		return result;
 	}
-	
-	public void delete(Tenant tenant){
+
+	public void delete(Tenant tenant) {
+		Assert.notNull(tenant);
+
 		tenantRepository.delete(tenant);
 	}
-	
+
 	//Other business methods
-	
-		public Tenant findByPrincipal(){
-			Tenant result;
-			UserAccount userAccount;
-			
-			userAccount = LoginService.getPrincipal();
-			
-			result = this.findByUserAccount(userAccount);
-			Assert.notNull(result, "Any tenant with userAccountId=" + userAccount.getId() + "has be found");
-			
-			return result;
-		}
-		
-		public Tenant findByUserAccount(UserAccount userAccount){
-			Tenant result;
-			int userAccountId;
-			
-			userAccountId = userAccount.getId();
-			result = tenantRepository.findByUserAccountId(userAccountId);
-			
-			return result;
-		}
-		
-		public Tenant findByUserName(String username){
-			Assert.notNull(username);
-			Tenant result;
-			
-			result = tenantRepository.findByUserName(username);
-			
-			return result;
-		}
+
+	public Tenant findByPrincipal() {
+		Tenant result;
+		UserAccount userAccount;
+
+		userAccount = LoginService.getPrincipal();
+
+		result = this.findByUserAccount(userAccount);
+		Assert.notNull(result, "Any tenant with userAccountId=" + userAccount.getId() + "has be found");
+
+		return result;
+	}
+
+	public Tenant findByUserAccount(UserAccount userAccount) {
+		Tenant result;
+		int userAccountId;
+
+		userAccountId = userAccount.getId();
+		result = tenantRepository.findByUserAccountId(userAccountId);
+
+		return result;
+	}
+
+	public Tenant findByUserName(String username) {
+		Assert.notNull(username);
+		Tenant result;
+
+		result = tenantRepository.findByUserName(username);
+
+		return result;
+	}
 
 }
