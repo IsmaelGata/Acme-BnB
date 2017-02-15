@@ -103,8 +103,8 @@
 		</property>
 	</bean>
 	
-	<!-- Other domain beans come here -->	
-	
+	<!-- Other domain beans come here -->
+
 	<!-- FEE -->
 	
 	<bean id="fee1" class="domain.Fee">
@@ -202,7 +202,6 @@
 		<property name="picture" value="www.picture2.com"/>
 		<property name="creditCard" ref="creditCard1" />
 		<property name="paid" value="0.0"/>
-		<property name="fee" ref="fee1" />
 		<property name="socialIdentities">
 			<list>
 				
@@ -211,14 +210,6 @@
 		<property name="properties">
 			<list>
 				
-			</list>
-		</property>
-		<property name="commentsAuthor">
-			<list>
-			</list>
-		</property>
-		<property name="commentsRecipient">
-			<list>
 			</list>
 		</property>
 		
@@ -234,7 +225,6 @@
 		<property name="picture" value="www.picture2.com"/>
 		<property name="creditCard" ref="creditCard2" />
 		<property name="paid" value="0.0"/>
-		<property name="fee" ref="fee1" />
 		<property name="socialIdentities">
 			<list>
 				
@@ -243,14 +233,6 @@
 		<property name="properties">
 			<list>
 				
-			</list>
-		</property>
-		<property name="commentsAuthor">
-			<list>
-			</list>
-		</property>
-		<property name="commentsRecipient">
-			<list>
 			</list>
 		</property>
 	</bean>
@@ -268,14 +250,6 @@
 		<property name="socialIdentities">
 			<list>
 				
-			</list>
-		</property>
-		<property name="commentsAuthor">
-			<list>
-			</list>
-		</property>
-		<property name="commentsRecipient">
-			<list>
 			</list>
 		</property>
 		<property name="books">
@@ -296,14 +270,6 @@
 		<property name="socialIdentities">
 			<list>
 				
-			</list>
-		</property>
-		<property name="commentsAuthor">
-			<list>
-			</list>
-		</property>
-		<property name="commentsRecipient">
-			<list>
 			</list>
 		</property>
 		<property name="books">
@@ -640,10 +606,9 @@
 		<property name="moment" value="02/10/2017" />
 		<property name="text" value="Trato excelente" />
 		<property name="stars" value="5" />
-		<property name="lessorAuthor"><null/></property>
-		<property name="lessorRecipient" ref="lessor1"/>
-		<property name="tenantAuthor" ref="tenant1"/>
-		<property name="tenantRecipient"><null/></property>
+		<property name="comentableId" value="12" />
+		<property name="comentableType" value="Lessor" />
+		<property name="author" ref="tenant1"/>
 	</bean>
 	
 	<bean id="comment2" class="domain.Comment">
@@ -651,10 +616,9 @@
 		<property name="moment" value="02/09/2017" />
 		<property name="text" value="El trato fue excelente pero hubo problemas con la transferencia" />
 		<property name="stars" value="4" />
-		<property name="lessorAuthor" ref="lessor1"/>
-		<property name="lessorRecipient"><null/></property>
-		<property name="tenantAuthor"><null/></property>
-		<property name="tenantRecipient" ref="tenant1"/>
+		<property name="comentableId" value="14" />
+		<property name="comentableType" value="Tenant" />
+		<property name="author" ref="lessor1"/>
 	</bean>
 	
 	<bean id="comment3" class="domain.Comment">
@@ -662,10 +626,9 @@
 		<property name="moment" value="02/05/2017" />
 		<property name="text" value="El arrendador deja mucho que desear en cuanto a comunicación" />
 		<property name="stars" value="1" />
-		<property name="lessorAuthor"><null/></property>
-		<property name="lessorRecipient" ref="lessor2"/>
-		<property name="tenantAuthor" ref="tenant1"/>
-		<property name="tenantRecipient"><null/></property>
+		<property name="comentableId" value="13" />
+		<property name="comentableType" value="Lessor" />
+		<property name="author" ref="tenant1"/>
 	</bean>
 	
 	<bean id="comment4" class="domain.Comment">
@@ -673,10 +636,9 @@
 		<property name="moment" value="02/10/2017" />
 		<property name="text" value="Trato excelente y muy buen alojamiento" />
 		<property name="stars" value="5" />
-		<property name="lessorAuthor"><null/></property>
-		<property name="lessorRecipient" ref="lessor1"/>
-		<property name="tenantAuthor" ref="tenant1"/>
-		<property name="tenantRecipient"><null/></property>
+		<property name="comentableId" value="12" />
+		<property name="comentableType" value="Lessor" />
+		<property name="author" ref="tenant1"/>
 	</bean>
 	
 	<bean id="comment5" class="domain.Comment">
@@ -684,10 +646,9 @@
 		<property name="moment" value="02/10/2017" />
 		<property name="text" value="La comunicación con el arrendador no fue la mejor del mundo." />
 		<property name="stars" value="3" />
-		<property name="lessorAuthor"><null/></property>
-		<property name="lessorRecipient" ref="lessor2"/>
-		<property name="tenantAuthor" ref="tenant2"/>
-		<property name="tenantRecipient"><null/></property>
+		<property name="comentableId" value="13" />
+		<property name="comentableType" value="Lessor" />
+		<property name="author" ref="tenant2"/>
 	</bean>
 	
 	<bean id="comment6" class="domain.Comment">
@@ -695,10 +656,9 @@
 		<property name="moment" value="02/10/2017" />
 		<property name="text" value="Trato excelente" />
 		<property name="stars" value="5" />
-		<property name="lessorAuthor"><null/></property>
-		<property name="lessorRecipient" ref="lessor1"/>
-		<property name="tenantAuthor" ref="tenant2"/>
-		<property name="tenantRecipient"><null/></property>
+		<property name="comentableId" value="12" />
+		<property name="comentableType" value="Lessor" />
+		<property name="author" ref="tenant2"/>
 	</bean>
 	
 </beans>

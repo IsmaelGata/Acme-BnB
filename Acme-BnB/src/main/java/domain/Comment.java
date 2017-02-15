@@ -26,6 +26,8 @@ public class Comment extends DomainEntity {
 	private Date	moment;
 	private String	text;
 	private int		stars;
+	private int		comentableId;
+	private String	comentableType;
 
 
 	//Constructor
@@ -74,52 +76,37 @@ public class Comment extends DomainEntity {
 		this.stars = stars;
 	}
 
+	@Min(1)
+	public int getComentableId() {
+		return comentableId;
+	}
+
+	public void setComentableId(int comentableId) {
+		this.comentableId = comentableId;
+	}
+
+	@NotBlank
+	public String getComentableType() {
+		return comentableType;
+	}
+
+	public void setComentableType(String comentableType) {
+		this.comentableType = comentableType;
+	}
+
 
 	//RelationShips
-	private Lessor	lessorAuthor;
-	private Lessor	lessorRecipient;
-	private Tenant	tenantAuthor;
-	private Tenant	tenantRecipient;
+	private ComentatorActor	author;
 
 
 	@Valid
 	@ManyToOne(optional = true)
-	public Lessor getLessorAuthor() {
-		return lessorAuthor;
+	public ComentatorActor getAuthor() {
+		return author;
 	}
 
-	public void setLessorAuthor(Lessor lessorAuthor) {
-		this.lessorAuthor = lessorAuthor;
-	}
-
-	@Valid
-	@ManyToOne(optional = true)
-	public Lessor getLessorRecipient() {
-		return lessorRecipient;
-	}
-
-	public void setLessorRecipient(Lessor lessorRecipient) {
-		this.lessorRecipient = lessorRecipient;
-	}
-
-	@Valid
-	@ManyToOne(optional = true)
-	public Tenant getTenantAuthor() {
-		return tenantAuthor;
-	}
-
-	public void setTenantAuthor(Tenant tenantAuthor) {
-		this.tenantAuthor = tenantAuthor;
-	}
-
-	@Valid
-	@ManyToOne(optional = true)
-	public Tenant getTenantRecipient() {
-		return tenantRecipient;
-	}
-
-	public void setTenantRecipient(Tenant tenantRecipient) {
-		this.tenantRecipient = tenantRecipient;
+	public void setAuthor(ComentatorActor author) {
+		this.author = author;
 	}
 
 }

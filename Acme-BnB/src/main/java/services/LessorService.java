@@ -19,7 +19,7 @@ import domain.SocialIdentity;
 
 @Service
 @Transactional
-public class LessorService {
+public class LessorService extends ComentableService {
 
 	//Managed repository
 

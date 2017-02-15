@@ -20,7 +20,7 @@ import domain.Tenant;
 
 @Service
 @Transactional
-public class TenantService {
+public class TenantService extends ComentableService {
 
 	//Managed repository
 
