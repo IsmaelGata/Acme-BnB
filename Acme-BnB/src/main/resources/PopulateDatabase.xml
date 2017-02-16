@@ -108,7 +108,7 @@
 	<!-- FEE -->
 	
 	<bean id="fee1" class="domain.Fee">
-		<property name="amount" value="20.0" />
+		<property name="amount" value="1.0" />
 	</bean>
 	
 	<!-- CREDIT CARDS -->

@@ -1,7 +1,9 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +12,7 @@ import org.springframework.util.Assert;
 
 import repositories.BookRepository;
 import domain.Book;
+import domain.Fee;
 import domain.Lessor;
 import domain.Property;
 import domain.Status;
@@ -31,6 +34,9 @@ public class BookService {
 
 	@Autowired
 	private TenantService	tenantService;
+
+	@Autowired
+	private FeeService		feeService;
 
 
 	//Constructor
@@ -91,8 +97,14 @@ public class BookService {
 		Assert.notNull(property);
 		Assert.isTrue(lessor.equals(property.getLessor()));
 
+		if (status.equals(Status.ACEPTED)) {
+			List<Fee> fee = new ArrayList<Fee>(feeService.findAll());
+			Assert.isTrue(!fee.isEmpty());
+			lessor.setPaid(lessor.getPaid() + fee.get(0).getAmount());
+
+			lessorService.save(lessor);
+		}
 		book.setStatus(status);
 		save(book);
 	}
-
 }

@@ -14,7 +14,10 @@ import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Book;
+import domain.ComentatorActor;
+import domain.Comment;
 import domain.Finder;
+import domain.Lessor;
 import domain.SocialIdentity;
 import domain.Tenant;
 
@@ -27,8 +30,11 @@ public class TenantService extends ComentableService {
 	@Autowired
 	private TenantRepository	tenantRepository;
 
-
 	//Supported services
+
+	@Autowired
+	private CommentService		commentService;
+
 
 	//Constructor
 
@@ -115,4 +121,23 @@ public class TenantService extends ComentableService {
 		return result;
 	}
 
+	public Collection<Lessor> getLessorsPropertiesRequestedByTenantDone(Tenant tenant) {
+		return tenantRepository.lessorsPropertiesRequestedByTenantDone(tenant.getId());
+	}
+
+	public Comment doComment(ComentatorActor comentatorActor, Comment comment) {
+		Comment result = null;
+		Assert.notNull(comentatorActor);
+		Assert.notNull(comment);
+		Tenant tenant = findByPrincipal();
+
+		if (tenant.equals(comentatorActor) || getLessorsPropertiesRequestedByTenantDone(tenant).contains(comentatorActor)) {
+			comment.setAuthor(tenant);
+			comment.setComentableId(comentatorActor.getId());
+			comment.setComentableType(comentatorActor.getClass().getSimpleName());
+			result = commentService.save(comment);
+		}
+
+		return result;
+	}
 }

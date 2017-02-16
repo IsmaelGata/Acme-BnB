@@ -13,9 +13,12 @@ import repositories.LessorRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import domain.ComentatorActor;
+import domain.Comment;
 import domain.Lessor;
 import domain.Property;
 import domain.SocialIdentity;
+import domain.Tenant;
 
 @Service
 @Transactional
@@ -26,8 +29,11 @@ public class LessorService extends ComentableService {
 	@Autowired
 	private LessorRepository	lessorRepository;
 
-
 	//Supported services
+
+	@Autowired
+	private CommentService		commentService;
+
 
 	//Constructor
 
@@ -112,10 +118,37 @@ public class LessorService extends ComentableService {
 		return result;
 	}
 
+	public Collection<Tenant> tenantRequestedPropertyByLessorDone(Lessor lessor) {
+		Assert.notNull(lessor);
+		return lessorRepository.tenantRequestedPropertyByLessorDone(lessor.getId());
+	}
+
+	/**
+	 * Calcula la cantidad total que debería abonar el arrendador si acepta todas las reservas que
+	 * tiene en curso (en estado PENDING) atendiendo al impuesto (FEE) que esté vigente en el momento
+	 * de aceptar la reserva.
+	 * 
+	 * @return cantidad total a pagar
+	 */
 	public double calculateTotalAmount() {
 		Lessor lessor = findByPrincipal();
-		double booksAcepted = lessorRepository.acceptedBooksByLessorDone(lessor.getId());
-		double result = booksAcepted - lessor.getPaid();
+		double result = lessorRepository.feeToPayByLessorDone(lessor.getId());
+
+		return result;
+	}
+
+	public Comment doComment(ComentatorActor comentatorActor, Comment comment) {
+		Comment result = null;
+		Assert.notNull(comentatorActor);
+		Assert.notNull(comment);
+		Lessor lessor = findByPrincipal();
+
+		if (lessor.equals(comentatorActor) || tenantRequestedPropertyByLessorDone(lessor).contains(comentatorActor)) {
+			comment.setAuthor(lessor);
+			comment.setComentableId(comentatorActor.getId());
+			comment.setComentableType(comentatorActor.getClass().getSimpleName());
+			result = commentService.save(comment);
+		}
 
 		return result;
 	}
