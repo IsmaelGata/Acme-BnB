@@ -3,6 +3,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -135,6 +136,7 @@ public class TenantService extends ComentableService {
 			comment.setAuthor(tenant);
 			comment.setComentableId(comentatorActor.getId());
 			comment.setComentableType(comentatorActor.getClass().getSimpleName());
+			comment.setMoment(new Date());
 			result = commentService.save(comment);
 		}
 

@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.Collection;
@@ -5,43 +6,74 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import repositories.InvoiceRepository;
+import domain.Book;
 import domain.Invoice;
+import domain.Tenant;
 
 @Service
 @Transactional
 public class InvoiceService {
-	
+
+	//Managed repository
+
 	@Autowired
-	private InvoiceRepository invoiceRepository;
+	private InvoiceRepository	invoiceRepository;
+
+	//Supported services
+
+	@Autowired
+	private TenantService		tenantService;
+
+
+	//Constructor
 
 	public InvoiceService() {
 		super();
 	}
-	
-	public Invoice create(){
-		return null;
-	}
-	
 
-	public Collection<Invoice> findAll(){
+	//Simple CRUD methods
+
+	public Invoice create(Book book) {
+		Assert.notNull(book);
+		Tenant tenant = tenantService.findByPrincipal();
+		Assert.isTrue(tenant.equals(book.getTenant()));
+
+		Invoice result = new Invoice();
+
+		result.setBook(book);
+
+		return result;
+	}
+
+	public Collection<Invoice> findAll() {
 		return invoiceRepository.findAll();
 	}
-	
-	public Invoice findOne(int id_invoice){
+
+	public Invoice findOne(int id_invoice) {
 		return invoiceRepository.findOne(id_invoice);
-		
+
 	}
-	
-	public void save(Invoice invoice){
+
+	public void save(Invoice invoice) {
+		Assert.notNull(invoice);
+		Tenant tenant = tenantService.findByPrincipal();
+		Assert.isTrue(tenant.equals(invoice.getBook().getTenant()));
+
 		invoiceRepository.save(invoice);
 	}
-	
-	public void delete(Invoice invoice){
+
+	@Deprecated
+	public void delete(Invoice invoice) {
+		Assert.notNull(invoice);
+		Tenant tenant = tenantService.findByPrincipal();
+		Assert.isTrue(tenant.equals(invoice.getBook().getTenant()));
+
 		invoiceRepository.delete(invoice);
 	}
-	
+
 	//Other business methods
 
 }

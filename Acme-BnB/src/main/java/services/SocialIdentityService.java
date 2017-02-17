@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.Collection;
@@ -5,43 +6,96 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import repositories.SocialIdentityRepository;
+import domain.Actor;
 import domain.SocialIdentity;
+import form.SocialIdentityForm;
 
 @Service
 @Transactional
 public class SocialIdentityService {
-	
+
+	//Managed repository
+
 	@Autowired
-	private SocialIdentityRepository socialIdentityRepository;
+	private SocialIdentityRepository	socialIdentityRepository;
+
+	//Supported services
+
+	@Autowired
+	private ActorService				actorService;
+
+
+	//Constructor
 
 	public SocialIdentityService() {
 		super();
 	}
-	
-	public SocialIdentity create(){
-		return null;
-	}
-	
 
-	public Collection<SocialIdentity> findAll(){
+	//Simple CRUD methods
+
+	public SocialIdentityForm create(Actor actor) {
+		Assert.notNull(actor);
+		SocialIdentityForm result = new SocialIdentityForm();
+
+		return result;
+	}
+
+	public Collection<SocialIdentity> findAll() {
 		return socialIdentityRepository.findAll();
 	}
-	
-	public SocialIdentity findOne(int id_socialIdentity){
+
+	public SocialIdentity findOne(int id_socialIdentity) {
 		return socialIdentityRepository.findOne(id_socialIdentity);
-		
+
 	}
-	
-	public void save(SocialIdentity socialIdentity){
-		socialIdentityRepository.save(socialIdentity);
+
+	public void save(SocialIdentityForm socialIdentityForm) {
+		Assert.notNull(socialIdentityForm);
+
+		SocialIdentity result = reconstruct(socialIdentityForm);
+		Actor actor = actorService.findByPrincipal();
+		Assert.isTrue(actor.equals(result.getActor()));
+
+		socialIdentityRepository.save(result);
 	}
-	
-	public void delete(SocialIdentity socialIdentity){
+
+	public void delete(SocialIdentity socialIdentity) {
+		Assert.notNull(socialIdentity);
+
+		Actor actor = actorService.findByPrincipal();
+		Assert.isTrue(actor.equals(socialIdentity.getActor()));
+
 		socialIdentityRepository.delete(socialIdentity);
 	}
-	
+
 	//Other business methods
 
+	public SocialIdentity reconstruct(SocialIdentityForm socialIdentityForm) {
+		SocialIdentity result = new SocialIdentity();
+
+		result.setNick(socialIdentityForm.getNick());
+		result.setNameSocialNetwork(socialIdentityForm.getNameSocialNetwork());
+		result.setURL(socialIdentityForm.getURL());
+
+		if (socialIdentityForm.getId() != 0) {
+			result.setId(socialIdentityForm.getId());
+		}
+
+		return result;
+	}
+
+	public SocialIdentityForm convertionToFormObject(SocialIdentity socialIdentity) {
+		Assert.notNull(socialIdentity);
+		SocialIdentityForm result = new SocialIdentityForm();
+
+		result.setId(socialIdentity.getId());
+		result.setNameSocialNetwork(socialIdentity.getNameSocialNetwork());
+		result.setNick(socialIdentity.getNick());
+		result.setURL(socialIdentity.getURL());
+
+		return result;
+	}
 }

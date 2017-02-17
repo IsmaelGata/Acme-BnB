@@ -1,30 +1,31 @@
 
-package domain;
-
-import javax.persistence.Access;
-import javax.persistence.AccessType;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.validation.Valid;
+package form;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
 
-@Entity
-@Access(AccessType.PROPERTY)
-public class SocialIdentity extends DomainEntity {
+public class SocialIdentityForm {
 
 	//Attributes
+	private int		id;
 	private String	nick;
 	private String	nameSocialNetwork;
 	private String	URL;
 
 
 	//Constructor
-	public SocialIdentity() {
+	public SocialIdentityForm() {
 		super();
 	}
 	//Getter & setter
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	@NotBlank
 	public String getNick() {
@@ -53,20 +54,4 @@ public class SocialIdentity extends DomainEntity {
 	public void setURL(String uRL) {
 		URL = uRL;
 	}
-
-
-	//RelationShips
-	private Actor	actor;
-
-
-	@Valid
-	@ManyToOne(optional = false)
-	public Actor getActor() {
-		return actor;
-	}
-
-	public void setActor(Actor actor) {
-		this.actor = actor;
-	}
-
 }

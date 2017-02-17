@@ -10,6 +10,7 @@ import org.springframework.util.Assert;
 
 import repositories.CommentRepository;
 import domain.Comment;
+import form.CommentForm;
 
 @Service
 @Transactional
@@ -30,8 +31,9 @@ public class CommentService {
 
 	//Simple CRUD methods
 
-	public Comment create() {
-		Comment result = new Comment();
+	public CommentForm create() {
+		CommentForm result = new CommentForm();
+
 		return result;
 	}
 
@@ -51,11 +53,31 @@ public class CommentService {
 		return result;
 	}
 
-	public void delete(Comment comment) {
-		Assert.notNull(comment);
-		commentRepository.delete(comment);
-	}
-
 	//Other business methods
 
+	public Comment reconstruct(CommentForm commentForm) {
+		Comment result = new Comment();
+
+		result.setStars(commentForm.getStars());
+		result.setText(commentForm.getText());
+		result.setTitle(commentForm.getTitle());
+
+		if (commentForm.getId() != 0) {
+			result.setId(commentForm.getId());
+		}
+
+		return result;
+	}
+
+	public CommentForm convertionToFormObject(Comment comment) {
+		Assert.notNull(comment);
+
+		CommentForm result = new CommentForm();
+		result.setStars(comment.getStars());
+		result.setText(comment.getText());
+		result.setTitle(comment.getTitle());
+		result.setId(comment.getId());
+
+		return result;
+	}
 }

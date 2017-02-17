@@ -60,6 +60,10 @@ public class AuditService {
 		Auditor auditor = auditorService.findByPrincipal();
 		Assert.isTrue(auditor.equals(audit.getAuditor()));
 
+		if (audit.getId() != 0) {
+			Assert.isTrue(audit.getDraft() == true);
+		}
+
 		result = auditRepository.save(audit);
 		return result;
 	}
@@ -68,6 +72,7 @@ public class AuditService {
 		Assert.notNull(audit);
 		Auditor auditor = auditorService.findByPrincipal();
 		Assert.isTrue(auditor.equals(audit.getAuditor()));
+		Assert.isTrue(audit.getDraft() == true);
 
 		auditRepository.delete(audit);
 	}
