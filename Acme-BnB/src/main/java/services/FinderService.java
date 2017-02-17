@@ -46,15 +46,13 @@ public class FinderService {
 	public void save(Finder finder) {
 		Assert.notNull(finder);
 		Tenant tenant = tenantService.findByPrincipal();
-		Assert.isTrue(tenant.equals(finder.getTenant()));
+		Assert.notNull(tenant);
 
 		finderRepository.save(finder);
 	}
 
 	public void delete(Finder finder) {
 		Assert.notNull(finder);
-		Tenant tenant = tenantService.findByPrincipal();
-		Assert.isTrue(tenant.equals(finder.getTenant()));
 
 		finderRepository.delete(finder);
 	}

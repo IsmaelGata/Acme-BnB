@@ -8,7 +8,6 @@ import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.validation.Valid;
 
 @Entity
@@ -26,19 +25,8 @@ public class Tenant extends ComentatorActor {
 	//Getter & setter
 
 	//RelationShips
-	private Finder				finder;
 	private Collection<Book>	books;
 
-
-	@Valid
-	@OneToOne(cascade = CascadeType.ALL)
-	public Finder getFinder() {
-		return finder;
-	}
-
-	public void setFinder(Finder finder) {
-		this.finder = finder;
-	}
 
 	@Valid
 	@OneToMany(mappedBy = "tenant", cascade = CascadeType.ALL)
