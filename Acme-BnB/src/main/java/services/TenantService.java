@@ -17,7 +17,6 @@ import security.UserAccount;
 import domain.Book;
 import domain.ComentatorActor;
 import domain.Comment;
-import domain.Finder;
 import domain.Lessor;
 import domain.SocialIdentity;
 import domain.Tenant;
@@ -55,9 +54,6 @@ public class TenantService extends ComentableService {
 		authority.setAuthority("TENANT");
 		userAccount.addAuthority(authority);
 		result.setUserAccount(userAccount);
-
-		Finder finder = new Finder();
-		result.setFinder(finder);
 
 		Collection<Book> books = new ArrayList<>();
 		result.setBooks(books);

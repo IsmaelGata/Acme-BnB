@@ -1,13 +1,21 @@
 
 package domain;
 
+import java.util.Collection;
+import java.util.Date;
+
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -18,6 +26,7 @@ public class Finder extends DomainEntity {
 	private double	minimun;
 	private double	maximum;
 	private String	keyWord;
+	private Date	moment;
 
 
 	//Constructor
@@ -36,6 +45,7 @@ public class Finder extends DomainEntity {
 		this.destination = destination;
 	}
 
+	@Min(0)
 	public double getMinimun() {
 		return minimun;
 	}
@@ -44,6 +54,7 @@ public class Finder extends DomainEntity {
 		this.minimun = minimun;
 	}
 
+	@Min(1)
 	public double getMaximum() {
 		return maximum;
 	}
@@ -60,18 +71,30 @@ public class Finder extends DomainEntity {
 		this.keyWord = keyWord;
 	}
 
-
-	//RelationShips
-	private Tenant	tenant;
-
-	@Valid
-	@OneToOne(optional = false)
-	public Tenant getTenant() {
-		return tenant;
+	@NotNull
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "MM/dd/yyyy HH:mm")
+	public Date getMoment() {
+		return moment;
 	}
 
-	public void setTenant(Tenant tenant) {
-		this.tenant = tenant;
+	public void setMoment(Date moment) {
+		this.moment = moment;
+	}
+
+
+	//RelationShips
+	private Collection<Property>	properties;
+
+
+	@Valid
+	@ManyToMany(mappedBy = "finders")
+	public Collection<Property> getProperties() {
+		return properties;
+	}
+
+	public void setProperties(Collection<Property> properties) {
+		this.properties = properties;
 	}
 
 }

@@ -246,7 +246,6 @@
 		<property name="email" value="lauri@acme.com"/>
 		<property name="phone" value="+34 633345894"/>
 		<property name="picture" value="www.picture.com"/>
-		<property name="finder" ref="finder1"/>
 		<property name="socialIdentities">
 			<list>
 				
@@ -266,7 +265,6 @@
 		<property name="email" value="lauri@acme.com"/>
 		<property name="phone" value="0048632145565897"/>
 		<property name="picture" value="www.picture.com"/>
-		<property name="finder" ref="finder2"/>
 		<property name="socialIdentities">
 			<list>
 				
@@ -285,16 +283,25 @@
 		<property name="destination" value="destino1" />
 		<property name="minimun" value="1.0" />
 		<property name="maximum" value="10.0" />
-		<property name="keyWord" value="palabra" />
-		<property name="tenant" ref="tenant1"/>
+		<property name="keyWord" value="chalet" />
+		<property name="moment" value="08/05/2017 00:00"/>
+		<property name="properties">
+			<list>
+			</list>
+		</property>
 	</bean>
 	
 	<bean id="finder2" class="domain.Finder">
-		<property name="destination" value="destino2" />
+		<property name="destination" value="Seville" />
 		<property name="minimun" value="1.0" />
 		<property name="maximum" value="10.0" />
-		<property name="keyWord" value="hoña" />
-		<property name="tenant" ref="tenant2"/>
+		<property name="keyWord" value="vacaciones" />
+		<property name="moment" value="08/05/2017 00:00"/>
+		<property name="properties">
+			<list>
+				
+			</list>
+		</property>
 	</bean>
 	
 	<!-- PROPERTY -->
@@ -324,6 +331,12 @@
 			<list>
 			</list>
 		</property>
+		<property name="finders">
+			<list>
+				<ref bean="finder1"/>
+				<ref bean="finder2"/>
+			</list>
+		</property>
 	</bean>
 	
 	<bean id="property2" class="domain.Property">
@@ -349,6 +362,11 @@
 		</property>
 		<property name="extraAttributes">
 			<list>
+			</list>
+		</property>
+		<property name="finders">
+			<list>
+				<ref bean="finder2"/>
 			</list>
 		</property>
 	</bean>
