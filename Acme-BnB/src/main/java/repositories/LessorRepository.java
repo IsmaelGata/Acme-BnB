@@ -38,4 +38,12 @@ public interface LessorRepository extends JpaRepository<Lessor, Integer> {
 	 */
 	@Query("select distinct b.tenant from Book b where b.property.lessor.id = ?1")
 	Collection<Tenant> tenantRequestedPropertyByLessorDone(int lessorId);
+	
+	//Dashboard
+	
+	@Query("select 1.0*(count(b)/(select count(b1) from Lessor l1 join l1.properties p1 join p1.books b1)) from Lessor l join l.properties p join p.books b where b.status=1 group by l")
+	Collection<Double> avgRequestAceptedOfLessor();
+	
+	@Query("select 1.0*(count(b)/(select count(b1) from Lessor l1 join l1.properties p1 join p1.books b1)) from Lessor l join l.properties p join p.books b where b.status=2 group by l")
+	Collection<Double> avgRequestDeniedOfLessor();
 }

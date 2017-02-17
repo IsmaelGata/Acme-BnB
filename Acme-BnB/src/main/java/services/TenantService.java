@@ -138,4 +138,26 @@ public class TenantService extends ComentableService {
 
 		return result;
 	}
+	
+	//Dashboard
+	
+	public Collection<Tenant> tenantMoreRequestAcepted(){
+		return tenantRepository.tenantMoreRequestAcepted();
+	}
+	
+	public Collection<Tenant> tenantMoreRequestDenied(){
+		return tenantRepository.tenantMoreRequestDenied();
+	}
+	
+	public Collection<Tenant> tenantMoreRequestPending(){
+		return tenantRepository.tenantMoreRequestPending();
+	}
+	
+	public Collection<Double> avgRequestAceptedOfTenant(){
+		return tenantRepository.avgRequestAceptedOfTenant();		
+	}
+	
+	public Collection<Double> avgRequestDeniedOfTenant(){
+		return tenantRepository.avgRequestDeniedOfTenant();
+	}
 }

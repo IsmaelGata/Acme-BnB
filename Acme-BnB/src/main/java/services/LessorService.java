@@ -154,4 +154,14 @@ public class LessorService extends ComentableService {
 
 		return result;
 	}
+	
+	//Dashboard
+	
+	public Collection<Double> avgRequestAceptedOfLessor(){
+		return lessorRepository.avgRequestAceptedOfLessor();
+	}
+	
+	public Collection<Double> avgRequestDeniedOfLesso(){
+		return lessorRepository.avgRequestDeniedOfLessor();
+	}
 }

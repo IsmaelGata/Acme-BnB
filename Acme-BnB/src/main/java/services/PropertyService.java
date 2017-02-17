@@ -123,4 +123,31 @@ public class PropertyService {
 
 		return result;
 	}
+	
+	
+	//Dashboard
+	
+	public Object[] numAuditsPerProperty(){
+		return propertyRepository.numAuditsPerProperty();
+	}
+	
+	public Collection<Property> getPropertyOrderAudits(int idLessor){
+		return propertyRepository.getPropertyOrderAudits(idLessor);
+	}
+	
+	public Collection<Property> getPropertyOrderBook(int idLessor){
+		return propertyRepository.getPropertyOrderBook(idLessor);
+	}
+	
+	public Collection<Property> getPropertyOrderBookAcepted(int idLessor){
+		return propertyRepository.getPropertyOrderBookAcepted(idLessor);
+	}
+	
+	public Collection<Property> getPropertyOrderBookDenied(int idLessor){
+		return propertyRepository.getPropertyOrderBookDenied(idLessor);
+	}
+	
+	public Collection<Property> getPropertyOrderBookPending(int idLessor){
+		return propertyRepository.getPropertyOrderBookPending(idLessor);
+	}
 }
