@@ -84,17 +84,17 @@ public class Finder extends DomainEntity {
 
 
 	//RelationShips
-	private Collection<Property>	properties;
+	private Collection<Property>	listProperty;
 
 
 	@Valid
 	@ManyToMany(mappedBy = "finders")
-	public Collection<Property> getProperties() {
-		return properties;
+	public Collection<Property> getListProperty() {
+		return listProperty;
 	}
 
-	public void setProperties(Collection<Property> properties) {
-		this.properties = properties;
+	public void setListProperty(Collection<Property> listProperty) {
+		this.listProperty = listProperty;
 	}
 
 }
