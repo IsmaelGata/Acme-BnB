@@ -369,11 +369,6 @@
 				<ref bean="finder2"/>
 			</list>
 		</property>
-		<property name="finders">
-			<list>
-				<ref bean="finder2"/>
-			</list>
-		</property>
 	</bean>
 		
 	<bean id="property3" class="domain.Property">
