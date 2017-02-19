@@ -64,7 +64,7 @@ public interface TenantRepository extends JpaRepository<Tenant, Integer> {
 	 * Devuelve el/los inquilino/s con el peor ratio de peticiones aceptadas
 	 * @return
 	 */
-	@Query("select b.tenant from Book b where (select 1.0*count(b2)/(select count(b3) from Book b3 where b3.tenant.id = b.tenant.id) from Book b2 where b2.status = 1 and b2.tenant.id = b.tenant.id) <= all(select 1.0*count(b4)/(select count(b5) from Book b5 where b5.tenant.id = b4.tenant.id) from Book b4 where b4.status = 1 group by b4.tenant) group by b.tenan")
+	@Query("select b.tenant from Book b where (select 1.0*count(b2)/(select count(b3) from Book b3 where b3.tenant.id = b.tenant.id) from Book b2 where b2.status = 1 and b2.tenant.id = b.tenant.id) <= all(select 1.0*count(b4)/(select count(b5) from Book b5 where b5.tenant.id = b4.tenant.id) from Book b4 where b4.status = 1 group by b4.tenant) group by b.tenant")
 	Collection<Lessor> getTenantsWithMinimumRatioOfApprovedRequests();
 	
 }
