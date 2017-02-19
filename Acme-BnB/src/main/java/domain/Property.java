@@ -5,7 +5,6 @@ import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -161,7 +160,7 @@ public class Property extends DomainEntity {
 	}
 
 	@Valid
-	@OneToMany(mappedBy = "property", cascade = CascadeType.ALL)
+	@ManyToMany(mappedBy = "properties")
 	public Collection<ExtraAttribute> getExtraAttributes() {
 		return extraAttributes;
 	}
@@ -171,8 +170,8 @@ public class Property extends DomainEntity {
 	}
 
 	@Valid
-	@ManyToMany()
-	@JoinTable(name = "finder_property", joinColumns = @JoinColumn(name = "finder_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "property_id", referencedColumnName = "id"))
+	@ManyToMany
+	@JoinTable(name = "finder_property", joinColumns = @JoinColumn(name = "property_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "finder_id", referencedColumnName = "id"))
 	public Collection<Finder> getFinders() {
 		return finders;
 	}

@@ -432,7 +432,12 @@
 		<property name="isNumber" value="false" />
 		<property name="isBoolean" value="false" />
 		<property name="value" value="Amueblado" />
-		<property name="property" ref="property1"/>
+		<property name="properties">
+			<list>
+				<ref bean="property1"/>
+				<ref bean="property2"/>
+			</list>
+		</property>
 	</bean>
 	
 	<bean id="extraAttribute2" class="domain.ExtraAttribute">
@@ -440,7 +445,12 @@
 		<property name="isNumber" value="false" />
 		<property name="isBoolean" value="true" />
 		<property name="value" value="true" />
-		<property name="property" ref="property1"/>
+		<property name="properties">
+			<list>
+				<ref bean="property1"/>
+				<ref bean="property2"/>
+			</list>
+		</property>
 	</bean>
 	
 	<bean id="extraAttribute3" class="domain.ExtraAttribute">
@@ -448,7 +458,12 @@
 		<property name="isNumber" value="true" />
 		<property name="isBoolean" value="false" />
 		<property name="value" value="3" />
-		<property name="property" ref="property1"/>
+		<property name="properties">
+			<list>
+				<ref bean="property1"/>
+				<ref bean="property2"/>
+			</list>
+		</property>
 	</bean>
 	
 	<bean id="extraAttribute4" class="domain.ExtraAttribute">
@@ -456,7 +471,13 @@
 		<property name="isNumber" value="false" />
 		<property name="isBoolean" value="true" />
 		<property name="value" value="true" />
-		<property name="property" ref="property1"/>
+		<property name="properties">
+			<list>
+				<ref bean="property1"/>
+				<ref bean="property2"/>
+				<ref bean="property3"/>
+			</list>
+		</property>
 	</bean>
 	
 	<bean id="extraAttribute5" class="domain.ExtraAttribute">
@@ -464,88 +485,15 @@
 		<property name="isNumber" value="false" />
 		<property name="isBoolean" value="true" />
 		<property name="value" value="false" />
-		<property name="property" ref="property1"/>
+		<property name="properties">
+			<list>
+				<ref bean="property1"/>
+				<ref bean="property2"/>
+				<ref bean="property3"/>
+			</list>
+		</property>
 	</bean>
 	
-	<bean id="extraAttribute6" class="domain.ExtraAttribute">
-		<property name="name" value="Equipamiento" />
-		<property name="isNumber" value="false" />
-		<property name="isBoolean" value="false" />
-		<property name="value" value="Amueblado" />
-		<property name="property" ref="property2"/>
-	</bean>
-	
-	<bean id="extraAttribute7" class="domain.ExtraAttribute">
-		<property name="name" value="A/C" />
-		<property name="isNumber" value="false" />
-		<property name="isBoolean" value="true" />
-		<property name="value" value="true" />
-		<property name="property" ref="property2"/>
-	</bean>
-	
-	<bean id="extraAttribute8" class="domain.ExtraAttribute">
-		<property name="name" value="Distancia centro ciudad (km)" />
-		<property name="isNumber" value="true" />
-		<property name="isBoolean" value="false" />
-		<property name="value" value="10" />
-		<property name="property" ref="property2"/>
-	</bean>
-	
-	<bean id="extraAttribute9" class="domain.ExtraAttribute">
-		<property name="name" value="Piscina" />
-		<property name="isNumber" value="false" />
-		<property name="isBoolean" value="true" />
-		<property name="value" value="false" />
-		<property name="property" ref="property2"/>
-	</bean>
-	
-	<bean id="extraAttribute10" class="domain.ExtraAttribute">
-		<property name="name" value="Animales" />
-		<property name="isNumber" value="false" />
-		<property name="isBoolean" value="true" />
-		<property name="value" value="true" />
-		<property name="property" ref="property2"/>
-	</bean>
-	
-	<bean id="extraAttribute11" class="domain.ExtraAttribute">
-		<property name="name" value="Equipamiento" />
-		<property name="isNumber" value="false" />
-		<property name="isBoolean" value="false" />
-		<property name="value" value="Amueblado" />
-		<property name="property" ref="property3"/>
-	</bean>
-	
-	<bean id="extraAttribute12" class="domain.ExtraAttribute">
-		<property name="name" value="A/C" />
-		<property name="isNumber" value="false" />
-		<property name="isBoolean" value="true" />
-		<property name="value" value="true" />
-		<property name="property" ref="property3"/>
-	</bean>
-	
-	<bean id="extraAttribute13" class="domain.ExtraAttribute">
-		<property name="name" value="Distancia centro ciudad (km)" />
-		<property name="isNumber" value="true" />
-		<property name="isBoolean" value="false" />
-		<property name="value" value="4" />
-		<property name="property" ref="property3"/>
-	</bean>
-	
-	<bean id="extraAttribute14" class="domain.ExtraAttribute">
-		<property name="name" value="Piscina" />
-		<property name="isNumber" value="false" />
-		<property name="isBoolean" value="true" />
-		<property name="value" value="true" />
-		<property name="property" ref="property3"/>
-	</bean>
-	
-	<bean id="extraAttribute15" class="domain.ExtraAttribute">
-		<property name="name" value="Animales" />
-		<property name="isNumber" value="false" />
-		<property name="isBoolean" value="true" />
-		<property name="value" value="false" />
-		<property name="property" ref="property3"/>
-	</bean>
 	
 	<!-- AUDIT -->
 	

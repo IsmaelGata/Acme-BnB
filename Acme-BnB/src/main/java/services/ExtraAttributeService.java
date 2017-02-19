@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,8 +42,9 @@ public class ExtraAttributeService {
 		Assert.notNull(admin);
 		Assert.notNull(property);
 		ExtraAttribute result = new ExtraAttribute();
+		Collection<Property> properties = new ArrayList<>();
 
-		result.setProperty(property);
+		result.setProperties(properties);
 		return result;
 	}
 
@@ -59,8 +61,6 @@ public class ExtraAttributeService {
 		Assert.notNull(extraAttribute);
 		Administrator admin = administratorService.findByPrincipal();
 		Assert.notNull(admin);
-		ExtraAttribute aux = extraAttributeRepository.findExtraAttribute(extraAttribute.getProperty().getId(), extraAttribute.getName());
-		Assert.isNull(aux);
 
 		extraAttributeRepository.save(extraAttribute);
 	}
