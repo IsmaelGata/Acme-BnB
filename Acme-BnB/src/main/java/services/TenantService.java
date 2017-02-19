@@ -162,4 +162,16 @@ public class TenantService extends ComentableService {
 		return tenantRepository.getTenantsWithMorePendingRequests();
 	}
 	
+	public Collection<Lessor> getTenantsWithMaximumRatioOfApprovedRequests() {
+		administratorService.findByPrincipal();
+		
+		return tenantRepository.getTenantsWithMaximumRatioOfApprovedRequests();
+	}
+	
+	public Collection<Lessor> getTenantsWithMinimumRatioOfApprovedRequests() {
+		administratorService.findByPrincipal();
+		
+		return tenantRepository.getTenantsWithMinimumRatioOfApprovedRequests();
+	}
+	
 }

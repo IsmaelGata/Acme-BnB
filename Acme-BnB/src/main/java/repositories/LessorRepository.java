@@ -61,4 +61,18 @@ public interface LessorRepository extends JpaRepository<Lessor, Integer> {
 	@Query("select l from Lessor l where (select count(b) from Book b where b.status = 0 and b.property.lessor.id = l.id) >= all(select count(b) from Book b where b.status = 0 group by b.property.lessor order by count(b) desc)")
 	Collection<Lessor> getLessorsWithMorePendingRequests();
 	
+	/**
+	 * Devuelve el/los arrendatario/s con el mejor ratio de peticiones aceptadas
+	 * @return
+	 */
+	@Query("select b.property.lessor from Book b where (select 1.0*count(b2)/(select count(b3) from Book b3 where b3.property.lessor.id = b.property.lessor.id) from Book b2 where b2.status = 1 and b2.property.lessor = b.property.lessor) >= all(select 1.0*count(b4)/(select count(b5) from Book b5 where b5.property.lessor.id = b4.property.lessor.id) from Book b4 where b4.status = 1 group by b4.property.lessor) group by b.property.lessor")
+	Collection<Lessor> getLessorsWithMaximumRatioOfApprovedRequests();
+	
+	/**
+	 * Devuelve el/los arrendatario/s con el peor ratio de peticiones aceptadas
+	 * @return
+	 */
+	@Query("select b.property.lessor from Book b where (select 1.0*count(b2)/(select count(b3) from Book b3 where b3.property.lessor.id = b.property.lessor.id) from Book b2 where b2.status = 1 and b2.property.lessor = b.property.lessor) <= all(select 1.0*count(b4)/(select count(b5) from Book b5 where b5.property.lessor.id = b4.property.lessor.id) from Book b4 where b4.status = 1 group by b4.property.lessor) group by b.property.lessor")
+	Collection<Lessor> getLessorsWithMinimumRatioOfApprovedRequests();
+	
 }

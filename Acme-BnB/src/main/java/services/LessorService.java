@@ -177,4 +177,16 @@ public class LessorService extends ComentableService {
 		return lessorRepository.getLessorsWithMorePendingRequests();
 	}
 	
+	public Collection<Lessor> getLessorsWithMaximumRatioOfApprovedRequests() {
+		administratorService.findByPrincipal();
+		
+		return lessorRepository.getLessorsWithMaximumRatioOfApprovedRequests();
+	}
+	
+	public Collection<Lessor> getLessorsWithMinimumRatioOfApprovedRequests() {
+		administratorService.findByPrincipal();
+		
+		return lessorRepository.getLessorsWithMinimumRatioOfApprovedRequests();
+	}
+	
 }

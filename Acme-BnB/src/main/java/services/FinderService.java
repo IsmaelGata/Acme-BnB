@@ -16,23 +16,26 @@ import domain.Tenant;
 @Transactional
 public class FinderService {
 
-	//Managed repository
+	// Managed repository
 	@Autowired
 	private FinderRepository	finderRepository;
 
-	//Supported services
+	// Supported services
 
 	@Autowired
 	private TenantService		tenantService;
+	
+	@Autowired
+	private AdministratorService administratorService;
 
 
-	//Constructor
+	// Constructor
 
 	public FinderService() {
 		super();
 	}
 
-	//Simple CRUD methods
+	// Simple CRUD methods
 
 	public Collection<Finder> findAll() {
 		return finderRepository.findAll();
@@ -57,6 +60,26 @@ public class FinderService {
 		finderRepository.delete(finder);
 	}
 
-	//Other business methods
+	// Other business methods
+	
+	// Dashboard
+	
+	public Double getAverageResultsPerFinder() {
+		administratorService.findByPrincipal();
+		
+		return finderRepository.getAverageResultsPerFinder();
+	}
+	
+	public Integer getMinimumResultsPerFinder() {
+		administratorService.findByPrincipal();
+		
+		return finderRepository.getMinimumResultsPerFinder();
+	}
+	
+	public Integer getMaximumResultsPerFinder() {
+		administratorService.findByPrincipal();
+		
+		return finderRepository.getMaximumResultsPerFinder();
+	}
 
 }
