@@ -8,12 +8,17 @@ import java.util.Date;
 import javax.validation.Validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 
+import repositories.TenantRepository;
+import security.Authority;
+import security.LoginService;
+import security.UserAccount;
 import domain.Book;
 import domain.ComentatorActor;
 import domain.Comment;
@@ -21,10 +26,6 @@ import domain.Lessor;
 import domain.SocialIdentity;
 import domain.Tenant;
 import form.TenantForm;
-import repositories.TenantRepository;
-import security.Authority;
-import security.LoginService;
-import security.UserAccount;
 
 @Service
 @Transactional
@@ -33,19 +34,19 @@ public class TenantService extends ComentableService {
 	//Managed repository
 
 	@Autowired
-	private TenantRepository	tenantRepository;
+	private TenantRepository		tenantRepository;
 
 	//Supported services
 
 	@Autowired
-	private CommentService		commentService;
-	
-	@Autowired
-	private AdministratorService administratorService;
+	private CommentService			commentService;
 
-	
 	@Autowired
-	private Validator validator;
+	private AdministratorService	administratorService;
+
+	@Qualifier("validator")
+	private Validator				validator;
+
 
 	//Constructor
 
@@ -149,63 +150,61 @@ public class TenantService extends ComentableService {
 
 		return result;
 	}
-	
-	public Tenant reconstruct(TenantForm tenantForm,BindingResult binding){
+
+	public Tenant reconstruct(TenantForm tenantForm, BindingResult binding) {
 		Tenant result;
-		
+
 		Assert.isTrue(tenantForm.getPassword().equals(tenantForm.getRepeatPassword()));
 		Assert.isTrue(tenantForm.getAcceptCondition());
-		
-		Md5PasswordEncoder encoder=new Md5PasswordEncoder();
-		String hash= encoder.encodePassword(tenantForm.getPassword(),null);
-		
-		result= create();
-		
+
+		Md5PasswordEncoder encoder = new Md5PasswordEncoder();
+		String hash = encoder.encodePassword(tenantForm.getPassword(), null);
+
+		result = create();
+
 		result.getUserAccount().setUsername(tenantForm.getUsername());
 		result.getUserAccount().setPassword(hash);
-		
+
 		result.setName(tenantForm.getName());
 		result.setSurname(tenantForm.getSurname());
 		result.setEmail(tenantForm.getEmail());
 		result.setPhone(tenantForm.getPhone());
 		result.setPicture(tenantForm.getPicture());
-		
+
 		//validator.validate(result, binding);
 		return result;
 	}
-	
+
 	// Dashboard
-	
+
 	public Collection<Lessor> getTenantsWithMoreAcceptedRequests() {
 		administratorService.findByPrincipal();
-		
+
 		return tenantRepository.getTenantsWithMoreAcceptedRequests();
 	}
-	
+
 	public Collection<Lessor> getTenantsWithMoreDeniedRequests() {
 		administratorService.findByPrincipal();
-		
+
 		return tenantRepository.getTenantsWithMoreDeniedRequests();
 	}
-	
+
 	public Collection<Lessor> getTenantsWithMorePendingRequests() {
 		administratorService.findByPrincipal();
-		
+
 		return tenantRepository.getTenantsWithMorePendingRequests();
 	}
-	
+
 	public Collection<Lessor> getTenantsWithMaximumRatioOfApprovedRequests() {
 		administratorService.findByPrincipal();
-		
+
 		return tenantRepository.getTenantsWithMaximumRatioOfApprovedRequests();
 	}
-	
+
 	public Collection<Lessor> getTenantsWithMinimumRatioOfApprovedRequests() {
 		administratorService.findByPrincipal();
-		
+
 		return tenantRepository.getTenantsWithMinimumRatioOfApprovedRequests();
 	}
-	
-	
-	
+
 }
