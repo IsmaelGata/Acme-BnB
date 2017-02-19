@@ -38,5 +38,12 @@ public interface BookRepository extends JpaRepository<Book, Integer>{
 	 */
 	@Query("select 1.0*count(b)/(select count(t) from Tenant t) from Book b where b.status = 2")
 	Double averageDeniedRequestPerTenant();
+	
+	/**
+	 * Devuelve el número medio de reservas con auditorias versus las que no tienen auditorias
+	 * @return
+	 */
+	@Query("select distinct(select count(b) from Property p join p.books b where p.audits.size != 0)/ (select count(b) from Property p join p.books b where p.audits.size = 0)*1.0 from Property")
+	public Double avgNumRequestWithAuditVsWithoutAudit();
 
 }

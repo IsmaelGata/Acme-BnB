@@ -398,6 +398,33 @@
 		</property>
 	</bean>
 	
+	<bean id="property4" class="domain.Property">
+		<property name="name" value="Marina Door" />
+		<property name="rate" value="50.0" />
+		<property name="description" value="Ciudad de vacaciones" />
+		<property name="address" value="España 10" />
+		<property name="country" value="Spain"/>
+		<property name="province" value="Málaga"/>
+		<property name="state" value=""/>
+		<property name="city" value="Marbella"/>
+		<property name="capability" value="3"/>
+		<property name="audits">
+			<list>
+				
+			</list>
+		</property>
+		<property name="lessor" ref="lessor2"/>
+		<property name="books">
+			<list>
+				
+			</list>
+		</property>
+		<property name="extraAttributes">
+			<list>
+			</list>
+		</property>
+	</bean>
+	
 	<!-- EXTRAATTRIBUTE -->
 	
 	<bean id="extraAttribute1" class="domain.ExtraAttribute">
@@ -612,9 +639,8 @@
 		<property name="creditCard" ref="creditCard2" />
 		<property name="status" value="PENDING"/>
 		<property name="invoice"><null /></property>
-		<property name="property" ref="property1"/>
+		<property name="property" ref="property4"/>
 		<property name="tenant" ref="tenant2"/>
-		
 	</bean>
 	
 	<!-- INVOICE -->
@@ -628,6 +654,27 @@
 		<property name="creditCard" ref="creditCard2"/>
 		<property name="book" ref="book3"/>
 	</bean>
+	
+	<bean id="invoice2" class="domain.Invoice">
+		<property name="moment" value="02/13/2017 00:00" />
+		<property name="vatNumber" value="21.0" />
+		<property name="details" value="Se llegará por la mañana" />
+		<property name="information" value="La salida se producirá a las 17:00 del último día" />
+		<property name="totalAmount" value="3000.0"/>
+		<property name="creditCard" ref="creditCard2"/>
+		<property name="book" ref="book4"/>
+	</bean>
+	
+	<bean id="invoice3" class="domain.Invoice">
+		<property name="moment" value="02/13/2017 00:00" />
+		<property name="vatNumber" value="21.0" />
+		<property name="details" value="Se llegará por la mañana" />
+		<property name="information" value="La salida se producirá a las 17:00 del último día" />
+		<property name="totalAmount" value="3000.0"/>
+		<property name="creditCard" ref="creditCard1"/>
+		<property name="book" ref="book1"/>
+	</bean>
+	
 	
 	<!-- COMMENT -->
 	
@@ -689,6 +736,14 @@
 		<property name="comentableId" value="12" />
 		<property name="comentableType" value="Lessor" />
 		<property name="author" ref="tenant2"/>
+	</bean>
+	
+	<!-- SOCIAL IDENTITY -->
+	<bean id="socialidentity1" class="domain.SocialIdentity">
+		<property name="nick" value="Salvotilla" />
+		<property name="nameSocialNetwork" value="Facebook" />
+		<property name="URL" value="https://es-es.facebook.com/" />
+		<property name="actor" ref="tenant1"/>
 	</bean>
 	
 </beans>

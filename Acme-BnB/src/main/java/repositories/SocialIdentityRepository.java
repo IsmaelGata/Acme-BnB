@@ -11,7 +11,6 @@ public interface SocialIdentityRepository extends JpaRepository<SocialIdentity, 
 
 	
 	//Dashboard
-	//ESTA DICE POR ACTOR, PERO NO ALMACENAMOS NINGUNA CON ENTIDAD ACTOR
 	@Query("select min(a.socialIdentities.size),avg(a.socialIdentities.size),max(a.socialIdentities.size) from Actor a")
 	Object[] numSocialPerProperty();
 	
