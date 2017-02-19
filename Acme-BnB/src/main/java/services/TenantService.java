@@ -5,21 +5,26 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.validation.Validator;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
 
-import repositories.TenantRepository;
-import security.Authority;
-import security.LoginService;
-import security.UserAccount;
 import domain.Book;
 import domain.ComentatorActor;
 import domain.Comment;
 import domain.Lessor;
 import domain.SocialIdentity;
 import domain.Tenant;
+import form.TenantForm;
+import repositories.TenantRepository;
+import security.Authority;
+import security.LoginService;
+import security.UserAccount;
 
 @Service
 @Transactional
@@ -38,6 +43,9 @@ public class TenantService extends ComentableService {
 	@Autowired
 	private AdministratorService administratorService;
 
+	
+	@Autowired
+	private Validator validator;
 
 	//Constructor
 
@@ -142,6 +150,30 @@ public class TenantService extends ComentableService {
 		return result;
 	}
 	
+	public Tenant reconstruct(TenantForm tenantForm,BindingResult binding){
+		Tenant result;
+		
+		Assert.isTrue(tenantForm.getPassword().equals(tenantForm.getRepeatPassword()));
+		Assert.isTrue(tenantForm.getAcceptCondition());
+		
+		Md5PasswordEncoder encoder=new Md5PasswordEncoder();
+		String hash= encoder.encodePassword(tenantForm.getPassword(),null);
+		
+		result= create();
+		
+		result.getUserAccount().setUsername(tenantForm.getUsername());
+		result.getUserAccount().setPassword(hash);
+		
+		result.setName(tenantForm.getName());
+		result.setSurname(tenantForm.getSurname());
+		result.setEmail(tenantForm.getEmail());
+		result.setPhone(tenantForm.getPhone());
+		result.setPicture(tenantForm.getPicture());
+		
+		//validator.validate(result, binding);
+		return result;
+	}
+	
 	// Dashboard
 	
 	public Collection<Lessor> getTenantsWithMoreAcceptedRequests() {
@@ -173,5 +205,7 @@ public class TenantService extends ComentableService {
 		
 		return tenantRepository.getTenantsWithMinimumRatioOfApprovedRequests();
 	}
+	
+	
 	
 }
