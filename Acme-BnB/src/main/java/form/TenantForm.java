@@ -5,6 +5,7 @@ import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
@@ -65,6 +66,7 @@ public class TenantForm {
 	}
 	
 	@NotBlank
+	@SafeHtml(whitelistType=WhiteListType.NONE)
 	public String getName() {
 		return name;
 	}
@@ -73,6 +75,7 @@ public class TenantForm {
 	}
 	
 	@NotBlank
+	@SafeHtml(whitelistType=WhiteListType.NONE)
 	public String getSurname() {
 		return surname;
 	}
@@ -81,6 +84,7 @@ public class TenantForm {
 	}
 	
 	@NotBlank
+	@SafeHtml(whitelistType=WhiteListType.NONE)
 	@Pattern(regexp = "(\\+|00)\\d{2,4}(\\s)?\\d{9,13}")
 	public String getPhone() {
 		return phone;
@@ -91,7 +95,8 @@ public class TenantForm {
 	}
 	
 	@NotBlank
-	@URL
+	@Email
+	@SafeHtml(whitelistType=WhiteListType.NONE)
 	public String getEmail() {
 		return email;
 	}
@@ -100,6 +105,8 @@ public class TenantForm {
 	}
 	
 	@NotBlank
+	@SafeHtml(whitelistType=WhiteListType.NONE)
+	@URL
 	public String getPicture() {
 		return picture;
 	}

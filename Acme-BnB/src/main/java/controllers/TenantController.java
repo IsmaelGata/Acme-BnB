@@ -40,31 +40,6 @@ public class TenantController extends AbstractController {
 		return result;
 	}
 	
-	@RequestMapping(value="/edit",method = RequestMethod.GET)
-	public ModelAndView edit(){
-		ModelAndView result;
-		Tenant tenant= tenantService.findByPrincipal();
-		result = createEditModelAndView(tenant);
-		
-		return result;
-	}
-	
-	@RequestMapping(value="/edit",method = RequestMethod.POST,params="save")
-	public ModelAndView save(@Valid Tenant tenant, BindingResult binding){
-		ModelAndView result;
-		
-		if(binding.hasErrors()){
-			result= createEditModelAndView(tenant);
-		}else{
-			try{
-				tenantService.save(tenant);
-				result= createEditModelAndView(tenant);
-			}catch(Throwable oops){
-				result= createEditModelAndView(tenant,"tenant.commit.error");
-			}
-		}
-		return result;
-	}
 	
 	@RequestMapping(value="/register",method = RequestMethod.POST,params="save")
 	public ModelAndView save(@Valid TenantForm tenantForm, BindingResult binding){
@@ -73,7 +48,7 @@ public class TenantController extends AbstractController {
 		
 		tenant=tenantService.reconstruct(tenantForm,binding);
 		if(binding.hasErrors()){
-			result= createEditModelAndView(tenant);
+			result= createEditModelAndView(tenantForm);
 		}else{
 			try{
 				tenantService.save(tenant);
@@ -105,21 +80,6 @@ public class TenantController extends AbstractController {
 		return result;
 	}
 	
-	protected ModelAndView createEditModelAndView(Tenant tenant){
-		ModelAndView result=createEditModelAndView(tenant,null);
-		return result;
-	}
-	
-	protected ModelAndView createEditModelAndView(Tenant tenant,String message){
-		ModelAndView result;
-		
-		result= new ModelAndView("tenant/edit");
-		result.addObject("tenant", tenant);
-		result.addObject("message", message);
-		
-		
-		return result;
-	}
 	
 
 }
