@@ -1,1 +1,4 @@
-/target/
+*/target/
+
+# Eclipse files
+*.settings
