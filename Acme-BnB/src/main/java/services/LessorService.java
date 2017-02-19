@@ -19,7 +19,6 @@ import domain.Comment;
 import domain.Lessor;
 import domain.Property;
 import domain.SocialIdentity;
-import domain.Tenant;
 
 @Service
 @Transactional
@@ -34,6 +33,9 @@ public class LessorService extends ComentableService {
 
 	@Autowired
 	private CommentService		commentService;
+	
+	@Autowired
+	private AdministratorService administratorService;
 
 
 	//Constructor
@@ -119,9 +121,9 @@ public class LessorService extends ComentableService {
 		return result;
 	}
 
-	public Collection<Tenant> tenantRequestedPropertyByLessorDone(Lessor lessor) {
+	public Collection<Integer> getRequestersTenantsByLessor(Lessor lessor) {
 		Assert.notNull(lessor);
-		return lessorRepository.tenantRequestedPropertyByLessorDone(lessor.getId());
+		return lessorRepository.getRequestersTenantsByLessor(lessor.getId());
 	}
 
 	/**
@@ -144,7 +146,7 @@ public class LessorService extends ComentableService {
 		Assert.notNull(comment);
 		Lessor lessor = findByPrincipal();
 
-		if (lessor.equals(comentatorActor) || tenantRequestedPropertyByLessorDone(lessor).contains(comentatorActor)) {
+		if (lessor.getId() == comentatorActor.getId() || getRequestersTenantsByLessor(lessor).contains(comentatorActor.getId())) {
 			comment.setAuthor(lessor);
 			comment.setComentableId(comentatorActor.getId());
 			comment.setComentableType(comentatorActor.getClass().getSimpleName());
@@ -155,13 +157,24 @@ public class LessorService extends ComentableService {
 		return result;
 	}
 	
-	//Dashboard
+	// Dashboard
 	
-	public Collection<Double> avgRequestAceptedOfLessor(){
-		return lessorRepository.avgRequestAceptedOfLessor();
+	public Collection<Lessor> getLessorsWithMoreAcceptedRequests() {
+		administratorService.findByPrincipal();
+		
+		return lessorRepository.getLessorsWithMoreAcceptedRequests();
 	}
 	
-	public Collection<Double> avgRequestDeniedOfLesso(){
-		return lessorRepository.avgRequestDeniedOfLessor();
+	public Collection<Lessor> getLessorsWithMoreDeniedRequests() {
+		administratorService.findByPrincipal();
+		
+		return lessorRepository.getLessorsWithMoreDeniedRequests();
 	}
+	
+	public Collection<Lessor> getLessorsWithMorePendingRequests() {
+		administratorService.findByPrincipal();
+		
+		return lessorRepository.getLessorsWithMorePendingRequests();
+	}
+	
 }

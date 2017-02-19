@@ -37,6 +37,9 @@ public class BookService {
 
 	@Autowired
 	private FeeService		feeService;
+	
+	@Autowired
+	private AdministratorService administratorService;
 
 
 	//Constructor
@@ -49,7 +52,6 @@ public class BookService {
 
 	public Book create(Property property) {
 		Tenant tenant = tenantService.findByPrincipal();
-		Assert.notNull(tenant);
 		Assert.notNull(property);
 
 		Book result = new Book();
@@ -106,5 +108,31 @@ public class BookService {
 		}
 		book.setStatus(status);
 		save(book);
+	}
+	
+	//Dashboard
+	
+	public Double averageAcceptedRequestPerLessor(){
+		administratorService.findByPrincipal();
+		
+		return bookRepository.averageAcceptedRequestPerLessor();
+	}
+	
+	public Double averageDeniedRequestPerLessor(){
+		administratorService.findByPrincipal();
+		
+		return bookRepository.averageDeniedRequestPerLessor();
+	}
+	
+	public Double averageAcceptedRequestPerTenant(){
+		administratorService.findByPrincipal();
+		
+		return bookRepository.averageAcceptedRequestPerTenant();		
+	}
+	
+	public Double averageDeniedRequestPerTenant(){
+		administratorService.findByPrincipal();
+		
+		return bookRepository.averageDeniedRequestPerTenant();
 	}
 }

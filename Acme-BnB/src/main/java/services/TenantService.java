@@ -34,6 +34,9 @@ public class TenantService extends ComentableService {
 
 	@Autowired
 	private CommentService		commentService;
+	
+	@Autowired
+	private AdministratorService administratorService;
 
 
 	//Constructor
@@ -118,8 +121,8 @@ public class TenantService extends ComentableService {
 		return result;
 	}
 
-	public Collection<Lessor> getLessorsPropertiesRequestedByTenantDone(Tenant tenant) {
-		return tenantRepository.lessorsPropertiesRequestedByTenantDone(tenant.getId());
+	public Collection<Integer> getRequestedLessorsByTenant(Tenant tenant) {
+		return tenantRepository.getRequestedLessorsByTenant(tenant.getId());
 	}
 
 	public Comment doComment(ComentatorActor comentatorActor, Comment comment) {
@@ -128,7 +131,7 @@ public class TenantService extends ComentableService {
 		Assert.notNull(comment);
 		Tenant tenant = findByPrincipal();
 
-		if (tenant.equals(comentatorActor) || getLessorsPropertiesRequestedByTenantDone(tenant).contains(comentatorActor)) {
+		if (tenant.getId() == comentatorActor.getId() || getRequestedLessorsByTenant(tenant).contains(comentatorActor.getId())) {
 			comment.setAuthor(tenant);
 			comment.setComentableId(comentatorActor.getId());
 			comment.setComentableType(comentatorActor.getClass().getSimpleName());
@@ -139,25 +142,24 @@ public class TenantService extends ComentableService {
 		return result;
 	}
 	
-	//Dashboard
+	// Dashboard
 	
-	public Collection<Tenant> tenantMoreRequestAcepted(){
-		return tenantRepository.tenantMoreRequestAcepted();
+	public Collection<Lessor> getTenantsWithMoreAcceptedRequests() {
+		administratorService.findByPrincipal();
+		
+		return tenantRepository.getTenantsWithMoreAcceptedRequests();
 	}
 	
-	public Collection<Tenant> tenantMoreRequestDenied(){
-		return tenantRepository.tenantMoreRequestDenied();
+	public Collection<Lessor> getTenantsWithMoreDeniedRequests() {
+		administratorService.findByPrincipal();
+		
+		return tenantRepository.getTenantsWithMoreDeniedRequests();
 	}
 	
-	public Collection<Tenant> tenantMoreRequestPending(){
-		return tenantRepository.tenantMoreRequestPending();
+	public Collection<Lessor> getTenantsWithMorePendingRequests() {
+		administratorService.findByPrincipal();
+		
+		return tenantRepository.getTenantsWithMorePendingRequests();
 	}
 	
-	public Collection<Double> avgRequestAceptedOfTenant(){
-		return tenantRepository.avgRequestAceptedOfTenant();		
-	}
-	
-	public Collection<Double> avgRequestDeniedOfTenant(){
-		return tenantRepository.avgRequestDeniedOfTenant();
-	}
 }

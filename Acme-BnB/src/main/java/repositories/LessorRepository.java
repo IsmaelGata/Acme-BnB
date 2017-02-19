@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import domain.Lessor;
-import domain.Tenant;
 
 @Repository
 public interface LessorRepository extends JpaRepository<Lessor, Integer> {
@@ -23,27 +22,43 @@ public interface LessorRepository extends JpaRepository<Lessor, Integer> {
 	 * Calcula la cantidad que debe pagar un arrendador si acepta todas las reservas que tiene
 	 * disponibles, esto es, cuyo status sea PENDING
 	 * 
-	 * @param lessorId
-	 * @return
+	 * @param lessorId, el id del arrendador
+	 * @return 
 	 */
-	@Query("select count(b)*(select f.amount from Fee f) from Property p join p.books b where b.status=0 and p.lessor.id = ?1")
+	@Query("select count(b)*(select f.amount from Fee f) from Book b where b.status=0 and b.property.lessor.id = ?1")
 	double feeToPayByLessorDone(int lessorId);
 
 	/**
-	 * Devuelve los tenant que han solicitado una reserva al arrendador dado.
+	 * Devuelve los inquilinos que han solicitado una reserva al arrendador dado.
 	 * (Se utiliza en el método doComment)
 	 * 
-	 * @param lessorId
+	 * @param lessorId, el id del arrendador
 	 * @return
 	 */
-	@Query("select distinct b.tenant from Book b where b.property.lessor.id = ?1")
-	Collection<Tenant> tenantRequestedPropertyByLessorDone(int lessorId);
+	@Query("select distinct b.tenant.id from Book b where b.property.lessor.id = ?1")
+	Collection<Integer> getRequestersTenantsByLessor(int lessorId);
 	
-	//Dashboard
+	// Dashboard
 	
-	@Query("select 1.0*(count(b)/(select count(b1) from Lessor l1 join l1.properties p1 join p1.books b1)) from Lessor l join l.properties p join p.books b where b.status=1 group by l")
-	Collection<Double> avgRequestAceptedOfLessor();
+	/**
+	 * Devuelve el/los arrendatario/s con más reservas aceptadas
+	 * @return
+	 */
+	@Query("select l from Lessor l where (select count(b) from Book b where b.status = 1 and b.property.lessor.id = l.id) >= all(select count(b) from Book b where b.status = 1 group by b.property.lessor order by count(b) desc)")
+	Collection<Lessor> getLessorsWithMoreAcceptedRequests();
 	
-	@Query("select 1.0*(count(b)/(select count(b1) from Lessor l1 join l1.properties p1 join p1.books b1)) from Lessor l join l.properties p join p.books b where b.status=2 group by l")
-	Collection<Double> avgRequestDeniedOfLessor();
+	/**
+	 * Devuelve el/los arrendatario/s con más reservas rechazadas
+	 * @return
+	 */
+	@Query("select l from Lessor l where (select count(b) from Book b where b.status = 2 and b.property.lessor.id = l.id) >= all(select count(b) from Book b where b.status = 2 group by b.property.lessor order by count(b) desc)")
+	Collection<Lessor> getLessorsWithMoreDeniedRequests();
+	
+	/**
+	 * Devuelve el/los arrendatario/s con más reservas pendientes
+	 * @return
+	 */
+	@Query("select l from Lessor l where (select count(b) from Book b where b.status = 0 and b.property.lessor.id = l.id) >= all(select count(b) from Book b where b.status = 0 group by b.property.lessor order by count(b) desc)")
+	Collection<Lessor> getLessorsWithMorePendingRequests();
+	
 }

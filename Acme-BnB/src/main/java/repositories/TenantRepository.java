@@ -21,29 +21,36 @@ public interface TenantRepository extends JpaRepository<Tenant, Integer> {
 
 	/**
 	 * Devuelve los arrendadores de las propiedades que ha solicitado un inquilino dado
+	 * (Se utiliza en el método doComment)
 	 * 
-	 * @param tenantId
+	 * @param tenantId, id del inquilino
 	 * @return
 	 */
-	@Query("select b.property.lessor from Book b where b.tenant.id = ?1")
-	Collection<Lessor> lessorsPropertiesRequestedByTenantDone(int tenantId);
+	@Query("select b.property.lessor.id from Book b where b.tenant.id = ?1")
+	Collection<Integer> getRequestedLessorsByTenant(int tenantId);
 	
 	
-	//Dashboard
-	@Query("select b.tenant from Book b where b.status=1 group by b.tenant having max(b.tenant)>=(select max(b2.tenant) from Book b2 where b2.status=1)")
-	Collection<Tenant> tenantMoreRequestAcepted();
+	// Dashboard
 	
-	@Query("select b.tenant from Book b where b.status=2 group by b.tenant having max(b.tenant)>=(select max(b2.tenant) from Book b2 where b2.status=2)")
-	Collection<Tenant> tenantMoreRequestDenied();
+	/**
+	 * Devuelve el/los inquilino/s con más reservas aceptadas
+	 * @return
+	 */
+	@Query("select t from Tenant t where (select count(b) from Book b where b.status = 1 and b.tenant.id = t.id) >= all(select count(b) from Book b where b.status = 1 group by b.tenant order by count(b) desc)")
+	Collection<Lessor> getTenantsWithMoreAcceptedRequests();
 	
-	@Query("select b.tenant from Book b where b.status=0 group by b.tenant having max(b.tenant)>=(select max(b2.tenant) from Book b2 where b2.status=0)")
-	Collection<Tenant> tenantMoreRequestPending();
+	/**
+	 * Devuelve el/los inquilino/s con más reservas rechazadas
+	 * @return
+	 */
+	@Query("select t from Tenant t where (select count(b) from Book b where b.status = 2 and b.tenant.id = t.id) >= all(select count(b) from Book b where b.status = 2 group by b.tenant order by count(b) desc)")
+	Collection<Lessor> getTenantsWithMoreDeniedRequests();
 	
-	@Query("select 1.0*(count(b)/(select count(b1) from Tenant t1 join t1.books b1)) from Tenant t join t.books b where b.status=1 group by t")
-	Collection<Double> avgRequestAceptedOfTenant();
-	
-	@Query("select 1.0*(count(b)/(select count(b1) from Tenant t1 join t1.books b1)) from Tenant t join t.books b where b.status=2 group by t")
-	Collection<Double> avgRequestDeniedOfTenant();
-
+	/**
+	 * Devuelve el/los inquilino/s con más reservas pendientes
+	 * @return
+	 */
+	@Query("select t from Tenant t where (select count(b) from Book b where b.status = 0 and b.tenant.id = t.id) >= all(select count(b) from Book b where b.status = 0 group by b.tenant order by count(b) desc)")
+	Collection<Lessor> getTenantsWithMorePendingRequests();
 	
 }
