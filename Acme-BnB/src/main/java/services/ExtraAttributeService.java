@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.ExtraAttributeRepository;
-import domain.Administrator;
 import domain.ExtraAttribute;
 import domain.Property;
 
@@ -37,8 +36,7 @@ public class ExtraAttributeService {
 	//Simple CRUD methods
 
 	public ExtraAttribute create(Property property) {
-		Administrator admin = administratorService.findByPrincipal();
-		Assert.notNull(admin);
+		administratorService.findByPrincipal();
 		Assert.notNull(property);
 		ExtraAttribute result = new ExtraAttribute();
 
@@ -57,8 +55,8 @@ public class ExtraAttributeService {
 
 	public void save(ExtraAttribute extraAttribute) {
 		Assert.notNull(extraAttribute);
-		Administrator admin = administratorService.findByPrincipal();
-		Assert.notNull(admin);
+		administratorService.findByPrincipal();
+		
 		ExtraAttribute aux = extraAttributeRepository.findExtraAttribute(extraAttribute.getProperty().getId(), extraAttribute.getName());
 		Assert.isNull(aux);
 
@@ -67,9 +65,8 @@ public class ExtraAttributeService {
 
 	public void delete(ExtraAttribute extraAttribute) {
 		Assert.notNull(extraAttribute);
-		Administrator admin = administratorService.findByPrincipal();
-		Assert.notNull(admin);
-
+		administratorService.findByPrincipal();
+		
 		extraAttributeRepository.delete(extraAttribute);
 	}
 

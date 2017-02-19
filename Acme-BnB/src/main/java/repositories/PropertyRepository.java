@@ -14,7 +14,6 @@ public interface PropertyRepository extends JpaRepository<Property, Integer>{
 	
 	//Dashboard
 	
-	
 	@Query("select min(p.audits.size),avg(p.audits.size),max(p.audits.size) from Property p")
 	Object[] numAuditsPerProperty();
 	
