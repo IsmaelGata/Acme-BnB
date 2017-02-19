@@ -25,8 +25,10 @@ public class SocialIdentityService {
 	//Supported services
 
 	@Autowired
-	private ActorService				actorService;
-
+	private ActorService actorService;
+	
+	@Autowired
+	private AdministratorService administratorService;
 
 	//Constructor
 
@@ -36,8 +38,8 @@ public class SocialIdentityService {
 
 	//Simple CRUD methods
 
-	public SocialIdentityForm create(Actor actor) {
-		Assert.notNull(actor);
+	public SocialIdentityForm create() {
+		actorService.findByPrincipal();
 		SocialIdentityForm result = new SocialIdentityForm();
 
 		return result;
@@ -47,8 +49,8 @@ public class SocialIdentityService {
 		return socialIdentityRepository.findAll();
 	}
 
-	public SocialIdentity findOne(int id_socialIdentity) {
-		return socialIdentityRepository.findOne(id_socialIdentity);
+	public SocialIdentity findOne(int socialIdentityId) {
+		return socialIdentityRepository.findOne(socialIdentityId);
 
 	}
 
@@ -87,7 +89,7 @@ public class SocialIdentityService {
 		return result;
 	}
 
-	public SocialIdentityForm convertionToFormObject(SocialIdentity socialIdentity) {
+	public SocialIdentityForm conversionToFormObject(SocialIdentity socialIdentity) {
 		Assert.notNull(socialIdentity);
 		SocialIdentityForm result = new SocialIdentityForm();
 
@@ -97,5 +99,25 @@ public class SocialIdentityService {
 		result.setURL(socialIdentity.getURL());
 
 		return result;
+	}
+	
+	// Dashboard
+	
+	public Double getAverageSocialIdentitiesPerActor() {
+		administratorService.findByPrincipal();
+		
+		return socialIdentityRepository.getAverageSocialIdentitiesPerActor();
+	}
+	
+	public Integer getMinimumSocialIdentitiesPerActor() {
+		administratorService.findByPrincipal();
+		
+		return socialIdentityRepository.getMinimumSocialIdentitiesPerActor();
+	}
+	
+	public Integer getMaximumSocialIdentitiesPerActor() {
+		administratorService.findByPrincipal();
+		
+		return socialIdentityRepository.getMaximumSocialIdentitiesPerActor();
 	}
 }

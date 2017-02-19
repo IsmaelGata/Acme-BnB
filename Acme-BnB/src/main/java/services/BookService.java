@@ -66,8 +66,8 @@ public class BookService {
 		return bookRepository.findAll();
 	}
 
-	public Book findOne(int id_book) {
-		return bookRepository.findOne(id_book);
+	public Book findOne(int bookId) {
+		return bookRepository.findOne(bookId);
 
 	}
 

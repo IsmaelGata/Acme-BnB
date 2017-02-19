@@ -49,8 +49,8 @@ public class AuditService {
 		return auditRepository.findAll();
 	}
 
-	public Audit findOne(int id_audit) {
-		return auditRepository.findOne(id_audit);
+	public Audit findOne(int auditId) {
+		return auditRepository.findOne(auditId);
 
 	}
 
@@ -61,6 +61,7 @@ public class AuditService {
 		Assert.isTrue(auditor.equals(audit.getAuditor()));
 
 		if (audit.getId() != 0) {
+			// FIXME ¿No seria mejor setearlo a true en lugar de hacer un Assert?
 			Assert.isTrue(audit.getDraft() == true);
 		}
 
@@ -72,7 +73,7 @@ public class AuditService {
 		Assert.notNull(audit);
 		Auditor auditor = auditorService.findByPrincipal();
 		Assert.isTrue(auditor.equals(audit.getAuditor()));
-		Assert.isTrue(audit.getDraft() == true);
+		Assert.isTrue(audit.getDraft());
 
 		auditRepository.delete(audit);
 	}

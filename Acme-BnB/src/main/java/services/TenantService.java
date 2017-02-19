@@ -14,6 +14,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 
+import repositories.TenantRepository;
+import security.Authority;
+import security.LoginService;
+import security.UserAccount;
 import domain.Book;
 import domain.ComentatorActor;
 import domain.Comment;
@@ -21,10 +25,6 @@ import domain.Lessor;
 import domain.SocialIdentity;
 import domain.Tenant;
 import form.TenantForm;
-import repositories.TenantRepository;
-import security.Authority;
-import security.LoginService;
-import security.UserAccount;
 
 @Service
 @Transactional
@@ -79,8 +79,8 @@ public class TenantService extends ComentableService {
 		return tenantRepository.findAll();
 	}
 
-	public Tenant findOne(int id_tenant) {
-		return tenantRepository.findOne(id_tenant);
+	public Tenant findOne(int tenantId) {
+		return tenantRepository.findOne(tenantId);
 
 	}
 

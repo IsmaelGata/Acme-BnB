@@ -32,8 +32,8 @@ public class ActorService {
 		return actorRepository.findAll();
 	}
 	
-	public Actor findOne(int id_actor){
-		return actorRepository.findOne(id_actor);
+	public Actor findOne(int actorId){
+		return actorRepository.findOne(actorId);
 		
 	}
 	

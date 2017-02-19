@@ -32,8 +32,8 @@ public class AdministratorService {
 		return administratorRepository.findAll();
 	}
 	
-	public Administrator findOne(int id_administrator){
-		return administratorRepository.findOne(id_administrator);
+	public Administrator findOne(int administratorId){
+		return administratorRepository.findOne(administratorId);
 		
 	}
 	

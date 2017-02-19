@@ -10,8 +10,19 @@ import domain.SocialIdentity;
 public interface SocialIdentityRepository extends JpaRepository<SocialIdentity, Integer>{
 
 	
-	//Dashboard
-	@Query("select min(a.socialIdentities.size),avg(a.socialIdentities.size),max(a.socialIdentities.size) from Actor a")
-	Object[] numSocialPerProperty();
+	// Dashboard
+	
+	/**
+	 * Devuelve la media de identidades sociales por actor
+	 * @return
+	 */
+	@Query("select avg(a.socialIdentities.size) from Actor a")
+	Double getAverageSocialIdentitiesPerActor();
+	
+	@Query("select min(a.socialIdentities.size) from Actor a")
+	Integer getMinimumSocialIdentitiesPerActor();
+	
+	@Query("select max(a.socialIdentities.size) from Actor a")
+	Integer getMaximumSocialIdentitiesPerActor();
 	
 }

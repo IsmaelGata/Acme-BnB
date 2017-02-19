@@ -41,8 +41,8 @@ public class CommentService {
 		return commentRepository.findAll();
 	}
 
-	public Comment findOne(int id_comment) {
-		return commentRepository.findOne(id_comment);
+	public Comment findOne(int commentId) {
+		return commentRepository.findOne(commentId);
 
 	}
 
@@ -69,7 +69,7 @@ public class CommentService {
 		return result;
 	}
 
-	public CommentForm convertionToFormObject(Comment comment) {
+	public CommentForm conversionToFormObject(Comment comment) {
 		Assert.notNull(comment);
 
 		CommentForm result = new CommentForm();

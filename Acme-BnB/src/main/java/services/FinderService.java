@@ -10,7 +10,6 @@ import org.springframework.util.Assert;
 
 import repositories.FinderRepository;
 import domain.Finder;
-import domain.Tenant;
 
 @Service
 @Transactional
@@ -41,15 +40,14 @@ public class FinderService {
 		return finderRepository.findAll();
 	}
 
-	public Finder findOne(int id_finder) {
-		return finderRepository.findOne(id_finder);
+	public Finder findOne(int finderId) {
+		return finderRepository.findOne(finderId);
 
 	}
 
 	public void save(Finder finder) {
 		Assert.notNull(finder);
-		Tenant tenant = tenantService.findByPrincipal();
-		Assert.notNull(tenant);
+		tenantService.findByPrincipal();
 
 		finderRepository.save(finder);
 	}

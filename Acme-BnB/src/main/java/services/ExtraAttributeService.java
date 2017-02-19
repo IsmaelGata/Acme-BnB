@@ -48,8 +48,8 @@ public class ExtraAttributeService {
 		return extraAttributeRepository.findAll();
 	}
 
-	public ExtraAttribute findOne(int id_extraAttribute) {
-		return extraAttributeRepository.findOne(id_extraAttribute);
+	public ExtraAttribute findOne(int extraAttributeId) {
+		return extraAttributeRepository.findOne(extraAttributeId);
 
 	}
 

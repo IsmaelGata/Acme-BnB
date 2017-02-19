@@ -29,8 +29,8 @@ public class FeeService {
 		return feeRepository.findAll();
 	}
 	
-	public Fee findOne(int id_fee){
-		return feeRepository.findOne(id_fee);
+	public Fee findOne(int feeId){
+		return feeRepository.findOne(feeId);
 		
 	}
 	

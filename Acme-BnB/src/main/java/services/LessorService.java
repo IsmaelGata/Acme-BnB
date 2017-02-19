@@ -69,8 +69,8 @@ public class LessorService extends ComentableService {
 		return lessorRepository.findAll();
 	}
 
-	public Lessor findOne(int id_lessor) {
-		return lessorRepository.findOne(id_lessor);
+	public Lessor findOne(int lessorId) {
+		return lessorRepository.findOne(lessorId);
 
 	}
 

@@ -11,24 +11,66 @@ import domain.Property;
 @Repository
 public interface PropertyRepository extends JpaRepository<Property, Integer>{
 	
-	
 	//Dashboard
 	
-	@Query("select min(p.audits.size),avg(p.audits.size),max(p.audits.size) from Property p")
-	Object[] numAuditsPerProperty();
+	/**
+	 * Devuelve el número medio de auditorías por propiedad
+	 * @return
+	 */
+	@Query("select avg(p.audits.size) from Property p")
+	Double getAverageAuditsPerProperty();
 	
+	/**
+	 * Devuelve el número mínimo de auditorías por propiedad
+	 * @return
+	 */
+	@Query("select min(p.audits.size) from Property p")
+	Integer getMinimumAuditsPerProperty();
+	
+	/**
+	 * Devuelve el número máximo de auditorías por propiedad
+	 * @return
+	 */
+	@Query("select max(p.audits.size) from Property p")
+	Integer getMaximumAuditsPerProperty();
+	
+	/**
+	 * Devuelve un listado de propiedades, para el arrendador dado, ordenadas descendentemente según el número de auditorías que tengan
+	 * @param idLessor, id del arrendador
+	 * @return
+	 */
 	@Query("select p from Property p where p.lessor.id=?1 order by p.audits.size desc")
-	Collection<Property> getPropertyOrderAudits(int idLessor);
+	Collection<Property> getPropertyOrderAudits(int lessorId);
 		
+	/**
+	 * Devuelve un listado de propiedades, para el arrendador dado, ordenadas descendentemente según el número de solicitudes que tengan
+	 * @param idLessor, id del arrendador
+	 * @return
+	 */
 	@Query("select p from Property p where p.lessor.id=?1 order by p.books.size desc")
-	Collection<Property> getPropertyOrderBook(int idLessor);
+	Collection<Property> getPropertyOrderBook(int lessorId);
 	
-	@Query("select p from Property p join p.books b where p.lessor.id=?1 and b.status=1 order by p.books.size desc")
-	Collection<Property> getPropertyOrderBookAcepted(int idLessor);
+	/**
+	 * Devuelve un listado de propiedades, para el arrendador dado, ordenadas descendentemente según el número de solicitudes aceptadas que tengan
+	 * @param idLessor, id del arrendador
+	 * @return
+	 */
+	@Query("select p, (select count(b) from Book b where b.property = p and b.status = 1) as c from Property p where p.lessor.id=?1 order by c desc")
+	Collection<Object[]> getPropertyOrderBookAcepted(int lessorId);
 	
-	@Query("select p from Property p join p.books b where p.lessor.id=?1 and b.status=2 order by p.books.size desc")
-	Collection<Property> getPropertyOrderBookDenied(int idLessor);
+	/**
+	 * Devuelve un listado de propiedades, para el arrendador dado, ordenadas descendentemente según el número de solicitudes denegadas que tengan
+	 * @param idLessor, id del arrendador
+	 * @return
+	 */
+	@Query("select p, (select count(b) from Book b where b.property = p and b.status = 2) as c from Property p where p.lessor.id=?1 order by c desc")
+	Collection<Object[]> getPropertyOrderBookDenied(int lessorId);
 	
-	@Query("select p from Property p join p.books b where p.lessor.id=?1 and b.status=0 order by p.books.size desc")
-	Collection<Property> getPropertyOrderBookPending(int idLessor);
+	/**
+	 * Devuelve un listado de propiedades, para el arrendador dado, ordenadas descendentemente según el número de solicitudes pendientes que tengan
+	 * @param idLessor, id del arrendador
+	 * @return
+	 */
+	@Query("select p, (select count(b) from Book b where b.property = p and b.status = 0) as c from Property p where p.lessor.id=?1 order by c desc")
+	Collection<Object[]> getPropertyOrderBookPending(int lessorId);
 }

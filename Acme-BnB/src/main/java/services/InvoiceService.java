@@ -17,24 +17,27 @@ import domain.Tenant;
 @Transactional
 public class InvoiceService {
 
-	//Managed repository
+	// Managed repository
 
 	@Autowired
 	private InvoiceRepository	invoiceRepository;
 
-	//Supported services
+	// Supported services
 
 	@Autowired
 	private TenantService		tenantService;
+	
+	@Autowired
+	private AdministratorService administratorService;
 
 
-	//Constructor
+	// Constructor
 
 	public InvoiceService() {
 		super();
 	}
 
-	//Simple CRUD methods
+	// Simple CRUD methods
 
 	public Invoice create(Book book) {
 		Assert.notNull(book);
@@ -52,8 +55,8 @@ public class InvoiceService {
 		return invoiceRepository.findAll();
 	}
 
-	public Invoice findOne(int id_invoice) {
-		return invoiceRepository.findOne(id_invoice);
+	public Invoice findOne(int invoiceId) {
+		return invoiceRepository.findOne(invoiceId);
 
 	}
 
@@ -74,6 +77,33 @@ public class InvoiceService {
 		invoiceRepository.delete(invoice);
 	}
 
-	//Other business methods
+	// Other business methods
 
+	
+	// Dashboard
+	
+	public Integer getMaximumInvoicesIssuedToTenants() {
+		administratorService.findByPrincipal();
+		
+		return invoiceRepository.getMaximumInvoicesIssuedToTenants();
+	}
+	
+	public Integer getMinimumInvoicesIssuedToTenants() {
+		administratorService.findByPrincipal();
+		
+		return invoiceRepository.getMinimumInvoicesIssuedToTenants();
+	}
+	
+	public Double getAverageInvoicesIssuedToTenants() {
+		administratorService.findByPrincipal();
+		
+		return invoiceRepository.getAverageInvoicesIssuedToTenants();
+	}
+	
+	public Double getTotalAmountOfMoney() {
+		administratorService.findByPrincipal();
+		
+		return invoiceRepository.getTotalAmountOfMoney();
+	}
+	
 }

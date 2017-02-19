@@ -11,16 +11,17 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Integer>{
 
 	
 	
-	//DASHBOARD
-	@Query("select distinct count(i) from Tenant t join t.books b join b.invoice i group by t having count(i) >= all(select count(i1) from Tenant t1 join t1.books b1 join b1.invoice i1 group by t1)")
-	public Double maxInvoiceIssue();
+	// Dashboard
 	
-	@Query("select distinct count(i) from Tenant t join t.books b join b.invoice i group by t having count(i) <= all(select count(i1) from Tenant t1 join t1.books b1 join b1.invoice i1 group by t1)")
-	public Double minInvoiceIssue();
+	@Query("select count(i) from Invoice i where (select count(i3) from Invoice i3 where i3.book.tenant = i.book.tenant) >= all(select count(i2) from Invoice i2 group by i2.book.tenant) group by i.book.tenant")
+	Integer getMaximumInvoicesIssuedToTenants();
 	
-	@Query("select distinct (select (select count(t.books.size)*1.0 from Tenant t join t.books b where  b.invoice is not null)/count(t1) from Tenant t1) from Tenant t2 join t2.books b2")
-	public Double avgInvoiceIssue();
+	@Query("select count(i) from Invoice i where (select count(i3) from Invoice i3 where i3.book.tenant = i.book.tenant) <= all(select count(i2) from Invoice i2 group by i2.book.tenant) group by i.book.tenant")
+	Integer getMinimumInvoicesIssuedToTenants();
+	
+	@Query("select 1.0*count(i)/(select count(t) from Tenant t) from Invoice i")
+	Double getAverageInvoicesIssuedToTenants();
 	
 	@Query("select sum(i.totalAmount) from Invoice i")
-	public Double totalAmountInvoice();
+	Double getTotalAmountOfMoney();
 }

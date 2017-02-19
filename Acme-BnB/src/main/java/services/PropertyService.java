@@ -25,7 +25,9 @@ public class PropertyService {
 	//Supported services
 	@Autowired
 	private LessorService		lessorService;
-
+	
+	@Autowired
+	private AdministratorService administratorService;
 
 	//Constructor
 
@@ -36,8 +38,7 @@ public class PropertyService {
 	//Simple CRUD methods
 
 	public PropertyForm create() {
-		Lessor lessor = lessorService.findByPrincipal();
-		Assert.notNull(lessor);
+		lessorService.findByPrincipal();
 
 		PropertyForm result = new PropertyForm();
 
@@ -48,15 +49,14 @@ public class PropertyService {
 		return propertyRepository.findAll();
 	}
 
-	public Property findOne(int id_property) {
-		return propertyRepository.findOne(id_property);
+	public Property findOne(int propertyId) {
+		return propertyRepository.findOne(propertyId);
 
 	}
 
 	public Property save(PropertyForm propertyForm) {
 		Assert.notNull(propertyForm);
 		Lessor lessor = lessorService.findByPrincipal();
-		Assert.notNull(lessor);
 
 		Property property = reconstruct(propertyForm);
 		Assert.isTrue(lessor.equals(property.getLessor()));
@@ -69,7 +69,6 @@ public class PropertyService {
 	public void delete(Property property) {
 		Assert.notNull(property);
 		Lessor lessor = lessorService.findByPrincipal();
-		Assert.notNull(lessor);
 		Assert.isTrue(lessor.equals(property.getLessor()));
 
 		propertyRepository.delete(property);
@@ -105,7 +104,7 @@ public class PropertyService {
 		return result;
 	}
 
-	public PropertyForm convertionToFormObject(Property property) {
+	public PropertyForm conversionToFormObject(Property property) {
 		Assert.notNull(property);
 
 		PropertyForm result = new PropertyForm();
@@ -127,27 +126,41 @@ public class PropertyService {
 	
 	//Dashboard
 	
-	public Object[] numAuditsPerProperty(){
-		return propertyRepository.numAuditsPerProperty();
+	public Double getAverageAuditsPerProperty(){
+		administratorService.findByPrincipal();
+		
+		return propertyRepository.getAverageAuditsPerProperty();
 	}
 	
-	public Collection<Property> getPropertyOrderAudits(int idLessor){
-		return propertyRepository.getPropertyOrderAudits(idLessor);
+	public Integer getMinimumAuditsPerProperty(){
+		administratorService.findByPrincipal();
+		
+		return propertyRepository.getMinimumAuditsPerProperty();
 	}
 	
-	public Collection<Property> getPropertyOrderBook(int idLessor){
-		return propertyRepository.getPropertyOrderBook(idLessor);
+	public Integer getMaximumAuditsPerProperty(){
+		administratorService.findByPrincipal();
+		
+		return propertyRepository.getMaximumAuditsPerProperty();
 	}
 	
-	public Collection<Property> getPropertyOrderBookAcepted(int idLessor){
-		return propertyRepository.getPropertyOrderBookAcepted(idLessor);
+	public Collection<Property> getPropertyOrderAudits(int lessorId){
+		return propertyRepository.getPropertyOrderAudits(lessorId);
 	}
 	
-	public Collection<Property> getPropertyOrderBookDenied(int idLessor){
-		return propertyRepository.getPropertyOrderBookDenied(idLessor);
+	public Collection<Property> getPropertyOrderBook(int lessorId){
+		return propertyRepository.getPropertyOrderBook(lessorId);
 	}
 	
-	public Collection<Property> getPropertyOrderBookPending(int idLessor){
-		return propertyRepository.getPropertyOrderBookPending(idLessor);
+	public Collection<Object[]> getPropertyOrderBookAcepted(int lessorId){
+		return propertyRepository.getPropertyOrderBookAcepted(lessorId);
+	}
+	
+	public Collection<Object[]> getPropertyOrderBookDenied(int lessorId){
+		return propertyRepository.getPropertyOrderBookDenied(lessorId);
+	}
+	
+	public Collection<Object[]> getPropertyOrderBookPending(int lessorId){
+		return propertyRepository.getPropertyOrderBookPending(lessorId);
 	}
 }

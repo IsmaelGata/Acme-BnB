@@ -13,7 +13,6 @@ import repositories.AuditorRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
-import domain.Administrator;
 import domain.Audit;
 import domain.Auditor;
 import domain.SocialIdentity;
@@ -63,24 +62,16 @@ public class AuditorService {
 		return auditorRepository.findAll();
 	}
 
-	public Auditor findOne(int id_auditor) {
-		return auditorRepository.findOne(id_auditor);
+	public Auditor findOne(int auditorId) {
+		return auditorRepository.findOne(auditorId);
 
 	}
 
 	public void save(Auditor auditor) {
 		Assert.notNull(auditor);
-		Administrator admin = administratorService.findByPrincipal();
-		Assert.notNull(admin);
-		auditorRepository.save(auditor);
-	}
+		administratorService.findByPrincipal();
 
-	@Deprecated
-	public void delete(Auditor auditor) {
-		Assert.notNull(auditor);
-		Administrator admin = administratorService.findByPrincipal();
-		Assert.notNull(admin);
-		auditorRepository.delete(auditor);
+		auditorRepository.save(auditor);
 	}
 
 	//Other business methods
