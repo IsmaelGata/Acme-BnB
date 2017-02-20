@@ -34,19 +34,18 @@ public class TenantService extends ComentableService {
 	//Managed repository
 
 	@Autowired
-	private TenantRepository	tenantRepository;
+	private TenantRepository		tenantRepository;
 
 	//Supported services
 
 	@Autowired
-	private CommentService		commentService;
-	
-	@Autowired
-	private AdministratorService administratorService;
+	private CommentService			commentService;
 
-	
+	@Autowired
+	private AdministratorService	administratorService;
+
 	@Qualifier("validator")
-	private Validator validator;
+	private Validator				validator;
 
 	//Constructor
 
@@ -150,10 +149,10 @@ public class TenantService extends ComentableService {
 
 		return result;
 	}
-	
-	public Tenant reconstruct(TenantForm tenantForm,BindingResult binding){
+
+	public Tenant reconstruct(TenantForm tenantForm, BindingResult binding) {
 		Tenant result;
-		
+
 		Assert.isTrue(tenantForm.getPassword().equals(tenantForm.getRepeatPassword()));
 		Assert.isTrue(tenantForm.getAcceptCondition());
 		
@@ -162,51 +161,50 @@ public class TenantService extends ComentableService {
 		
 		result = create();
 		
+
 		result.getUserAccount().setUsername(tenantForm.getUsername());
 		result.getUserAccount().setPassword(hash);
-		
+
 		result.setName(tenantForm.getName());
 		result.setSurname(tenantForm.getSurname());
 		result.setEmail(tenantForm.getEmail());
 		result.setPhone(tenantForm.getPhone());
 		result.setPicture(tenantForm.getPicture());
-		
+
 		//validator.validate(result, binding);
 		return result;
 	}
-	
+
 	// Dashboard
-	
+
 	public Collection<Lessor> getTenantsWithMoreAcceptedRequests() {
 		administratorService.findByPrincipal();
-		
+
 		return tenantRepository.getTenantsWithMoreAcceptedRequests();
 	}
-	
+
 	public Collection<Lessor> getTenantsWithMoreDeniedRequests() {
 		administratorService.findByPrincipal();
-		
+
 		return tenantRepository.getTenantsWithMoreDeniedRequests();
 	}
-	
+
 	public Collection<Lessor> getTenantsWithMorePendingRequests() {
 		administratorService.findByPrincipal();
-		
+
 		return tenantRepository.getTenantsWithMorePendingRequests();
 	}
-	
+
 	public Collection<Lessor> getTenantsWithMaximumRatioOfApprovedRequests() {
 		administratorService.findByPrincipal();
-		
+
 		return tenantRepository.getTenantsWithMaximumRatioOfApprovedRequests();
 	}
-	
+
 	public Collection<Lessor> getTenantsWithMinimumRatioOfApprovedRequests() {
 		administratorService.findByPrincipal();
-		
+
 		return tenantRepository.getTenantsWithMinimumRatioOfApprovedRequests();
 	}
-	
-	
-	
+
 }

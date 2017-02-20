@@ -59,9 +59,6 @@ public class ExtraAttributeService {
 		Assert.notNull(extraAttribute);
 		administratorService.findByPrincipal();
 		
-		ExtraAttribute aux = extraAttributeRepository.findExtraAttribute(extraAttribute.getProperty().getId(), extraAttribute.getName());
-		Assert.isNull(aux);
-
 		extraAttributeRepository.save(extraAttribute);
 	}
 

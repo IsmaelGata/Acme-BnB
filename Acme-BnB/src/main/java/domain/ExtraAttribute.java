@@ -1,10 +1,14 @@
 
 package domain;
 
+import java.util.Collection;
+
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.validation.Valid;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -64,17 +68,18 @@ public class ExtraAttribute extends DomainEntity {
 
 	//RelationShips
 
-	private Property	property;
+	private Collection<Property>	properties;
 
 
 	@Valid
-	@ManyToOne(optional = false)
-	public Property getProperty() {
-		return property;
+	@ManyToMany
+	@JoinTable(name = "property_extraAttribute", joinColumns = @JoinColumn(name = "extraAttribute_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "property_id", referencedColumnName = "id"))
+	public Collection<Property> getProperties() {
+		return properties;
 	}
 
-	public void setProperty(Property property) {
-		this.property = property;
+	public void setProperties(Collection<Property> properties) {
+		this.properties = properties;
 	}
 
 }
