@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,8 +40,9 @@ public class ExtraAttributeService {
 		administratorService.findByPrincipal();
 		Assert.notNull(property);
 		ExtraAttribute result = new ExtraAttribute();
+		Collection<Property> properties = new ArrayList<>();
 
-		result.setProperty(property);
+		result.setProperties(properties);
 		return result;
 	}
 

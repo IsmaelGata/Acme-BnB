@@ -8,6 +8,7 @@ import java.util.Date;
 import javax.validation.Validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,7 +45,7 @@ public class TenantService extends ComentableService {
 	private AdministratorService administratorService;
 
 	
-	@Autowired
+	@Qualifier("validator")
 	private Validator validator;
 
 	//Constructor
@@ -156,10 +157,10 @@ public class TenantService extends ComentableService {
 		Assert.isTrue(tenantForm.getPassword().equals(tenantForm.getRepeatPassword()));
 		Assert.isTrue(tenantForm.getAcceptCondition());
 		
-		Md5PasswordEncoder encoder=new Md5PasswordEncoder();
-		String hash= encoder.encodePassword(tenantForm.getPassword(),null);
+		Md5PasswordEncoder encoder = new Md5PasswordEncoder();
+		String hash = encoder.encodePassword(tenantForm.getPassword(), null);
 		
-		result= create();
+		result = create();
 		
 		result.getUserAccount().setUsername(tenantForm.getUsername());
 		result.getUserAccount().setPassword(hash);

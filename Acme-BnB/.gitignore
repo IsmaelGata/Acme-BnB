@@ -1,3 +1,4 @@
-/target/
-/.settings/
-/images/Thumbs.db
+*/target/
+
+# Eclipse files
+*.settings
