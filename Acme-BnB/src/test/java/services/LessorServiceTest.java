@@ -17,6 +17,7 @@ import domain.Comment;
 import domain.CreditCard;
 import domain.Lessor;
 import domain.Tenant;
+import form.LessorForm;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
@@ -39,7 +40,7 @@ public class LessorServiceTest extends AbstractTest {
 	@Test
 	public void createTest() {
 
-		Lessor result = lessorService.create();
+		LessorForm lessorForm = lessorService.create();
 		CreditCard creditCard = new CreditCard();
 		creditCard.setBrandName("test");
 		creditCard.setCvv(001);
@@ -48,12 +49,19 @@ public class LessorServiceTest extends AbstractTest {
 		creditCard.setHolderName("VISA");
 		creditCard.setNumber("987898789");
 
-		result.setEmail("Testing@test.es");
-		result.setName("Test");
-		result.setPhone("+34 666666666");
-		result.setPicture("http://www.test.es");
-		result.setSurname("Testing");
-		result.setCreditCard(creditCard);
+		lessorForm.setEmail("Testing@test.es");
+		lessorForm.setName("Test798789");
+		lessorForm.setPhone("+34 666666666");
+		lessorForm.setPicture("http://www.test.es");
+		lessorForm.setSurname("Testing");
+		lessorForm.setCreditCard(creditCard);
+
+		lessorForm.setUsername("Testing1");
+		lessorForm.setPassword("Testing1");
+		lessorForm.setRepeatPassword("Testing1");
+		lessorForm.setAcceptCondition(true);
+
+		Lessor result = lessorService.reconstruct(lessorForm, null);
 
 		lessorService.save(result);
 		authenticate(null);

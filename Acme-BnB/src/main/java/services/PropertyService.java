@@ -20,14 +20,15 @@ public class PropertyService {
 	//Managed repository
 
 	@Autowired
-	private PropertyRepository	propertyRepository;
+	private PropertyRepository		propertyRepository;
 
 	//Supported services
 	@Autowired
-	private LessorService		lessorService;
-	
+	private LessorService			lessorService;
+
 	@Autowired
-	private AdministratorService administratorService;
+	private AdministratorService	administratorService;
+
 
 	//Constructor
 
@@ -54,12 +55,17 @@ public class PropertyService {
 
 	}
 
-	public Property save(PropertyForm propertyForm) {
-		Assert.notNull(propertyForm);
+	public Property save(Property property) {
+		Assert.notNull(property);
 		Lessor lessor = lessorService.findByPrincipal();
 
-		Property property = reconstruct(propertyForm);
 		Assert.isTrue(lessor.equals(property.getLessor()));
+
+		if (property.getState() != null) {
+			Assert.isTrue(property.getProvince() == null);
+		} else if (property.getProvince() != null) {
+			Assert.isTrue(property.getState() == null);
+		}
 
 		Property result = propertyRepository.save(property);
 
@@ -122,45 +128,44 @@ public class PropertyService {
 
 		return result;
 	}
-	
-	
+
 	//Dashboard
-	
-	public Double getAverageAuditsPerProperty(){
+
+	public Double getAverageAuditsPerProperty() {
 		administratorService.findByPrincipal();
-		
+
 		return propertyRepository.getAverageAuditsPerProperty();
 	}
-	
-	public Integer getMinimumAuditsPerProperty(){
+
+	public Integer getMinimumAuditsPerProperty() {
 		administratorService.findByPrincipal();
-		
+
 		return propertyRepository.getMinimumAuditsPerProperty();
 	}
-	
-	public Integer getMaximumAuditsPerProperty(){
+
+	public Integer getMaximumAuditsPerProperty() {
 		administratorService.findByPrincipal();
-		
+
 		return propertyRepository.getMaximumAuditsPerProperty();
 	}
-	
-	public Collection<Property> getPropertyOrderAudits(int lessorId){
+
+	public Collection<Property> getPropertyOrderAudits(int lessorId) {
 		return propertyRepository.getPropertyOrderAudits(lessorId);
 	}
-	
-	public Collection<Property> getPropertyOrderBook(int lessorId){
+
+	public Collection<Property> getPropertyOrderBook(int lessorId) {
 		return propertyRepository.getPropertyOrderBook(lessorId);
 	}
-	
-	public Collection<Object[]> getPropertyOrderBookAcepted(int lessorId){
+
+	public Collection<Object[]> getPropertyOrderBookAcepted(int lessorId) {
 		return propertyRepository.getPropertyOrderBookAcepted(lessorId);
 	}
-	
-	public Collection<Object[]> getPropertyOrderBookDenied(int lessorId){
+
+	public Collection<Object[]> getPropertyOrderBookDenied(int lessorId) {
 		return propertyRepository.getPropertyOrderBookDenied(lessorId);
 	}
-	
-	public Collection<Object[]> getPropertyOrderBookPending(int lessorId){
+
+	public Collection<Object[]> getPropertyOrderBookPending(int lessorId) {
 		return propertyRepository.getPropertyOrderBookPending(lessorId);
 	}
 }

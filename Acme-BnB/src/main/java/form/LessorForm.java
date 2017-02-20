@@ -12,23 +12,31 @@ import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 import org.hibernate.validator.constraints.URL;
 
-public class TenantForm {
+import domain.CreditCard;
 
-	public TenantForm() {
+public class LessorForm {
+
+	//Attributes
+
+	private String		username;
+	private String		password;
+	private String		repeatPassword;
+	private Boolean		acceptCondition;
+	private String		name;
+	private String		surname;
+	private String		phone;
+	private String		email;
+	private String		picture;
+	private CreditCard	creditCard;
+
+
+	//Constructor
+
+	public LessorForm() {
 		super();
 	}
 
-
-	private String	username;
-	private String	password;
-	private String	repeatPassword;
-	private Boolean	acceptCondition;
-	private String	name;
-	private String	surname;
-	private String	phone;
-	private String	email;
-	private String	picture;
-
+	//Getter & setter
 
 	@Size(min = 5, max = 32)
 	@Column(unique = true)
@@ -114,6 +122,14 @@ public class TenantForm {
 	}
 	public void setPicture(String picture) {
 		this.picture = picture;
+	}
+
+	public CreditCard getCreditCard() {
+		return creditCard;
+	}
+
+	public void setCreditCard(CreditCard creditCard) {
+		this.creditCard = creditCard;
 	}
 
 }

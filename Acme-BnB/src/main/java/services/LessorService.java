@@ -6,9 +6,11 @@ import java.util.Collection;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
 
 import repositories.LessorRepository;
 import security.Authority;
@@ -19,6 +21,7 @@ import domain.Comment;
 import domain.Lessor;
 import domain.Property;
 import domain.SocialIdentity;
+import form.LessorForm;
 
 @Service
 @Transactional
@@ -27,15 +30,15 @@ public class LessorService extends ComentableService {
 	//Managed repository
 
 	@Autowired
-	private LessorRepository	lessorRepository;
+	private LessorRepository		lessorRepository;
 
 	//Supported services
 
 	@Autowired
-	private CommentService		commentService;
-	
+	private CommentService			commentService;
+
 	@Autowired
-	private AdministratorService administratorService;
+	private AdministratorService	administratorService;
 
 
 	//Constructor
@@ -45,22 +48,8 @@ public class LessorService extends ComentableService {
 	}
 
 	//Simple CRUD methods
-	public Lessor create() {
-		Lessor result = new Lessor();
-
-		Authority authority = new Authority();
-		UserAccount userAccount = new UserAccount();
-
-		//Configuring authority & userAccount
-		authority.setAuthority("LESSOR");
-		userAccount.addAuthority(authority);
-		result.setUserAccount(userAccount);
-
-		Collection<Property> properties = new ArrayList<>();
-		result.setListProperty(properties);
-
-		Collection<SocialIdentity> socialIdentities = new ArrayList<>();
-		result.setSocialIdentities(socialIdentities);
+	public LessorForm create() {
+		LessorForm result = new LessorForm();
 
 		return result;
 	}
@@ -156,37 +145,73 @@ public class LessorService extends ComentableService {
 
 		return result;
 	}
-	
+
+	public Lessor reconstruct(LessorForm lessorForm, BindingResult binding) {
+		Lessor result = new Lessor();
+
+		Assert.isTrue(lessorForm.getPassword().equals(lessorForm.getRepeatPassword()));
+		Assert.isTrue(lessorForm.getAcceptCondition());
+
+		Md5PasswordEncoder encoder = new Md5PasswordEncoder();
+		String hash = encoder.encodePassword(lessorForm.getPassword(), null);
+
+		Authority authority = new Authority();
+		UserAccount userAccount = new UserAccount();
+
+		//Configuring authority & userAccount
+		authority.setAuthority("LESSOR");
+		userAccount.addAuthority(authority);
+		result.setUserAccount(userAccount);
+
+		Collection<Property> properties = new ArrayList<>();
+		result.setListProperty(properties);
+
+		Collection<SocialIdentity> socialIdentities = new ArrayList<>();
+		result.setSocialIdentities(socialIdentities);
+
+		result.getUserAccount().setUsername(lessorForm.getUsername());
+		result.getUserAccount().setPassword(hash);
+
+		result.setName(lessorForm.getName());
+		result.setSurname(lessorForm.getSurname());
+		result.setEmail(lessorForm.getEmail());
+		result.setPhone(lessorForm.getPhone());
+		result.setPicture(lessorForm.getPicture());
+		result.setCreditCard(lessorForm.getCreditCard());
+
+		return result;
+	}
+
 	// Dashboard
-	
+
 	public Collection<Lessor> getLessorsWithMoreAcceptedRequests() {
 		administratorService.findByPrincipal();
-		
+
 		return lessorRepository.getLessorsWithMoreAcceptedRequests();
 	}
-	
+
 	public Collection<Lessor> getLessorsWithMoreDeniedRequests() {
 		administratorService.findByPrincipal();
-		
+
 		return lessorRepository.getLessorsWithMoreDeniedRequests();
 	}
-	
+
 	public Collection<Lessor> getLessorsWithMorePendingRequests() {
 		administratorService.findByPrincipal();
-		
+
 		return lessorRepository.getLessorsWithMorePendingRequests();
 	}
-	
+
 	public Collection<Lessor> getLessorsWithMaximumRatioOfApprovedRequests() {
 		administratorService.findByPrincipal();
-		
+
 		return lessorRepository.getLessorsWithMaximumRatioOfApprovedRequests();
 	}
-	
+
 	public Collection<Lessor> getLessorsWithMinimumRatioOfApprovedRequests() {
 		administratorService.findByPrincipal();
-		
+
 		return lessorRepository.getLessorsWithMinimumRatioOfApprovedRequests();
 	}
-	
+
 }

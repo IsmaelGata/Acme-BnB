@@ -5,10 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
-import javax.validation.Validator;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,8 +41,6 @@ public class TenantService extends ComentableService {
 	@Autowired
 	private AdministratorService	administratorService;
 
-	@Qualifier("validator")
-	private Validator				validator;
 
 	//Constructor
 
@@ -55,22 +50,8 @@ public class TenantService extends ComentableService {
 
 	//Simple CRUD methods
 
-	public Tenant create() {
-		Tenant result = new Tenant();
-
-		Authority authority = new Authority();
-		UserAccount userAccount = new UserAccount();
-
-		//Configuring authority & userAccount
-		authority.setAuthority("TENANT");
-		userAccount.addAuthority(authority);
-		result.setUserAccount(userAccount);
-
-		Collection<Book> books = new ArrayList<>();
-		result.setBooks(books);
-
-		Collection<SocialIdentity> socialIdentities = new ArrayList<>();
-		result.setSocialIdentities(socialIdentities);
+	public TenantForm create() {
+		TenantForm result = new TenantForm();
 
 		return result;
 	}
@@ -86,10 +67,12 @@ public class TenantService extends ComentableService {
 
 	public Tenant save(Tenant tenant) {
 		Assert.notNull(tenant);
+
 		Tenant result = tenantRepository.save(tenant);
 		return result;
 	}
 
+	@Deprecated
 	public void delete(Tenant tenant) {
 		Assert.notNull(tenant);
 
@@ -155,12 +138,25 @@ public class TenantService extends ComentableService {
 
 		Assert.isTrue(tenantForm.getPassword().equals(tenantForm.getRepeatPassword()));
 		Assert.isTrue(tenantForm.getAcceptCondition());
-		
+
 		Md5PasswordEncoder encoder = new Md5PasswordEncoder();
 		String hash = encoder.encodePassword(tenantForm.getPassword(), null);
-		
-		result = create();
-		
+
+		result = new Tenant();
+
+		Authority authority = new Authority();
+		UserAccount userAccount = new UserAccount();
+
+		//Configuring authority & userAccount
+		authority.setAuthority("TENANT");
+		userAccount.addAuthority(authority);
+		result.setUserAccount(userAccount);
+
+		Collection<Book> books = new ArrayList<>();
+		result.setBooks(books);
+
+		Collection<SocialIdentity> socialIdentities = new ArrayList<>();
+		result.setSocialIdentities(socialIdentities);
 
 		result.getUserAccount().setUsername(tenantForm.getUsername());
 		result.getUserAccount().setPassword(hash);
@@ -171,7 +167,6 @@ public class TenantService extends ComentableService {
 		result.setPhone(tenantForm.getPhone());
 		result.setPicture(tenantForm.getPicture());
 
-		//validator.validate(result, binding);
 		return result;
 	}
 

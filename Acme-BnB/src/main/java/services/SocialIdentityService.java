@@ -25,10 +25,11 @@ public class SocialIdentityService {
 	//Supported services
 
 	@Autowired
-	private ActorService actorService;
-	
+	private ActorService				actorService;
+
 	@Autowired
-	private AdministratorService administratorService;
+	private AdministratorService		administratorService;
+
 
 	//Constructor
 
@@ -54,14 +55,14 @@ public class SocialIdentityService {
 
 	}
 
-	public void save(SocialIdentityForm socialIdentityForm) {
-		Assert.notNull(socialIdentityForm);
-
-		SocialIdentity result = reconstruct(socialIdentityForm);
+	public SocialIdentity save(SocialIdentity socialIdentity) {
+		Assert.notNull(socialIdentity);
+		SocialIdentity result;
 		Actor actor = actorService.findByPrincipal();
-		Assert.isTrue(actor.equals(result.getActor()));
+		socialIdentity.setActor(actor);
 
-		socialIdentityRepository.save(result);
+		result = socialIdentityRepository.save(socialIdentity);
+		return result;
 	}
 
 	public void delete(SocialIdentity socialIdentity) {
@@ -100,24 +101,24 @@ public class SocialIdentityService {
 
 		return result;
 	}
-	
+
 	// Dashboard
-	
+
 	public Double getAverageSocialIdentitiesPerActor() {
 		administratorService.findByPrincipal();
-		
+
 		return socialIdentityRepository.getAverageSocialIdentitiesPerActor();
 	}
-	
+
 	public Integer getMinimumSocialIdentitiesPerActor() {
 		administratorService.findByPrincipal();
-		
+
 		return socialIdentityRepository.getMinimumSocialIdentitiesPerActor();
 	}
-	
+
 	public Integer getMaximumSocialIdentitiesPerActor() {
 		administratorService.findByPrincipal();
-		
+
 		return socialIdentityRepository.getMaximumSocialIdentitiesPerActor();
 	}
 }
