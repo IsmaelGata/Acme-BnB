@@ -36,9 +36,8 @@ public class ExtraAttributeService {
 
 	//Simple CRUD methods
 
-	public ExtraAttribute create(Property property) {
+	public ExtraAttribute create() {
 		administratorService.findByPrincipal();
-		Assert.notNull(property);
 		ExtraAttribute result = new ExtraAttribute();
 		Collection<Property> properties = new ArrayList<>();
 
@@ -55,17 +54,20 @@ public class ExtraAttributeService {
 
 	}
 
-	public void save(ExtraAttribute extraAttribute) {
+	public ExtraAttribute save(ExtraAttribute extraAttribute) {
 		Assert.notNull(extraAttribute);
+		ExtraAttribute result;
 		administratorService.findByPrincipal();
-		
-		extraAttributeRepository.save(extraAttribute);
+
+		result = extraAttributeRepository.save(extraAttribute);
+
+		return result;
 	}
 
 	public void delete(ExtraAttribute extraAttribute) {
 		Assert.notNull(extraAttribute);
 		administratorService.findByPrincipal();
-		
+
 		extraAttributeRepository.delete(extraAttribute);
 	}
 

@@ -2,7 +2,10 @@
 package services;
 
 import java.util.Collection;
+import java.util.Date;
 
+import org.joda.time.DateTime;
+import org.joda.time.Days;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,6 +14,7 @@ import org.springframework.util.Assert;
 import repositories.InvoiceRepository;
 import domain.Book;
 import domain.Invoice;
+import domain.Property;
 import domain.Tenant;
 
 @Service
@@ -20,15 +24,15 @@ public class InvoiceService {
 	// Managed repository
 
 	@Autowired
-	private InvoiceRepository	invoiceRepository;
+	private InvoiceRepository		invoiceRepository;
 
 	// Supported services
 
 	@Autowired
-	private TenantService		tenantService;
-	
+	private TenantService			tenantService;
+
 	@Autowired
-	private AdministratorService administratorService;
+	private AdministratorService	administratorService;
 
 
 	// Constructor
@@ -44,7 +48,16 @@ public class InvoiceService {
 		Tenant tenant = tenantService.findByPrincipal();
 		Assert.isTrue(tenant.equals(book.getTenant()));
 
+		Property property = book.getProperty();
 		Invoice result = new Invoice();
+		DateTime dt1 = new DateTime(book.getCheckIn());
+		DateTime dt2 = new DateTime(book.getCheckOut());
+		int days = Days.daysBetween(dt1, dt2).getDays();
+		result.setTotalAmount(days * property.getRate());
+		result.setVatNumber(21);
+		result.setInformation("Property: " + property.getName() + ", Address: " + property.getAddress() + ", Country: " + property.getCountry() + " Capability: " + property.getCapability() + " City: " + property.getCity());
+		result.setCreditCard(book.getCreditCard());
+		result.setDetails("This invoice has been auto-generated");
 
 		result.setBook(book);
 
@@ -64,6 +77,7 @@ public class InvoiceService {
 		Assert.notNull(invoice);
 		Tenant tenant = tenantService.findByPrincipal();
 		Assert.isTrue(tenant.equals(invoice.getBook().getTenant()));
+		invoice.setMoment(new Date(System.currentTimeMillis() - 1000));
 
 		invoiceRepository.save(invoice);
 	}
@@ -79,31 +93,30 @@ public class InvoiceService {
 
 	// Other business methods
 
-	
 	// Dashboard
-	
+
 	public Integer getMaximumInvoicesIssuedToTenants() {
 		administratorService.findByPrincipal();
-		
+
 		return invoiceRepository.getMaximumInvoicesIssuedToTenants();
 	}
-	
+
 	public Integer getMinimumInvoicesIssuedToTenants() {
 		administratorService.findByPrincipal();
-		
+
 		return invoiceRepository.getMinimumInvoicesIssuedToTenants();
 	}
-	
+
 	public Double getAverageInvoicesIssuedToTenants() {
 		administratorService.findByPrincipal();
-		
+
 		return invoiceRepository.getAverageInvoicesIssuedToTenants();
 	}
-	
+
 	public Double getTotalAmountOfMoney() {
 		administratorService.findByPrincipal();
-		
+
 		return invoiceRepository.getTotalAmountOfMoney();
 	}
-	
+
 }

@@ -2,6 +2,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,7 +40,9 @@ public class AuditService {
 	public Audit create(Property property) {
 		Assert.notNull(property);
 		Audit result = new Audit();
+		Auditor auditor = auditorService.findByPrincipal();
 
+		result.setAuditor(auditor);
 		result.setProperty(property);
 
 		return result;
@@ -62,9 +65,12 @@ public class AuditService {
 
 		if (audit.getId() != 0) {
 			// FIXME ¿No seria mejor setearlo a true en lugar de hacer un Assert?
+			//TODO R: no, yo quiero comprobar que realmente es un borrador. Supongamos que mediante hacking
+			//		  se intenta modificar un ya emitido, automaticamente se convierte en borrador.
 			Assert.isTrue(audit.getDraft() == true);
 		}
 
+		audit.setMoment(new Date());
 		result = auditRepository.save(audit);
 		return result;
 	}

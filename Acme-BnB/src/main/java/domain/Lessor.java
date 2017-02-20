@@ -10,7 +10,6 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -19,7 +18,6 @@ public class Lessor extends ComentatorActor {
 	//Attributes
 	private CreditCard	creditCard;
 	private double		totalFee;
-	private double		paid;
 
 
 	//Constructor
@@ -29,7 +27,6 @@ public class Lessor extends ComentatorActor {
 
 	//Getter & setter
 
-	@NotNull
 	public CreditCard getCreditCard() {
 		return creditCard;
 	}
@@ -45,14 +42,6 @@ public class Lessor extends ComentatorActor {
 
 	public void setTotalFee(double totalFee) {
 		this.totalFee = totalFee;
-	}
-
-	public double getPaid() {
-		return paid;
-	}
-
-	public void setPaid(double paid) {
-		this.paid = paid;
 	}
 
 

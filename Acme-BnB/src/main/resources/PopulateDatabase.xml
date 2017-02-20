@@ -201,7 +201,6 @@
 		<property name="phone" value="+34 632365112"/>
 		<property name="picture" value="www.picture2.com"/>
 		<property name="creditCard" ref="creditCard1" />
-		<property name="paid" value="0.0"/>
 		<property name="socialIdentities">
 			<list>
 				
@@ -224,7 +223,6 @@
 		<property name="phone" value="+34 632149898"/>
 		<property name="picture" value="www.picture2.com"/>
 		<property name="creditCard" ref="creditCard2" />
-		<property name="paid" value="0.0"/>
 		<property name="socialIdentities">
 			<list>
 				
