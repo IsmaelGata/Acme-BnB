@@ -50,9 +50,7 @@
 	<display:column property="capability" title="${capability}" />
 	
 	<display:column>
-		<input type="button" name="property.lessor"
-			value="<spring:message code="property.lessor" />"
-			onclick="javascript: window.location.replace('lessor/show.do?lessorId=${row.lessor.id}')"/>
+		<acme:cancel url="lessor/show.do?lessorId=${row.lessor.id}" code="property.lessor"/>
 	</display:column>
 
 </display:table>

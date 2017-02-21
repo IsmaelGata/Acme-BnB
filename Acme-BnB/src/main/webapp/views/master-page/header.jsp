@@ -13,6 +13,18 @@
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 
+<script type="text/javascript">
+		function relativeRedir(loc) {	
+			var b = document.getElementsByTagName('base');
+			if (b && b[0] && b[0].href) {
+	  			if (b[0].href.substr(b[0].href.length - 1) == '/' && loc.charAt(0) == '/')
+	    		loc = loc.substr(1);
+	  			loc = b[0].href + loc;
+			}
+			window.location.replace(loc);
+		}
+	</script>
+
 <div>
 	<img src="images/logo.png" alt="Acme-BnB." />
 </div>
