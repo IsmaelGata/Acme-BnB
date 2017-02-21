@@ -42,6 +42,11 @@
 			</li>
 		</security:authorize>
 		
+		<security:authorize access="permitAll">
+			<li><a href="property/list.do"><spring:message code="master.page.list.property" /></a></li>
+		
+		</security:authorize>
+		
 		<security:authorize access="isAuthenticated()">
 			<li>
 				<a class="fNiv"> 

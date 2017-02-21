@@ -41,7 +41,15 @@
 
 		<security:intercept-url pattern="/welcome/index.do" access="permitAll" />
 		
+		<!-- TENANT -->
 		<security:intercept-url pattern="/tenant/register.do" access="isAnonymous()" /> 
+		
+		<!-- LESSOR -->
+		<security:intercept-url pattern="/lessor/register.do" access="isAnonymous()" /> 
+		<security:intercept-url pattern="/lessor/show.do" access="permitAll" /> 
+		
+		<!-- PROPERTY -->
+		<security:intercept-url pattern="/property/list.do" access="permitAll" /> 
 
 		
 	

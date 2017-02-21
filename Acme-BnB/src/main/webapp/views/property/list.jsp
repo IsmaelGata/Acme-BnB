@@ -19,7 +19,7 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
-<display:table name="descriptions" id="row" requestURI="${RequestURI}"
+<display:table name="properties" id="row" requestURI="${RequestURI}"
 	pagesize="5">
 
 	<spring:message code="property.name" var="name" />
@@ -49,6 +49,10 @@
 	<spring:message code="property.capability" var="capability" />
 	<display:column property="capability" title="${capability}" />
 	
-	<acme:cancel url="lessor/lessorByProperty.do?idProperty=${row.id}" code="property.lessor"/>
+	<display:column>
+		<input type="button" name="property.lessor"
+			value="<spring:message code="property.lessor" />"
+			onclick="javascript: window.location.replace('lessor/show.do?lessorId=${row.lessor.id}')"/>
+	</display:column>
 
 </display:table>

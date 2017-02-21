@@ -21,4 +21,9 @@
 		<put-attribute name="body" value="/views/lessor/show.jsp" />
 	</definition>
 	
+	<definition name="lessor/register" extends="master.page">	
+		<put-attribute name="title" value="Register a lessor" />
+		<put-attribute name="body" value="/views/lessor/register.jsp" />
+	</definition>
+	
 </tiles-definitions>
