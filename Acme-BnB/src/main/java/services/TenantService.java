@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.TenantRepository;
 import security.Authority;
@@ -133,6 +134,11 @@ public class TenantService extends ComentableService {
 		return result;
 	}
 
+
+	@Autowired
+	private Validator	validator;
+
+
 	public Tenant reconstruct(TenantForm tenantForm, BindingResult binding) {
 		Tenant result;
 
@@ -165,9 +171,11 @@ public class TenantService extends ComentableService {
 		result.setPicture(tenantForm.getPicture());
 
 		//Checking passwords and conditions
-		if (!tenantForm.getPassword().equals(tenantForm.getRepeatPassword()) || tenantForm.getAcceptCondition() != true) {
-			result = null;
+		if (!tenantForm.getPassword().equals(tenantForm.getRepeatPassword())) {
+			result.getUserAccount().setPassword(null);
 		}
+
+		validator.validate(result, binding);
 
 		return result;
 	}
