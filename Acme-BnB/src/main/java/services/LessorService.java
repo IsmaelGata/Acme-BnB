@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.LessorRepository;
 import security.Authority;
@@ -18,6 +19,7 @@ import security.LoginService;
 import security.UserAccount;
 import domain.ComentatorActor;
 import domain.Comment;
+import domain.CreditCard;
 import domain.Lessor;
 import domain.Property;
 import domain.SocialIdentity;
@@ -146,11 +148,13 @@ public class LessorService extends ComentableService {
 		return result;
 	}
 
+
+	@Autowired
+	Validator	validator;
+
+
 	public Lessor reconstruct(LessorForm lessorForm, BindingResult binding) {
 		Lessor result = new Lessor();
-
-		Assert.isTrue(lessorForm.getPassword().equals(lessorForm.getRepeatPassword()));
-		Assert.isTrue(lessorForm.getAcceptCondition());
 
 		Md5PasswordEncoder encoder = new Md5PasswordEncoder();
 		String hash = encoder.encodePassword(lessorForm.getPassword(), null);
@@ -178,6 +182,28 @@ public class LessorService extends ComentableService {
 		result.setPhone(lessorForm.getPhone());
 		result.setPicture(lessorForm.getPicture());
 		result.setCreditCard(lessorForm.getCreditCard());
+
+		//Checking passwords and conditions
+		if (!lessorForm.getPassword().equals(lessorForm.getRepeatPassword())) {
+			result.getUserAccount().setPassword(null);
+		}
+
+		validator.validate(lessorForm, binding);
+
+		if (checkCreditCard(lessorForm.getCreditCard())) {
+
+			validator.validate(lessorForm.getCreditCard(), binding);
+		}
+
+		return result;
+	}
+
+	public boolean checkCreditCard(CreditCard creditCard) {
+		boolean result = true;
+
+		if (creditCard.getBrandName().isEmpty() && creditCard.getCvv() == 0 && creditCard.getExpirationMonth() == 0 && creditCard.getExpirationYear() == 0 && creditCard.getHolderName().isEmpty() && creditCard.getNumber().isEmpty()) {
+			result = false;
+		}
 
 		return result;
 	}

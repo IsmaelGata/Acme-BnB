@@ -321,6 +321,13 @@
 		    <version>1.7.2</version>
 		</dependency>
 		
+		<!-- Validator -->
+		<dependency>
+		    <groupId>commons-validator</groupId>
+		    <artifactId>commons-validator</artifactId>
+		    <version>1.5.1</version>
+		</dependency>
+		
 	</dependencies>
 
 </project> 

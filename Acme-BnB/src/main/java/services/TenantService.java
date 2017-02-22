@@ -136,9 +136,6 @@ public class TenantService extends ComentableService {
 	public Tenant reconstruct(TenantForm tenantForm, BindingResult binding) {
 		Tenant result;
 
-		Assert.isTrue(tenantForm.getPassword().equals(tenantForm.getRepeatPassword()));
-		Assert.isTrue(tenantForm.getAcceptCondition());
-
 		Md5PasswordEncoder encoder = new Md5PasswordEncoder();
 		String hash = encoder.encodePassword(tenantForm.getPassword(), null);
 
@@ -166,6 +163,11 @@ public class TenantService extends ComentableService {
 		result.setEmail(tenantForm.getEmail());
 		result.setPhone(tenantForm.getPhone());
 		result.setPicture(tenantForm.getPicture());
+
+		//Checking passwords and conditions
+		if (!tenantForm.getPassword().equals(tenantForm.getRepeatPassword()) || tenantForm.getAcceptCondition() != true) {
+			result = null;
+		}
 
 		return result;
 	}

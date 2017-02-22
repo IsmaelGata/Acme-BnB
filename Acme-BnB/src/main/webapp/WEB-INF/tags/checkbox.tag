@@ -26,9 +26,14 @@
 <%@ attribute name="code" required="true" %>
 
 <%@ attribute name="readonly" required="false" %>
+<%@ attribute name="varConditions" required="false" %>
 
 <jstl:if test="${readonly == null}">
 	<jstl:set var="readonly" value="false" />
+</jstl:if>
+
+<jstl:if test="${varConditions == null}">
+	<jstl:set var="varConditions" value="false" />
 </jstl:if>
 
 <%-- Definition --%>
