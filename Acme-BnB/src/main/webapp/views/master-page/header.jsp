@@ -56,7 +56,7 @@
 		
 		<security:authorize access="permitAll">
 			<li><a href="property/list.do"><spring:message code="master.page.list.property" /></a></li>
-		
+			
 		</security:authorize>
 		
 		<security:authorize access="isAuthenticated()">
@@ -67,9 +67,7 @@
 				</a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="profile/action-1.do"><spring:message code="master.page.profile.action.1" /></a></li>
-					<li><a href="profile/action-2.do"><spring:message code="master.page.profile.action.2" /></a></li>
-					<li><a href="profile/action-3.do"><spring:message code="master.page.profile.action.3" /></a></li>					
+					<li><a href="actor/edit.do"><spring:message code="master.page.edit.actor" /></a></li>
 					<li><a href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a></li>
 				</ul>
 			</li>

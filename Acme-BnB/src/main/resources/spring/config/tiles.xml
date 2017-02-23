@@ -29,6 +29,7 @@
 		<value>/views/tenant/tiles.xml</value>
 		<value>/views/lessor/tiles.xml</value>
 		<value>/views/property/tiles.xml</value>
+		<value>/views/actor/tiles.xml</value>
 	</util:list>
 
 </beans>

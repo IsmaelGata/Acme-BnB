@@ -51,7 +51,8 @@
 		<!-- PROPERTY -->
 		<security:intercept-url pattern="/property/list.do" access="permitAll" /> 
 
-		
+		<!-- ACTOR -->
+		<security:intercept-url pattern="/actor/edit.do" access="isAuthenticated()" /> 
 	
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
 
