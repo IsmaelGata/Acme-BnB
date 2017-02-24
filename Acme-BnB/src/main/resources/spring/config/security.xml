@@ -53,6 +53,7 @@
 
 		<!-- ACTOR -->
 		<security:intercept-url pattern="/actor/edit.do" access="isAuthenticated()" /> 
+		<security:intercept-url pattern="/actor/save.do" access="isAuthenticated()" /> 
 	
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
 

@@ -149,7 +149,7 @@ public class LessorService extends ComentableService {
 	}
 
 
-	//	@Autowired
+	@Autowired
 	Validator	validator;
 
 
@@ -188,7 +188,7 @@ public class LessorService extends ComentableService {
 			result.getUserAccount().setPassword(null);
 		}
 
-		validator.validate(lessorForm, binding);
+		//		validator.validate(result, binding);
 
 		if (checkCreditCard(lessorForm.getCreditCard())) {
 

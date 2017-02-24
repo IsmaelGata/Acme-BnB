@@ -19,12 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import domain.Actor;
 import services.ActorService;
-import services.AdministratorService;
-import services.AuditorService;
-import services.LessorService;
-import services.TenantService;
+import domain.Actor;
 
 @Controller
 @RequestMapping("/actor")
@@ -34,21 +30,20 @@ public class ActorController extends AbstractController {
 	private ActorService	actorService;
 
 
-
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public ModelAndView edit() {
 		ModelAndView result;
-		
-		Actor actor= actorService.findByPrincipal();
+
+		Actor actor = actorService.findByPrincipal();
 		result = createEditModelAndView(actor);
 
 		return result;
 	}
 
-	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
+	@RequestMapping(value = "/save", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid Actor actor, BindingResult binding) {
 		ModelAndView result = new ModelAndView();
-		
+
 		actor = actorService.reconstruct(actor, binding);
 		if (binding.hasErrors()) {
 			result = createEditModelAndView(actor);
@@ -78,6 +73,7 @@ public class ActorController extends AbstractController {
 		result = new ModelAndView("actor/edit");
 		result.addObject("actor", actor);
 		result.addObject("message", message);
+		result.addObject("RequestURI", "actor/save.do");
 
 		return result;
 	}

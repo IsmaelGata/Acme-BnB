@@ -135,7 +135,7 @@ public class TenantService extends ComentableService {
 	}
 
 
-	//	@Autowired
+	@Autowired
 	private Validator	validator;
 
 
@@ -175,7 +175,7 @@ public class TenantService extends ComentableService {
 			result.getUserAccount().setPassword(null);
 		}
 
-		validator.validate(result, binding);
+		//		validator.validate(result, binding);
 
 		return result;
 	}

@@ -17,7 +17,7 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
-<form:form action="${requestURI}" modelAttribute="actor">
+<form:form action="${RequestURI}" modelAttribute="actor">
 
 	<form:hidden path="id"/>
 	<form:hidden path="version"/>
@@ -25,6 +25,8 @@
 	<form:hidden path="name"/>
 
 	<fieldset >
+		<legend><spring:message code="actor.personalDataDetails"/></legend>
+		<br/>
 		<acme:textbox code="actor.phone" path="phone" />
 		<br/>
 		<acme:textbox code="actor.email" path="email" />
@@ -32,7 +34,7 @@
 		<acme:textbox code="actor.picture" path="picture" />
 	</fieldset>
 
-	
+		<br/>
 		<acme:submit code="actor.save" name="save"/>
 		
 		<acme:cancel code="actor.cancel" url="welcome/index.do"/>

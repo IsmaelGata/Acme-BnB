@@ -14,6 +14,8 @@ import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
+import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 
 import security.UserAccount;
 
@@ -38,6 +40,7 @@ public class Actor extends DomainEntity {
 	//Getter & setter
 
 	@NotBlank
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getName() {
 		return name;
 	}
@@ -47,6 +50,7 @@ public class Actor extends DomainEntity {
 	}
 
 	@NotBlank
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getSurname() {
 		return surname;
 	}
@@ -57,6 +61,7 @@ public class Actor extends DomainEntity {
 
 	@NotBlank
 	@Email
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getEmail() {
 		return email;
 	}
@@ -67,6 +72,7 @@ public class Actor extends DomainEntity {
 
 	@NotBlank
 	@Pattern(regexp = "(\\+|00)\\d{2,4}(\\s)?\\d{9,13}")
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getPhone() {
 		return phone;
 	}
@@ -76,6 +82,7 @@ public class Actor extends DomainEntity {
 	}
 
 	@NotBlank
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getPicture() {
 		return picture;
 	}
