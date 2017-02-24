@@ -149,7 +149,7 @@ public class LessorService extends ComentableService {
 	}
 
 
-	@Autowired
+	//	@Autowired
 	Validator	validator;
 
 

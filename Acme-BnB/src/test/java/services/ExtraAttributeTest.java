@@ -12,6 +12,7 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 
 import utilities.AbstractTest;
 import domain.ExtraAttribute;
+import domain.Type;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
@@ -34,10 +35,8 @@ public class ExtraAttributeTest extends AbstractTest {
 	public void createTest() {
 		authenticate("admin");
 		ExtraAttribute extraAttribute = extraAttributeService.create();
-		extraAttribute.setIsBoolean(false);
-		extraAttribute.setIsNumber(false);
 		extraAttribute.setName("Test");
-		extraAttribute.setValue("Test");
+		extraAttribute.setType(Type.BOOLEAN);
 
 		extraAttributeService.save(extraAttribute);
 		authenticate(null);
@@ -48,10 +47,8 @@ public class ExtraAttributeTest extends AbstractTest {
 	public void createNegativeTest() {
 		try {
 			ExtraAttribute extraAttribute = extraAttributeService.create();
-			extraAttribute.setIsBoolean(false);
-			extraAttribute.setIsNumber(false);
 			extraAttribute.setName("Test");
-			extraAttribute.setValue("Test");
+			extraAttribute.setType(Type.TEXT);
 
 			extraAttributeService.save(extraAttribute);
 		} catch (IllegalArgumentException e) {
@@ -67,10 +64,8 @@ public class ExtraAttributeTest extends AbstractTest {
 	public void deletePositiveTest() {
 		authenticate("admin");
 		ExtraAttribute extraAttribute = extraAttributeService.create();
-		extraAttribute.setIsBoolean(false);
-		extraAttribute.setIsNumber(false);
 		extraAttribute.setName("Test");
-		extraAttribute.setValue("Test");
+		extraAttribute.setType(Type.TEXT);
 
 		ExtraAttribute result = extraAttributeService.save(extraAttribute);
 		extraAttributeService.delete(result);
@@ -83,10 +78,8 @@ public class ExtraAttributeTest extends AbstractTest {
 	public void deleteNegativeTest() {
 		try {
 			ExtraAttribute extraAttribute = extraAttributeService.create();
-			extraAttribute.setIsBoolean(false);
-			extraAttribute.setIsNumber(false);
 			extraAttribute.setName("Test");
-			extraAttribute.setValue("Test");
+			extraAttribute.setType(Type.NUMBER);
 
 			ExtraAttribute result = extraAttributeService.save(extraAttribute);
 			extraAttributeService.delete(result);

@@ -55,7 +55,7 @@ public class InvoiceService {
 		int days = Days.daysBetween(dt1, dt2).getDays();
 		result.setTotalAmount(days * property.getRate());
 		result.setVatNumber(21);
-		result.setInformation("Property: " + property.getName() + ", Address: " + property.getAddress() + ", Country: " + property.getCountry() + " Capability: " + property.getCapability() + " City: " + property.getCity());
+		result.setInformation("Property: " + property.getName() + ", Address: " + property.getAddress());
 		result.setCreditCard(book.getCreditCard());
 		result.setDetails("This invoice has been auto-generated");
 

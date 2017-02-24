@@ -1,24 +1,29 @@
 
 package form;
 
+import java.util.Collection;
+
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
+import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
+
+import domain.ExtraAttribute;
+import domain.RelatedValue;
 
 public class PropertyForm {
 
 	//Attributes
 
-	private int		id;
-	private String	name;
-	private double	rate;
-	private String	description;
-	private String	address;
-	private String	country;
-	private String	province;
-	private String	state;
-	private String	city;
-	private int		capability;
+	private int							id;
+	private String						name;
+	private double						rate;
+	private String						description;
+	private String						address;
+	private Collection<ExtraAttribute>	extraAttributes;
+	private Collection<RelatedValue>	relatedValues;
 
 
 	//Constructor
@@ -37,6 +42,7 @@ public class PropertyForm {
 		this.id = id;
 	}
 	@NotBlank
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getName() {
 		return name;
 	}
@@ -55,6 +61,7 @@ public class PropertyForm {
 	}
 
 	@NotBlank
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getDescription() {
 		return description;
 	}
@@ -64,6 +71,7 @@ public class PropertyForm {
 	}
 
 	@NotBlank
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getAddress() {
 		return address;
 	}
@@ -72,46 +80,22 @@ public class PropertyForm {
 		this.address = address;
 	}
 
-	@NotBlank
-	public String getCountry() {
-		return country;
+	@NotNull
+	public Collection<ExtraAttribute> getExtraAttributes() {
+		return extraAttributes;
 	}
 
-	public void setCountry(String country) {
-		this.country = country;
+	public void setExtraAttributes(Collection<ExtraAttribute> extraAttributes) {
+		this.extraAttributes = extraAttributes;
 	}
 
-	public String getProvince() {
-		return province;
+	@NotNull
+	public Collection<RelatedValue> getRelatedValues() {
+		return relatedValues;
 	}
 
-	public void setProvince(String province) {
-		this.province = province;
+	public void setRelatedValues(Collection<RelatedValue> relatedValues) {
+		this.relatedValues = relatedValues;
 	}
 
-	public String getState() {
-		return state;
-	}
-
-	public void setState(String state) {
-		this.state = state;
-	}
-
-	@NotBlank
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	@Min(0)
-	public int getCapability() {
-		return capability;
-	}
-
-	public void setCapability(int capability) {
-		this.capability = capability;
-	}
 }

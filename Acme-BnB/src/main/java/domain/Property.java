@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -25,11 +26,6 @@ public class Property extends DomainEntity {
 	private double	rate;
 	private String	description;
 	private String	address;
-	private String	country;
-	private String	province;
-	private String	state;
-	private String	city;
-	private int		capability;
 
 
 	//Constructor
@@ -76,61 +72,18 @@ public class Property extends DomainEntity {
 		this.address = address;
 	}
 
-	@NotBlank
-	public String getCountry() {
-		return country;
-	}
-
-	public void setCountry(String country) {
-		this.country = country;
-	}
-
-	public String getProvince() {
-		return province;
-	}
-
-	public void setProvince(String province) {
-		this.province = province;
-	}
-
-	public String getState() {
-		return state;
-	}
-
-	public void setState(String state) {
-		this.state = state;
-	}
-
-	@NotBlank
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	@Min(0)
-	public int getCapability() {
-		return capability;
-	}
-
-	public void setCapability(int capability) {
-		this.capability = capability;
-	}
-
 
 	//RelationShips
 
 	private Collection<Audit>			audits;
 	private Lessor						lessor;
 	private Collection<Book>			books;
-	private Collection<ExtraAttribute>	extraAttributes;
+	private Collection<RelatedValue>	relatedValues;
 	private Collection<Finder>			finders;
 
 
 	@Valid
-	@OneToMany(mappedBy = "property")
+	@OneToMany(mappedBy = "property", cascade = CascadeType.ALL)
 	public Collection<Audit> getAudits() {
 		return audits;
 	}
@@ -160,13 +113,13 @@ public class Property extends DomainEntity {
 	}
 
 	@Valid
-	@ManyToMany(mappedBy = "properties")
-	public Collection<ExtraAttribute> getExtraAttributes() {
-		return extraAttributes;
+	@OneToMany(mappedBy = "property", cascade = CascadeType.ALL)
+	public Collection<RelatedValue> getRelatedValues() {
+		return relatedValues;
 	}
 
-	public void setExtraAttributes(Collection<ExtraAttribute> extraAttributes) {
-		this.extraAttributes = extraAttributes;
+	public void setRelatedValues(Collection<RelatedValue> relatedValues) {
+		this.relatedValues = relatedValues;
 	}
 
 	@Valid

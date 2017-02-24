@@ -5,23 +5,26 @@ import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Access(AccessType.PROPERTY)
+@Table(uniqueConstraints = {
+	@UniqueConstraint(columnNames = "name")
+})
 public class ExtraAttribute extends DomainEntity {
 
 	//Attributes
 	private String	name;
-	private boolean	isNumber;
-	private boolean	isBoolean;
-	private String	value;
+	private Type	type;
 
 
 	//Constructor
@@ -40,46 +43,29 @@ public class ExtraAttribute extends DomainEntity {
 		this.name = name;
 	}
 
-	public boolean getIsNumber() {
-		return isNumber;
+	@NotNull
+	public Type getType() {
+		return type;
 	}
 
-	public void setIsNumber(boolean isNumber) {
-		this.isNumber = isNumber;
-	}
-
-	public boolean getIsBoolean() {
-		return isBoolean;
-	}
-
-	public void setIsBoolean(boolean isBoolean) {
-		this.isBoolean = isBoolean;
-	}
-
-	@NotBlank
-	public String getValue() {
-		return value;
-	}
-
-	public void setValue(String value) {
-		this.value = value;
+	public void setType(Type type) {
+		this.type = type;
 	}
 
 
 	//RelationShips
 
-	private Collection<Property>	properties;
+	private Collection<RelatedValue>	relatedValues;
 
 
 	@Valid
-	@ManyToMany
-	@JoinTable(name = "property_extraAttribute", joinColumns = @JoinColumn(name = "extraAttribute_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "property_id", referencedColumnName = "id"))
-	public Collection<Property> getProperties() {
-		return properties;
+	@OneToMany(mappedBy = "extraAttribute", cascade = CascadeType.ALL)
+	public Collection<RelatedValue> getRelatedValues() {
+		return relatedValues;
 	}
 
-	public void setProperties(Collection<Property> properties) {
-		this.properties = properties;
+	public void setRelatedValues(Collection<RelatedValue> relatedValues) {
+		this.relatedValues = relatedValues;
 	}
 
 }

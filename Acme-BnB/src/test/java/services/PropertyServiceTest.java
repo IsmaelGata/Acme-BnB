@@ -1,7 +1,7 @@
 
 package services;
 
-import javax.transaction.Transactional;
+import java.util.Collection;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,10 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
 import domain.Property;
+import domain.RelatedValue;
+import domain.Type;
 import form.PropertyForm;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -26,7 +29,10 @@ public class PropertyServiceTest extends AbstractTest {
 	//Services under test
 
 	@Autowired
-	private PropertyService	propertyService;
+	private PropertyService		propertyService;
+
+	@Autowired
+	private RelatedValueService	relatedValueService;
 
 
 	//Create test
@@ -37,16 +43,24 @@ public class PropertyServiceTest extends AbstractTest {
 		authenticate("lessor1");
 		PropertyForm propertyForm = propertyService.create();
 		propertyForm.setAddress("test");
-		propertyForm.setCapability(2);
-		propertyForm.setCity("Test");
-		propertyForm.setCountry("Test");
 		propertyForm.setDescription("Testing");
 		propertyForm.setName("Test");
-		propertyForm.setProvince("Test");
 		propertyForm.setRate(2.3);
+		propertyForm.setDescription("Test");
+		propertyForm.setName("test");
+
+		Collection<RelatedValue> relatedValues = propertyForm.getRelatedValues();
+		for (RelatedValue relatedValue : relatedValues) {
+			if (relatedValue.getExtraAttribute().getType().equals(Type.NUMBER)) {
+				relatedValue.setValue("1");
+			} else {
+				relatedValue.setValue("test");
+			}
+		}
 
 		Property property = propertyService.reconstruct(propertyForm);
 		propertyService.save(property);
+
 		authenticate(null);
 	}
 
@@ -58,13 +72,21 @@ public class PropertyServiceTest extends AbstractTest {
 		try {
 			PropertyForm propertyForm = propertyService.create();
 			propertyForm.setAddress("test");
-			propertyForm.setCapability(2);
-			propertyForm.setCity("Test");
-			propertyForm.setCountry("Test");
 			propertyForm.setDescription("Testing");
 			propertyForm.setName("Test");
-			propertyForm.setProvince("Test");
 			propertyForm.setRate(2.3);
+
+			propertyForm.setDescription("Test");
+			propertyForm.setName("test");
+
+			Collection<RelatedValue> relatedValues = propertyForm.getRelatedValues();
+			for (RelatedValue relatedValue : relatedValues) {
+				if (relatedValue.getExtraAttribute().getType().equals(Type.NUMBER)) {
+					relatedValue.setValue("1");
+				} else {
+					relatedValue.setValue("test");
+				}
+			}
 
 			Property property = propertyService.reconstruct(propertyForm);
 			propertyService.save(property);
@@ -81,19 +103,9 @@ public class PropertyServiceTest extends AbstractTest {
 	//Positive
 	@Test
 	public void deletePositiveTest() {
-		authenticate("lessor1");
-		PropertyForm propertyForm = propertyService.create();
-		propertyForm.setAddress("test");
-		propertyForm.setCapability(2);
-		propertyForm.setCity("Test");
-		propertyForm.setCountry("Test");
-		propertyForm.setDescription("Testing");
-		propertyForm.setName("Test");
-		propertyForm.setProvince("Test");
-		propertyForm.setRate(2.3);
-
-		Property property = propertyService.reconstruct(propertyForm);
-		Property result = propertyService.save(property);
+		authenticate("lessor2");
+		Property result = propertyService.findOne(20);
+		relatedValueService.deleteAll(result.getRelatedValues());
 		propertyService.delete(result);
 		authenticate(null);
 	}
@@ -102,18 +114,8 @@ public class PropertyServiceTest extends AbstractTest {
 	@Test
 	public void deleteNegativeTest() {
 		try {
-			PropertyForm propertyForm = propertyService.create();
-			propertyForm.setAddress("test");
-			propertyForm.setCapability(2);
-			propertyForm.setCity("Test");
-			propertyForm.setCountry("Test");
-			propertyForm.setDescription("Testing");
-			propertyForm.setName("Test");
-			propertyForm.setProvince("Test");
-			propertyForm.setRate(2.3);
-
-			Property property = propertyService.reconstruct(propertyForm);
-			Property result = propertyService.save(property);
+			Property result = propertyService.findOne(20);
+			relatedValueService.deleteAll(result.getRelatedValues());
 			propertyService.delete(result);
 		} catch (IllegalArgumentException e) {
 			System.out.println("deleteNegativeTest passed");
@@ -127,7 +129,6 @@ public class PropertyServiceTest extends AbstractTest {
 		Property property = propertyService.findOne(18);
 		PropertyForm result = propertyService.conversionToFormObject(property);
 		Assert.notNull(result);
-		Assert.notNull(result.getCity());
 		Assert.notNull(result.getRate());
 		Assert.notNull(result.getDescription());
 	}

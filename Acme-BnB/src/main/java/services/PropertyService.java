@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.PropertyRepository;
+import domain.Book;
+import domain.ExtraAttribute;
 import domain.Lessor;
 import domain.Property;
+import domain.RelatedValue;
 import form.PropertyForm;
 
 @Service
@@ -29,6 +33,9 @@ public class PropertyService {
 	@Autowired
 	private AdministratorService	administratorService;
 
+	@Autowired
+	private RelatedValueService		relatedValueService;
+
 
 	//Constructor
 
@@ -41,11 +48,19 @@ public class PropertyService {
 	public PropertyForm create() {
 		lessorService.findByPrincipal();
 
+		Collection<ExtraAttribute> extraAttributes = getDefaultExtraAttributes();
+		Collection<RelatedValue> relatedValues = new ArrayList<>();
 		PropertyForm result = new PropertyForm();
 
+		for (ExtraAttribute extraAttribute : extraAttributes) {
+			RelatedValue relatedValue = relatedValueService.create();
+			relatedValue.setExtraAttribute(extraAttribute);
+			relatedValues.add(relatedValue);
+		}
+		result.setExtraAttributes(extraAttributes);
+		result.setRelatedValues(relatedValues);
 		return result;
 	}
-
 	public Collection<Property> findAll() {
 		return propertyRepository.findAll();
 	}
@@ -60,23 +75,22 @@ public class PropertyService {
 		Lessor lessor = lessorService.findByPrincipal();
 
 		Assert.isTrue(lessor.equals(property.getLessor()));
-
-		if (property.getState() != null) {
-			Assert.isTrue(property.getProvince() == null);
-		} else if (property.getProvince() != null) {
-			Assert.isTrue(property.getState() == null);
-		}
-
+		Collection<RelatedValue> relatedValues = property.getRelatedValues();
+		property.setRelatedValues(null);
 		Property result = propertyRepository.save(property);
+
+		relatedValueService.assignProperty(relatedValues, result);
+		relatedValueService.saveAll(relatedValues);
+		result.setRelatedValues(relatedValues);
 
 		return result;
 	}
 
 	public void delete(Property property) {
 		Assert.notNull(property);
+		Assert.isTrue(property.getBooks().isEmpty());
 		Lessor lessor = lessorService.findByPrincipal();
 		Assert.isTrue(lessor.equals(property.getLessor()));
-
 		propertyRepository.delete(property);
 	}
 
@@ -88,28 +102,40 @@ public class PropertyService {
 		Lessor lessor = lessorService.findByPrincipal();
 		Assert.notNull(lessor);
 
-		result.setAddress(propertyForm.getAddress());
-		result.setLessor(lessor);
-		result.setCapability(propertyForm.getCapability());
-		result.setCity(propertyForm.getCity());
-		result.setCountry(propertyForm.getCountry());
-		result.setDescription(propertyForm.getDescription());
-		result.setName(propertyForm.getName());
-		result.setProvince(propertyForm.getProvince());
-		result.setRate(propertyForm.getRate());
-		result.setState(propertyForm.getState());
-
+		//Checking property's existence
 		if (propertyForm.getId() != 0) {
 			result.setId(propertyForm.getId());
 			Property backed = findOne(propertyForm.getId());
 			result.setAudits(backed.getAudits());
 			result.setBooks(backed.getBooks());
-			result.setExtraAttributes(backed.getExtraAttributes());
+			result.setRelatedValues(backed.getRelatedValues());
+		} else {
+			result.setAddress(propertyForm.getAddress());
+			result.setLessor(lessor);
+			result.setBooks(new ArrayList<Book>());
 		}
+
+		result.setName(propertyForm.getName());
+		result.setDescription(propertyForm.getDescription());
+		result.setRate(propertyForm.getRate());
+
+		Collection<RelatedValue> resultRelatedValues = new ArrayList<>();
+
+		//Settings relatedValue
+		for (RelatedValue relatedValue : propertyForm.getRelatedValues()) {
+			if (!propertyForm.getRelatedValues().contains(relatedValue) || relatedValue.getId() == 0) {
+				relatedValue.setProperty(result);
+				resultRelatedValues.add(relatedValue);
+			} else {
+				relatedValueService.delete(relatedValue);
+			}
+		}
+
+		result.setRelatedValues(resultRelatedValues);
+		//**********************************************
 
 		return result;
 	}
-
 	public PropertyForm conversionToFormObject(Property property) {
 		Assert.notNull(property);
 
@@ -117,16 +143,21 @@ public class PropertyService {
 
 		result.setId(property.getId());
 		result.setAddress(property.getAddress());
-		result.setCapability(property.getCapability());
-		result.setCity(property.getCity());
-		result.setCountry(property.getCountry());
 		result.setDescription(property.getDescription());
 		result.setName(property.getName());
-		result.setProvince(property.getProvince());
 		result.setRate(property.getRate());
-		result.setState(property.getState());
+		result.setRelatedValues(property.getRelatedValues());
+		Collection<ExtraAttribute> extraAttributes = new ArrayList<>();
+		for (RelatedValue relatedValue : property.getRelatedValues()) {
+			extraAttributes.add(relatedValue.getExtraAttribute());
+		}
+		result.setExtraAttributes(extraAttributes);
 
 		return result;
+	}
+
+	public Collection<ExtraAttribute> getDefaultExtraAttributes() {
+		return propertyRepository.getDefaultExtraAttributes();
 	}
 
 	//Dashboard

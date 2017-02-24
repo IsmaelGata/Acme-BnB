@@ -11,7 +11,7 @@ import org.springframework.util.Assert;
 
 import repositories.ExtraAttributeRepository;
 import domain.ExtraAttribute;
-import domain.Property;
+import domain.RelatedValue;
 
 @Service
 @Transactional
@@ -39,9 +39,9 @@ public class ExtraAttributeService {
 	public ExtraAttribute create() {
 		administratorService.findByPrincipal();
 		ExtraAttribute result = new ExtraAttribute();
-		Collection<Property> properties = new ArrayList<>();
+		Collection<RelatedValue> relatedValues = new ArrayList<>();
 
-		result.setProperties(properties);
+		result.setRelatedValues(relatedValues);
 		return result;
 	}
 

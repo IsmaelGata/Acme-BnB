@@ -135,7 +135,7 @@ public class TenantService extends ComentableService {
 	}
 
 
-	@Autowired
+	//	@Autowired
 	private Validator	validator;
 
 

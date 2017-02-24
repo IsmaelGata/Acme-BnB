@@ -21,7 +21,7 @@ public class LessorForm {
 	private String		username;
 	private String		password;
 	private String		repeatPassword;
-	private Boolean		acceptCondition;
+	private boolean		acceptCondition;
 	private String		name;
 	private String		surname;
 	private String		phone;
@@ -68,10 +68,10 @@ public class LessorForm {
 	}
 
 	@AssertTrue
-	public Boolean getAcceptCondition() {
+	public boolean getAcceptCondition() {
 		return acceptCondition;
 	}
-	public void setAcceptCondition(Boolean acceptCondition) {
+	public void setAcceptCondition(boolean acceptCondition) {
 		this.acceptCondition = acceptCondition;
 	}
 

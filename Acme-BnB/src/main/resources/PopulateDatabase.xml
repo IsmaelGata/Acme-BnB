@@ -309,11 +309,6 @@
 		<property name="rate" value="50.0" />
 		<property name="description" value="Chalet adosado perfecto para vacaciones. Zona tranquila. Chalet colindante de vecino jubilado" />
 		<property name="address" value="Calígula 24" />
-		<property name="country" value="Spain"/>
-		<property name="province" value="Seville"/>
-		<property name="state" value=""/>
-		<property name="city" value="Seville"/>
-		<property name="capability" value="6"/>
 		<property name="audits">
 			<list>
 				
@@ -325,7 +320,7 @@
 				
 			</list>
 		</property>
-		<property name="extraAttributes">
+		<property name="relatedValues">
 			<list>
 			</list>
 		</property>
@@ -342,11 +337,6 @@
 		<property name="rate" value="30.0" />
 		<property name="description" value="Piso en la sierra norte de Sevilla totalmente amueblado y equipado." />
 		<property name="address" value="Almendara 3" />
-		<property name="country" value="Spain"/>
-		<property name="province" value="Seville"/>
-		<property name="state" value=""/>
-		<property name="city" value="Seville"/>
-		<property name="capability" value="4"/>
 		<property name="audits">
 			<list>
 				
@@ -358,7 +348,7 @@
 				
 			</list>
 		</property>
-		<property name="extraAttributes">
+		<property name="relatedValues">
 			<list>
 			</list>
 		</property>
@@ -374,11 +364,6 @@
 		<property name="rate" value="50.0" />
 		<property name="description" value="Maravilloso apartamente para vacaciones de verano. Playa a 10min" />
 		<property name="address" value="España 10" />
-		<property name="country" value="Spain"/>
-		<property name="province" value="Málaga"/>
-		<property name="state" value=""/>
-		<property name="city" value="Marbella"/>
-		<property name="capability" value="3"/>
 		<property name="audits">
 			<list>
 				
@@ -390,7 +375,7 @@
 				
 			</list>
 		</property>
-		<property name="extraAttributes">
+		<property name="relatedValues">
 			<list>
 			</list>
 		</property>
@@ -401,11 +386,6 @@
 		<property name="rate" value="50.0" />
 		<property name="description" value="Ciudad de vacaciones" />
 		<property name="address" value="España 10" />
-		<property name="country" value="Spain"/>
-		<property name="province" value="Málaga"/>
-		<property name="state" value=""/>
-		<property name="city" value="Marbella"/>
-		<property name="capability" value="3"/>
 		<property name="audits">
 			<list>
 				
@@ -417,7 +397,7 @@
 				
 			</list>
 		</property>
-		<property name="extraAttributes">
+		<property name="relatedValues">
 			<list>
 			</list>
 		</property>
@@ -425,73 +405,265 @@
 	
 	<!-- EXTRAATTRIBUTE -->
 	
+	<!-- Default extraAttribute. Must not be deleted -->
+	
 	<bean id="extraAttribute1" class="domain.ExtraAttribute">
-		<property name="name" value="Equipamiento" />
-		<property name="isNumber" value="false" />
-		<property name="isBoolean" value="false" />
-		<property name="value" value="Amueblado" />
-		<property name="properties">
+		<property name="name" value="Country" />
+		<property name="type" value="TEXT" />
+		<property name="relatedValues">
 			<list>
-				<ref bean="property1"/>
-				<ref bean="property2"/>
 			</list>
 		</property>
 	</bean>
 	
 	<bean id="extraAttribute2" class="domain.ExtraAttribute">
-		<property name="name" value="A/C" />
-		<property name="isNumber" value="false" />
-		<property name="isBoolean" value="true" />
-		<property name="value" value="true" />
-		<property name="properties">
+		<property name="name" value="Province" />
+		<property name="type" value="TEXT" />
+		<property name="relatedValues">
 			<list>
-				<ref bean="property1"/>
-				<ref bean="property2"/>
 			</list>
 		</property>
 	</bean>
 	
 	<bean id="extraAttribute3" class="domain.ExtraAttribute">
-		<property name="name" value="Distancia centro ciudad (km)" />
-		<property name="isNumber" value="true" />
-		<property name="isBoolean" value="false" />
-		<property name="value" value="3" />
-		<property name="properties">
+		<property name="name" value="State" />
+		<property name="type" value="TEXT" />
+		<property name="relatedValues">
 			<list>
-				<ref bean="property1"/>
-				<ref bean="property2"/>
 			</list>
 		</property>
 	</bean>
 	
 	<bean id="extraAttribute4" class="domain.ExtraAttribute">
-		<property name="name" value="Piscina" />
-		<property name="isNumber" value="false" />
-		<property name="isBoolean" value="true" />
-		<property name="value" value="true" />
-		<property name="properties">
+		<property name="name" value="City" />
+		<property name="type" value="TEXT" />
+		<property name="relatedValues">
 			<list>
-				<ref bean="property1"/>
-				<ref bean="property2"/>
-				<ref bean="property3"/>
 			</list>
 		</property>
 	</bean>
 	
 	<bean id="extraAttribute5" class="domain.ExtraAttribute">
-		<property name="name" value="Animales" />
-		<property name="isNumber" value="false" />
-		<property name="isBoolean" value="true" />
-		<property name="value" value="false" />
-		<property name="properties">
+		<property name="name" value="Capability" />
+		<property name="type" value="NUMBER" />
+		<property name="relatedValues">
 			<list>
-				<ref bean="property1"/>
-				<ref bean="property2"/>
-				<ref bean="property3"/>
 			</list>
 		</property>
 	</bean>
 	
+	<!-- ******************************************************************************** -->
+	<bean id="extraAttribute6" class="domain.ExtraAttribute">
+		<property name="name" value="Equipamiento" />
+		<property name="type" value="TEXT" />
+		<property name="relatedValues">
+			<list>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="extraAttribute7" class="domain.ExtraAttribute">
+		<property name="name" value="A/C" />
+		<property name="type" value="BOOLEAN" />
+		<property name="relatedValues">
+			<list>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="extraAttribute8" class="domain.ExtraAttribute">
+		<property name="name" value="Distancia centro ciudad (km)" />
+		<property name="type" value="NUMBER" />
+		<property name="relatedValues">
+			<list>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="extraAttribute9" class="domain.ExtraAttribute">
+		<property name="name" value="Piscina" />
+		<property name="type" value="BOOLEAN" />
+		<property name="relatedValues">
+			<list>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="extraAttribute10" class="domain.ExtraAttribute">
+		<property name="name" value="Animales" />
+		<property name="type" value="BOOLEAN" />
+		<property name="relatedValues">
+			<list>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- RELATEDVALUE -->
+	
+	<!-- Default values. Must not be deleted -->
+	
+	<bean id="relatedValue1" class="domain.RelatedValue">
+		<property name="value" value="Spain" />
+		<property name="property" ref="property1" />
+		<property name="extraAttribute" ref="extraAttribute1" />
+	</bean>
+	
+	<bean id="relatedValue2" class="domain.RelatedValue">
+		<property name="value" value="Spain" />
+		<property name="property" ref="property2" />
+		<property name="extraAttribute" ref="extraAttribute1" />
+	</bean>
+	
+	<bean id="relatedValue3" class="domain.RelatedValue">
+		<property name="value" value="Spain" />
+		<property name="property" ref="property3" />
+		<property name="extraAttribute" ref="extraAttribute1" />
+	</bean>
+	
+	<bean id="relatedValue4" class="domain.RelatedValue">
+		<property name="value" value="Spain" />
+		<property name="property" ref="property4" />
+		<property name="extraAttribute" ref="extraAttribute1" />
+	</bean>
+	
+	<bean id="relatedValue5" class="domain.RelatedValue">
+		<property name="value" value="Seville" />
+		<property name="property" ref="property1" />
+		<property name="extraAttribute" ref="extraAttribute2" />
+	</bean>
+	
+	<bean id="relatedValue6" class="domain.RelatedValue">
+		<property name="value" value="Seville" />
+		<property name="property" ref="property2" />
+		<property name="extraAttribute" ref="extraAttribute2" />
+	</bean>
+	
+	<bean id="relatedValue7" class="domain.RelatedValue">
+		<property name="value" value="Málaga" />
+		<property name="property" ref="property3" />
+		<property name="extraAttribute" ref="extraAttribute2" />
+	</bean>
+	
+	<bean id="relatedValue8" class="domain.RelatedValue">
+		<property name="value" value="Málaga" />
+		<property name="property" ref="property4" />
+		<property name="extraAttribute" ref="extraAttribute2" />
+	</bean>
+	
+	<bean id="relatedValue9" class="domain.RelatedValue">
+		<property name="value" value="No procede"/>
+		<property name="property" ref="property1" />
+		<property name="extraAttribute" ref="extraAttribute3" />
+	</bean>
+	
+	<bean id="relatedValue10" class="domain.RelatedValue">
+		<property name="value" value="No procede"/>
+		<property name="property" ref="property2" />
+		<property name="extraAttribute" ref="extraAttribute3" />
+	</bean>
+	
+	<bean id="relatedValue11" class="domain.RelatedValue">
+		<property name="value" value="No procede"/>
+		<property name="property" ref="property3" />
+		<property name="extraAttribute" ref="extraAttribute3" />
+	</bean>
+	
+	<bean id="relatedValue12" class="domain.RelatedValue">
+		<property name="value" value="No procede"/>
+		<property name="property" ref="property4" />
+		<property name="extraAttribute" ref="extraAttribute3" />
+	</bean>
+	
+	<bean id="relatedValue13" class="domain.RelatedValue">
+		<property name="value" value="Seville" />
+		<property name="property" ref="property1" />
+		<property name="extraAttribute" ref="extraAttribute4" />
+	</bean>
+	
+	<bean id="relatedValue14" class="domain.RelatedValue">
+		<property name="value" value="Seville" />
+		<property name="property" ref="property2" />
+		<property name="extraAttribute" ref="extraAttribute4" />
+	</bean>
+	
+	<bean id="relatedValue15" class="domain.RelatedValue">
+		<property name="value" value="Marbella" />
+		<property name="property" ref="property3" />
+		<property name="extraAttribute" ref="extraAttribute4" />
+	</bean>
+	
+	<bean id="relatedValue16" class="domain.RelatedValue">
+		<property name="value" value="Marbella" />
+		<property name="property" ref="property4" />
+		<property name="extraAttribute" ref="extraAttribute4" />
+	</bean>
+	
+	<bean id="relatedValue17" class="domain.RelatedValue">
+		<property name="value" value="6" />
+		<property name="property" ref="property1" />
+		<property name="extraAttribute" ref="extraAttribute5" />
+	</bean>
+	
+	<bean id="relatedValue18" class="domain.RelatedValue">
+		<property name="value" value="4" />
+		<property name="property" ref="property2" />
+		<property name="extraAttribute" ref="extraAttribute5" />
+	</bean>
+	
+	<bean id="relatedValue19" class="domain.RelatedValue">
+		<property name="value" value="3" />
+		<property name="property" ref="property3" />
+		<property name="extraAttribute" ref="extraAttribute5" />
+	</bean>
+	
+	<bean id="relatedValue20" class="domain.RelatedValue">
+		<property name="value" value="3" />
+		<property name="property" ref="property4" />
+		<property name="extraAttribute" ref="extraAttribute5" />
+	</bean>
+	<!-- ************************************************************************************ -->
+	
+	<bean id="relatedValue21" class="domain.RelatedValue">
+		<property name="value" value="Amueblado" />
+		<property name="property" ref="property1" />
+		<property name="extraAttribute" ref="extraAttribute6" />
+	</bean>
+	
+	<bean id="relatedValue22" class="domain.RelatedValue">
+		<property name="value" value="Amueblado" />
+		<property name="property" ref="property2" />
+		<property name="extraAttribute" ref="extraAttribute6" />
+	</bean>
+	
+	<bean id="relatedValue23" class="domain.RelatedValue">
+		<property name="value" value="true" />
+		<property name="property" ref="property1" />
+		<property name="extraAttribute" ref="extraAttribute7" />
+	</bean>
+	
+	<bean id="relatedValue24" class="domain.RelatedValue">
+		<property name="value" value="true" />
+		<property name="property" ref="property2" />
+		<property name="extraAttribute" ref="extraAttribute7" />
+	</bean>
+	
+	<bean id="relatedValue25" class="domain.RelatedValue">
+		<property name="value" value="3" />
+		<property name="property" ref="property1" />
+		<property name="extraAttribute" ref="extraAttribute8" />
+	</bean>
+	
+	<bean id="relatedValue26" class="domain.RelatedValue">
+		<property name="value" value="true" />
+		<property name="property" ref="property1" />
+		<property name="extraAttribute" ref="extraAttribute9" />
+	</bean>
+	
+	<bean id="relatedValue27" class="domain.RelatedValue">
+		<property name="value" value="true" />
+		<property name="property" ref="property2" />
+		<property name="extraAttribute" ref="extraAttribute10" />
+	</bean>
 	
 	<!-- AUDIT -->
 	
