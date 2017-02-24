@@ -17,7 +17,7 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
-<form:form action="${requestURI}" modelAttribute="actor">
+<form:form action="${RequestURI}" modelAttribute="actor">
 
 	<form:hidden path="id"/>
 	<form:hidden path="version"/>
