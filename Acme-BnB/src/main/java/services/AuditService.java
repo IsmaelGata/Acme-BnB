@@ -64,9 +64,6 @@ public class AuditService {
 		Assert.isTrue(auditor.equals(audit.getAuditor()));
 
 		if (audit.getId() != 0) {
-			// FIXME ¿No seria mejor setearlo a true en lugar de hacer un Assert?
-			//TODO R: no, yo quiero comprobar que realmente es un borrador. Supongamos que mediante hacking
-			//		  se intenta modificar un ya emitido, automaticamente se convierte en borrador.
 			Assert.isTrue(audit.getDraft() == true);
 		}
 

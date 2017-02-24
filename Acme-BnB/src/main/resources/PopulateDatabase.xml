@@ -409,6 +409,7 @@
 	
 	<bean id="extraAttribute1" class="domain.ExtraAttribute">
 		<property name="name" value="Country" />
+		<property name="spanishName" value="País" />
 		<property name="type" value="TEXT" />
 		<property name="relatedValues">
 			<list>
@@ -418,6 +419,7 @@
 	
 	<bean id="extraAttribute2" class="domain.ExtraAttribute">
 		<property name="name" value="Province" />
+		<property name="spanishName" value="Provincia" />
 		<property name="type" value="TEXT" />
 		<property name="relatedValues">
 			<list>
@@ -427,6 +429,7 @@
 	
 	<bean id="extraAttribute3" class="domain.ExtraAttribute">
 		<property name="name" value="State" />
+		<property name="spanishName" value="Estado" />
 		<property name="type" value="TEXT" />
 		<property name="relatedValues">
 			<list>
@@ -436,6 +439,7 @@
 	
 	<bean id="extraAttribute4" class="domain.ExtraAttribute">
 		<property name="name" value="City" />
+		<property name="spanishName" value="Ciudad" />
 		<property name="type" value="TEXT" />
 		<property name="relatedValues">
 			<list>
@@ -444,7 +448,8 @@
 	</bean>
 	
 	<bean id="extraAttribute5" class="domain.ExtraAttribute">
-		<property name="name" value="Capability" />
+		<property name="name" value="Capacity" />
+		<property name="spanishName" value="Capacidad" />
 		<property name="type" value="NUMBER" />
 		<property name="relatedValues">
 			<list>
@@ -454,7 +459,8 @@
 	
 	<!-- ******************************************************************************** -->
 	<bean id="extraAttribute6" class="domain.ExtraAttribute">
-		<property name="name" value="Equipamiento" />
+		<property name="name" value="Equipment" />
+		<property name="spanishName" value="Equipamiento" />
 		<property name="type" value="TEXT" />
 		<property name="relatedValues">
 			<list>
@@ -463,7 +469,8 @@
 	</bean>
 	
 	<bean id="extraAttribute7" class="domain.ExtraAttribute">
-		<property name="name" value="A/C" />
+		<property name="name" value="Air conditioner" />
+		<property name="spanishName" value="Aire acondicionado" />
 		<property name="type" value="BOOLEAN" />
 		<property name="relatedValues">
 			<list>
@@ -473,6 +480,7 @@
 	
 	<bean id="extraAttribute8" class="domain.ExtraAttribute">
 		<property name="name" value="Distancia centro ciudad (km)" />
+		<property name="spanishName" value="Distance to city centre (km)" />
 		<property name="type" value="NUMBER" />
 		<property name="relatedValues">
 			<list>
@@ -482,6 +490,7 @@
 	
 	<bean id="extraAttribute9" class="domain.ExtraAttribute">
 		<property name="name" value="Piscina" />
+		<property name="spanishName" value="Swimming pool" />
 		<property name="type" value="BOOLEAN" />
 		<property name="relatedValues">
 			<list>
@@ -490,7 +499,8 @@
 	</bean>
 	
 	<bean id="extraAttribute10" class="domain.ExtraAttribute">
-		<property name="name" value="Animales" />
+		<property name="name" value="Pets" />
+		<property name="spanishName" value="Animales" />
 		<property name="type" value="BOOLEAN" />
 		<property name="relatedValues">
 			<list>

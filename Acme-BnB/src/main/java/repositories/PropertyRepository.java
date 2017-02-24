@@ -13,7 +13,7 @@ import domain.Property;
 @Repository
 public interface PropertyRepository extends JpaRepository<Property, Integer> {
 
-	@Query("select ea from ExtraAttribute ea where ea.name = 'Country' or ea-name = 'Province' or ea.name = 'State' or ea.name = 'City' or ea.name = 'Capability'")
+	@Query("select ea from ExtraAttribute ea where ea.name in ('Country', 'Province', 'State', 'City', 'Capacity')")
 	Collection<ExtraAttribute> getDefaultExtraAttributes();
 
 	//Dashboard

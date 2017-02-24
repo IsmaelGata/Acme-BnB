@@ -24,6 +24,7 @@ public class ExtraAttribute extends DomainEntity {
 
 	//Attributes
 	private String	name;
+	private String	spanishName;
 	private Type	type;
 
 
@@ -41,6 +42,14 @@ public class ExtraAttribute extends DomainEntity {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getSpanishName() {
+		return spanishName;
+	}
+
+	public void setSpanishName(String spanishName) {
+		this.spanishName = spanishName;
 	}
 
 	@NotNull
