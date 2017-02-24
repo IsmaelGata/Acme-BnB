@@ -6,11 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
+import domain.Actor;
 import repositories.ActorRepository;
 import security.LoginService;
 import security.UserAccount;
-import domain.Actor;
 
 @Service
 @Transactional
@@ -18,6 +20,8 @@ public class ActorService {
 	
 	@Autowired
 	private ActorRepository actorRepository;
+	
+
 
 	public ActorService() {
 		super();
@@ -75,6 +79,30 @@ public class ActorService {
 			
 			result = actorRepository.findByUserName(username);
 			
+			return result;
+		}
+		
+		@Autowired
+		Validator	validator;
+		
+		
+		public Actor reconstruct(Actor actor, BindingResult binding) {
+			Actor result;
+
+			if(actor.getId()==0){
+				result=actor;
+			}else{
+				result = actorRepository.findOne(actor.getId());
+				
+				result.setEmail(actor.getEmail());
+				result.setPhone(actor.getPhone());
+				result.setPicture(actor.getPicture());
+				
+				validator.validate(result, binding);
+			}
+			
+
+
 			return result;
 		}
 
