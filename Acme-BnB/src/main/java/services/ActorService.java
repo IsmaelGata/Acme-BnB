@@ -10,10 +10,11 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
+import domain.Actor;
+import form.ActorForm;
 import repositories.ActorRepository;
 import security.LoginService;
 import security.UserAccount;
-import domain.Actor;
 
 @Service
 @Transactional
@@ -86,19 +87,13 @@ public class ActorService {
 	Validator	validator;
 
 
-	public Actor reconstruct(Actor actor, BindingResult binding) {
-		Actor result;
-
-		if (actor.getId() == 0) {
-			result = actor;
-		} else {
-			result = actorRepository.findOne(actor.getId());
-
-			result.setEmail(actor.getEmail());
-			result.setPhone(actor.getPhone());
-			result.setPicture(actor.getPicture());
-
-			//				validator.validate(result, binding);
+	public Actor reconstruct(ActorForm actorForm, BindingResult binding) {
+		Actor result= findByPrincipal();
+		
+		if (!binding.hasErrors()) {
+			result.setEmail(actorForm.getEmail());
+			result.setPhone(actorForm.getPhone());
+			result.setPicture(actorForm.getPicture());
 		}
 
 		return result;

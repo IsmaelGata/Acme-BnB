@@ -19,8 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.ActorService;
 import domain.Actor;
+import form.ActorForm;
+import services.ActorService;
 
 @Controller
 @RequestMapping("/actor")
@@ -35,25 +36,33 @@ public class ActorController extends AbstractController {
 		ModelAndView result;
 
 		Actor actor = actorService.findByPrincipal();
-		result = createEditModelAndView(actor);
+		
+		ActorForm actorForm = new ActorForm();
+
+		actorForm.setEmail(actor.getEmail());
+		actorForm.setPhone(actor.getPhone());
+		actorForm.setPicture(actor.getPicture());
+		
+		result = createEditModelAndView(actorForm);
 
 		return result;
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid Actor actor, BindingResult binding) {
+	public ModelAndView save(@Valid ActorForm actorForm, BindingResult binding) {
 		ModelAndView result = new ModelAndView();
-
-		actor = actorService.reconstruct(actor, binding);
+		Actor actor;
+		
+		actor = actorService.reconstruct(actorForm, binding);
 		if (binding.hasErrors()) {
-			result = createEditModelAndView(actor);
+			result = createEditModelAndView(actorForm);
 
 		} else {
 			try {
 				actorService.save(actor);
 				result = new ModelAndView("redirect:/welcome/index.do");
 			} catch (Throwable oops) {
-				result = createEditModelAndView(actor, "actor.commit.error");
+				result = createEditModelAndView(actorForm, "actor.commit.error");
 			}
 		}
 
@@ -62,16 +71,16 @@ public class ActorController extends AbstractController {
 
 	//Ancillary methods
 
-	protected ModelAndView createEditModelAndView(Actor actor) {
-		ModelAndView result = createEditModelAndView(actor, null);
+	protected ModelAndView createEditModelAndView(ActorForm actorForm) {
+		ModelAndView result = createEditModelAndView(actorForm, null);
 		return result;
 	}
 
-	protected ModelAndView createEditModelAndView(Actor actor, String message) {
+	protected ModelAndView createEditModelAndView(ActorForm actorForm, String message) {
 		ModelAndView result;
 
 		result = new ModelAndView("actor/edit");
-		result.addObject("actor", actor);
+		result.addObject("actorForm", actorForm);
 		result.addObject("message", message);
 		result.addObject("RequestURI", "actor/save.do");
 

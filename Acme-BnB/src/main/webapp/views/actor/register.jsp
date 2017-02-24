@@ -17,12 +17,7 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
-<form:form action="${RequestURI}" modelAttribute="actor">
-
-	<form:hidden path="id"/>
-	<form:hidden path="version"/>
-	<form:hidden path="surname"/>
-	<form:hidden path="name"/>
+<form:form action="${RequestURI}" modelAttribute="actorForm">
 
 	<fieldset >
 		<legend><spring:message code="actor.personalDataDetails"/></legend>
