@@ -31,6 +31,7 @@
 		<value>/views/lessor/messages</value>
 		<value>/views/property/messages</value>
 		<value>/views/actor/messages</value>
+		<value>/views/book/messages</value>
 	</util:list>
 
 </beans>

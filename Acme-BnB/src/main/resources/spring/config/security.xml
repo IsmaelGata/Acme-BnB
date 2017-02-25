@@ -54,6 +54,10 @@
 		<!-- ACTOR -->
 		<security:intercept-url pattern="/actor/edit.do" access="isAuthenticated()" /> 
 		<security:intercept-url pattern="/actor/save.do" access="isAuthenticated()" /> 
+		
+		<!-- BOOK -->
+		<security:intercept-url pattern="/book/list.do" access="hasRole('LESSOR')" /> 
+		<security:intercept-url pattern="/book/changeStatus.do" access="hasRole('LESSOR')" /> 
 	
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
 

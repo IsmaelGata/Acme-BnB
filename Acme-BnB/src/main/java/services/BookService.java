@@ -73,6 +73,11 @@ public class BookService {
 		Book result = bookRepository.save(book);
 		return result;
 	}
+	
+	public Book update(Book book) {
+		Assert.notNull(book);
+		return bookRepository.save(book);
+	}
 
 	public void delete(Book book) {
 		Assert.notNull(book);
@@ -83,6 +88,11 @@ public class BookService {
 	}
 
 	//Other business methods
+	
+	public Collection<Book> findBooksByLessorAuthenticated(){
+		Lessor lessor = lessorService.findByPrincipal();
+		return bookRepository.findBooksByLessorAuthenticated(lessor.getId());
+	}
 
 	public void changeStatus(Book book, Status status) {
 		Assert.notNull(book);
@@ -98,7 +108,7 @@ public class BookService {
 		}
 
 		book.setStatus(status);
-		save(book);
+		update(book);
 	}
 
 	//Dashboard
