@@ -50,6 +50,12 @@
 		
 		<!-- PROPERTY -->
 		<security:intercept-url pattern="/property/list.do" access="permitAll" /> 
+		<security:intercept-url pattern="/property/moreInfo.do" access="permitAll" />
+		<security:intercept-url pattern="/property/ownProperties.do" access="hasRole('LESSOR')" />
+		<security:intercept-url pattern="/property/create.do" access="hasRole('LESSOR')" />
+		<security:intercept-url pattern="/property/save.do" access="hasRole('LESSOR')" /> 
+		<security:intercept-url pattern="/property/edit.do" access="hasRole('LESSOR')" />   
+		<security:intercept-url pattern="/property/delete.do" access="hasRole('LESSOR')" /> 
 
 		<!-- ACTOR -->
 		<security:intercept-url pattern="/actor/edit.do" access="isAuthenticated()" /> 

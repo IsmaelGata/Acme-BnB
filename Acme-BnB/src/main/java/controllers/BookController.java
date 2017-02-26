@@ -1,3 +1,4 @@
+
 package controllers;
 
 import java.util.Collection;
@@ -10,18 +11,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import domain.Actor;
+import services.BookService;
 import domain.Book;
 import domain.Status;
-import form.LessorForm;
-import services.BookService;
 
 @Controller
 @RequestMapping("/book")
 public class BookController extends AbstractController {
 
 	@Autowired
-	private BookService bookService;
+	private BookService	bookService;
+
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
@@ -42,7 +42,7 @@ public class BookController extends AbstractController {
 			Status status = null;
 			if ("ACEPTED".equals(value)) {
 				status = Status.ACEPTED;
-			}else if ("DENIED".equals(value)) {
+			} else if ("DENIED".equals(value)) {
 				status = Status.DENIED;
 			}
 

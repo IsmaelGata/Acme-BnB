@@ -4,7 +4,6 @@ package form;
 import java.util.Collection;
 
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
@@ -80,7 +79,6 @@ public class PropertyForm {
 		this.address = address;
 	}
 
-	@NotNull
 	public Collection<ExtraAttribute> getExtraAttributes() {
 		return extraAttributes;
 	}
@@ -89,7 +87,6 @@ public class PropertyForm {
 		this.extraAttributes = extraAttributes;
 	}
 
-	@NotNull
 	public Collection<RelatedValue> getRelatedValues() {
 		return relatedValues;
 	}

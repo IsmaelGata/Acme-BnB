@@ -58,7 +58,7 @@ public class PropertyServiceTest extends AbstractTest {
 			}
 		}
 
-		Property property = propertyService.reconstruct(propertyForm);
+		Property property = propertyService.reconstruct(propertyForm, null);
 		propertyService.save(property);
 
 		authenticate(null);
@@ -88,7 +88,7 @@ public class PropertyServiceTest extends AbstractTest {
 				}
 			}
 
-			Property property = propertyService.reconstruct(propertyForm);
+			Property property = propertyService.reconstruct(propertyForm, null);
 			propertyService.save(property);
 		} catch (IllegalArgumentException e) {
 			System.out.println("createNegativeTest passed");

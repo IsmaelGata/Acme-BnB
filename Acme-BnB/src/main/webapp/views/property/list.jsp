@@ -14,6 +14,7 @@
 <%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
@@ -34,23 +35,41 @@
 	<spring:message code="property.address" var="address" />
 	<display:column property="address" title="${address}" />
 
-	<spring:message code="property.country" var="country" />
-	<display:column property="country" title="${country}" />
-
-	<spring:message code="property.province" var="province" />
-	<display:column property="province" title="${province}" />
-
-	<spring:message code="property.state" var="state" />
-	<display:column property="state" title="${state}" />
-
-	<spring:message code="property.city" var="city" />
-	<display:column property="city" title="${city}" />
-
-	<spring:message code="property.capability" var="capability" />
-	<display:column property="capability" title="${capability}" />
+	<display:column>
+		<acme:cancel url="property/moreInfo.do?propertyId=${row.id}" code="property.moreInfo"/>
+	</display:column>
 	
 	<display:column>
 		<acme:cancel url="lessor/show.do?lessorId=${row.lessor.id}" code="property.lessor"/>
 	</display:column>
-
+	
+	<jstl:if test="${lessorId == row.lessor.id}">
+		<display:column>
+			<jstl:if test="${lessorId == row.lessor.id}">
+				<acme:cancel url="property/edit.do?propertyId=${row.id}" code="property.edit"/>
+			</jstl:if>
+		</display:column>
+		<display:column>
+			<jstl:if test="${fn:length(row.books) <= 0}">
+					<acme:cancel url="property/delete.do?propertyId=${row.id}" code="property.delete"/>
+			</jstl:if>
+		</display:column>
+	</jstl:if>
+	
 </display:table>
+
+<jstl:if test="${editErrorMessage != null}">
+	<spring:message code="${editErrorMessage}" var="editErrorM" />
+	<jstl:out value="${editErrorM}"/>
+	<br/>
+</jstl:if>
+<jstl:if test="${deleteErrorMessage != null}">
+	<spring:message code="${deleteErrorMessage}" var="deleteErrorM" />
+	<jstl:out value="${deleteErrorM}"/>
+	<br/>
+</jstl:if>
+
+<br/>
+<security:authorize access="hasRole('LESSOR')">
+		<acme:cancel url="property/create.do" code="property.create"/>
+	</security:authorize>

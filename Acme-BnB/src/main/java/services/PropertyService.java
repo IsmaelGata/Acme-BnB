@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.PropertyRepository;
 import domain.Book;
@@ -79,9 +81,11 @@ public class PropertyService {
 		property.setRelatedValues(null);
 		Property result = propertyRepository.save(property);
 
-		relatedValueService.assignProperty(relatedValues, result);
-		relatedValueService.saveAll(relatedValues);
-		result.setRelatedValues(relatedValues);
+		if (relatedValues != null) {
+			relatedValueService.assignProperty(relatedValues, result);
+			relatedValueService.saveAll(relatedValues);
+			result.setRelatedValues(relatedValues);
+		}
 
 		return result;
 	}
@@ -94,9 +98,14 @@ public class PropertyService {
 		propertyRepository.delete(property);
 	}
 
+
 	//Other business methods
 
-	public Property reconstruct(PropertyForm propertyForm) {
+	@Autowired
+	private Validator	validator;
+
+
+	public Property reconstruct(PropertyForm propertyForm, BindingResult binding) {
 		Assert.notNull(propertyForm);
 		Property result = new Property();
 		Lessor lessor = lessorService.findByPrincipal();
@@ -122,13 +131,17 @@ public class PropertyService {
 		Collection<RelatedValue> resultRelatedValues = new ArrayList<>();
 
 		//Settings relatedValue
-		for (RelatedValue relatedValue : propertyForm.getRelatedValues()) {
-			if (!propertyForm.getRelatedValues().contains(relatedValue) || relatedValue.getId() == 0) {
-				relatedValue.setProperty(result);
-				resultRelatedValues.add(relatedValue);
-			} else {
-				relatedValueService.delete(relatedValue);
+
+		if (propertyForm.getRelatedValues() != null) {
+			for (RelatedValue relatedValue : propertyForm.getRelatedValues()) {
+				if (!propertyForm.getRelatedValues().contains(relatedValue) || relatedValue.getId() == 0) {
+					relatedValue.setProperty(result);
+					resultRelatedValues.add(relatedValue);
+				} else {
+					relatedValueService.delete(relatedValue);
+				}
 			}
+			validator.validate(propertyForm.getRelatedValues(), binding);
 		}
 
 		result.setRelatedValues(resultRelatedValues);

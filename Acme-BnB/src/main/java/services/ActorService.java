@@ -8,13 +8,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Validator;
 
-import domain.Actor;
-import form.ActorForm;
 import repositories.ActorRepository;
 import security.LoginService;
 import security.UserAccount;
+import domain.Actor;
+import form.ActorForm;
 
 @Service
 @Transactional
@@ -82,14 +81,9 @@ public class ActorService {
 		return result;
 	}
 
-
-	@Autowired
-	Validator	validator;
-
-
 	public Actor reconstruct(ActorForm actorForm, BindingResult binding) {
-		Actor result= findByPrincipal();
-		
+		Actor result = findByPrincipal();
+
 		if (!binding.hasErrors()) {
 			result.setEmail(actorForm.getEmail());
 			result.setPhone(actorForm.getPhone());

@@ -47,17 +47,17 @@ public class Lessor extends ComentatorActor {
 
 	//RelationShips
 
-	private Collection<Property>	listProperty;
+	private Collection<Property>	properties;
 
 
 	@Valid
 	@OneToMany(mappedBy = "lessor", cascade = CascadeType.ALL)
-	public Collection<Property> getListProperty() {
-		return listProperty;
+	public Collection<Property> getProperties() {
+		return properties;
 	}
 
-	public void setListProperty(Collection<Property> listProperty) {
-		this.listProperty = listProperty;
+	public void setProperties(Collection<Property> properties) {
+		this.properties = properties;
 	}
 
 }

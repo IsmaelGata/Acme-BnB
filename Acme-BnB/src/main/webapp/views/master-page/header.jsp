@@ -62,7 +62,16 @@
 		</security:authorize>
 		
 		<security:authorize access="permitAll">
-			<li><a href="property/list.do"><spring:message code="master.page.list.property" /></a></li>
+			<li><a class="fNiv"><spring:message	code="master.page.property" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="property/list.do"><spring:message code="master.page.list.property" /></a></li>
+					<security:authorize access="hasRole('LESSOR')">
+						<li><a href="property/ownProperties.do"><spring:message code="master.page.property.ownProperty" /></a></li>
+					</security:authorize>
+				</ul>
+			</li>
+			
 			
 		</security:authorize>
 		

@@ -168,7 +168,7 @@ public class LessorService extends ComentableService {
 		result.setUserAccount(userAccount);
 
 		Collection<Property> properties = new ArrayList<>();
-		result.setListProperty(properties);
+		result.setProperties(properties);
 
 		Collection<SocialIdentity> socialIdentities = new ArrayList<>();
 		result.setSocialIdentities(socialIdentities);
