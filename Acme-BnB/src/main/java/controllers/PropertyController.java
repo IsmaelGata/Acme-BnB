@@ -184,6 +184,8 @@ public class PropertyController extends AbstractController {
 			}
 			propertyForm.setExtraAttributes(extraAttributes);
 			propertyForm.setRelatedValues(relatedValues);
+		} else if (propertyForm.getId() != 0) {
+			propertyForm = propertyService.assingDefaultRelatedValues(propertyForm);
 		}
 
 		result = new ModelAndView("property/create");

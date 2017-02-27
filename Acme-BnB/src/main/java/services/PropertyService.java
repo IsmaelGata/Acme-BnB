@@ -62,7 +62,7 @@ public class PropertyService {
 		result.setExtraAttributes(extraAttributes);
 		result.setRelatedValues(relatedValues);
 		result.setId(0);
-		
+
 		return result;
 	}
 	public Collection<Property> findAll() {
@@ -119,12 +119,16 @@ public class PropertyService {
 			result.setAudits(backed.getAudits());
 			result.setBooks(backed.getBooks());
 			result.setRelatedValues(backed.getRelatedValues());
+			if (result.getLessor() == null) {
+				Assert.isTrue(lessor.equals(backed.getLessor()));
+				result.setLessor(lessor);
+			}
 		} else {
-			result.setAddress(propertyForm.getAddress());
 			result.setLessor(lessor);
 			result.setBooks(new ArrayList<Book>());
 		}
 
+		result.setAddress(propertyForm.getAddress());
 		result.setName(propertyForm.getName());
 		result.setDescription(propertyForm.getDescription());
 		result.setRate(propertyForm.getRate());
@@ -144,7 +148,8 @@ public class PropertyService {
 		result.setDescription(property.getDescription());
 		result.setName(property.getName());
 		result.setRate(property.getRate());
-		result.setRelatedValues((ArrayList) property.getRelatedValues());
+		result.setRelatedValues(new ArrayList<>(property.getRelatedValues()));
+		//		result.setRelatedValues((ArrayList) property.getRelatedValues());
 		Collection<ExtraAttribute> extraAttributes = new ArrayList<>();
 		for (RelatedValue relatedValue : property.getRelatedValues()) {
 			extraAttributes.add(relatedValue.getExtraAttribute());
@@ -156,6 +161,26 @@ public class PropertyService {
 
 	public Collection<ExtraAttribute> getDefaultExtraAttributes() {
 		return propertyRepository.getDefaultExtraAttributes();
+	}
+
+	public PropertyForm assingDefaultRelatedValues(PropertyForm propertyForm) {
+		Collection<ExtraAttribute> defaultExtraAttributes = getDefaultExtraAttributes();
+		Collection<ExtraAttribute> defaultExtraAttributesCopy = getDefaultExtraAttributes();
+		Collection<ExtraAttribute> propertyExtraAttributes = propertyForm.getExtraAttributes();
+		ArrayList<RelatedValue> relatedValues = new ArrayList<RelatedValue>(propertyForm.getRelatedValues());
+
+		defaultExtraAttributes.retainAll(propertyExtraAttributes);
+		defaultExtraAttributesCopy.removeAll(defaultExtraAttributes);
+		if (defaultExtraAttributesCopy.size() > 0) {
+			for (ExtraAttribute extraAttribute : defaultExtraAttributesCopy) {
+				RelatedValue relatedValue = relatedValueService.create();
+				relatedValue.setExtraAttribute(extraAttribute);
+				relatedValues.add(relatedValue);
+			}
+			propertyForm.setRelatedValues(relatedValues);
+		}
+
+		return propertyForm;
 	}
 
 	//Dashboard

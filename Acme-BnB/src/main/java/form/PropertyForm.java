@@ -18,13 +18,13 @@ public class PropertyForm {
 
 	//Attributes
 
-	private Integer							id;
-	private String								name;
-	private Double							rate;
-	private String								description;
-	private String								address;
+	private Integer						id;
+	private String						name;
+	private Double						rate;
+	private String						description;
+	private String						address;
 	private Collection<ExtraAttribute>	extraAttributes;
-	private ArrayList<RelatedValue>	relatedValues;
+	private ArrayList<RelatedValue>		relatedValues;
 
 
 	//Constructor
@@ -35,7 +35,7 @@ public class PropertyForm {
 
 	//Getter & setter
 
-	 @NotNull
+	@NotNull
 	public Integer getId() {
 		return id;
 	}
@@ -43,7 +43,7 @@ public class PropertyForm {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	
+
 	@NotBlank
 	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getName() {
