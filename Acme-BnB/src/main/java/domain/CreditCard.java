@@ -8,6 +8,8 @@ import javax.persistence.Embeddable;
 import org.hibernate.validator.constraints.CreditCardNumber;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
+import org.hibernate.validator.constraints.SafeHtml;
+import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 
 @Embeddable
 @Access(AccessType.PROPERTY)
@@ -29,6 +31,7 @@ public class CreditCard {
 
 	//Getter & setter
 	@NotBlank
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getHolderName() {
 		return holderName;
 	}
@@ -38,6 +41,7 @@ public class CreditCard {
 	}
 
 	@NotBlank
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getBrandName() {
 		return brandName;
 	}

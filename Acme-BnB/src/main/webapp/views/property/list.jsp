@@ -42,7 +42,11 @@
 	<display:column>
 		<acme:cancel url="lessor/show.do?lessorId=${row.lessor.id}" code="property.lessor"/>
 	</display:column>
-	
+	<security:authorize access="hasRole('TENANT')">
+		<display:column>
+			<acme:cancel url="book/create.do?propertyId=${row.id}" code="property.book.create"/>
+		</display:column>
+	</security:authorize>
 	<jstl:if test="${lessorId == row.lessor.id}">
 		<display:column>
 			<jstl:if test="${fn:length(row.books) >= 0}">

@@ -7,13 +7,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
-import repositories.BookRepository;
 import domain.Book;
+import domain.CreditCard;
 import domain.Lessor;
 import domain.Property;
 import domain.Status;
 import domain.Tenant;
+import form.BookForm;
+import repositories.BookRepository;
 
 @Service
 @Transactional
@@ -26,6 +30,9 @@ public class BookService {
 
 	//Supported services
 
+	@Autowired
+	private PropertyService propertyService;
+	
 	@Autowired
 	private LessorService			lessorService;
 
@@ -116,6 +123,28 @@ public class BookService {
 		book.setStatus(status);
 		update(book);
 	}
+	
+	@Autowired
+	Validator	validator;
+	
+	public Book reconstruct(BookForm bookForm, BindingResult binding) {
+		Book result;
+		
+		Property property= propertyService.findOne(bookForm.getIdProperty());
+		
+		result= create(property);
+		result.setCheckIn(bookForm.getCheckIn());
+		result.setCheckOut(bookForm.getCheckOut());
+		result.setSmoker(bookForm.isSmoker());
+		result.setCreditCard(bookForm.getCreditCard());
+		
+		if (checkCreditCard(bookForm.getCreditCard())) {
+
+			validator.validate(bookForm.getCreditCard(), binding);
+		}
+		
+		return result;
+	}
 
 	//Dashboard
 
@@ -141,5 +170,15 @@ public class BookService {
 		administratorService.findByPrincipal();
 
 		return bookRepository.averageDeniedRequestPerTenant();
+	}
+	
+	public boolean checkCreditCard(CreditCard creditCard) {
+		boolean result = true;
+
+		if (creditCard.getBrandName().isEmpty() && creditCard.getCvv() == 0 && creditCard.getExpirationMonth() == 0 && creditCard.getExpirationYear() == 0 && creditCard.getHolderName().isEmpty() && creditCard.getNumber().isEmpty()) {
+			result = false;
+		}
+
+		return result;
 	}
 }
