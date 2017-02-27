@@ -175,7 +175,7 @@ public class PropertyController extends AbstractController {
 
 		if (propertyForm.getRelatedValues() == null) {
 			Collection<ExtraAttribute> extraAttributes = propertyService.getDefaultExtraAttributes();
-			Collection<RelatedValue> relatedValues = new ArrayList<>();
+			ArrayList<RelatedValue> relatedValues = new ArrayList<>();
 
 			for (ExtraAttribute extraAttribute : extraAttributes) {
 				RelatedValue relatedValue = relatedValueService.create();

@@ -18,6 +18,8 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
 <form:form action="${RequestURI}" modelAttribute="propertyForm">
+	<form:hidden path="id"/>
+	<form:hidden path="extraAttributes"/>
 	
 	<fieldset >
 		<legend><spring:message code="property.simpleData"/></legend>
@@ -26,24 +28,27 @@
 			<br/>
 		<acme:textbox code="property.rate" path="rate" />
 			<br/>
-		<acme:password code="property.description" path="description" />
+		<acme:textbox code="property.description" path="description" />
 			<br/>
-		<acme:password code="property.address" path="address" />
+		<acme:textbox code="property.address" path="address" />
 	</fieldset>
 	<br/>
 	<fieldset >
 		<legend><spring:message code="property.extraAttributeData"/></legend>
 			<br/>
-		<jstl:forEach items="${propertyForm.relatedValues}" var="value">
-			<acme:textbox2 attributeName="${value.extraAttribute.name}" path="${value.value}" />
+		<jstl:forEach items="${propertyForm.relatedValues}" var="relatedValue" varStatus="vstatus">
+			<form:hidden path="relatedValues[${vstatus.index}].id"/>
+			<form:hidden path="relatedValues[${vstatus.index}].extraAttribute"/>
+			<form:hidden path="relatedValues[${vstatus.index}].property"/>
+			<acme:textbox2 attributeName="${relatedValue.extraAttribute.name}" path="relatedValues[${vstatus.index}].value" />
 			<br/>
 		</jstl:forEach>
 	</fieldset>
 	<br/>
 		
-		<acme:submit code="tenant.save" name="save"/>
+		<acme:submit code="property.save" name="save"/>
 		
-		<acme:cancel code="tenant.cancel" url="welcome/index.do"/>
+		<acme:cancel code="property.cancel" url="welcome/index.do"/>
 		
 		
 </form:form>

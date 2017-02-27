@@ -1,9 +1,11 @@
 
 package form;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
@@ -16,13 +18,13 @@ public class PropertyForm {
 
 	//Attributes
 
-	private int							id;
-	private String						name;
-	private double						rate;
-	private String						description;
-	private String						address;
+	private Integer							id;
+	private String								name;
+	private Double							rate;
+	private String								description;
+	private String								address;
 	private Collection<ExtraAttribute>	extraAttributes;
-	private Collection<RelatedValue>	relatedValues;
+	private ArrayList<RelatedValue>	relatedValues;
 
 
 	//Constructor
@@ -33,13 +35,15 @@ public class PropertyForm {
 
 	//Getter & setter
 
-	public int getId() {
+	 @NotNull
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
+	
 	@NotBlank
 	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getName() {
@@ -51,11 +55,12 @@ public class PropertyForm {
 	}
 
 	@Min(0)
-	public double getRate() {
+	@NotNull
+	public Double getRate() {
 		return rate;
 	}
 
-	public void setRate(double rate) {
+	public void setRate(Double rate) {
 		this.rate = rate;
 	}
 
@@ -91,7 +96,7 @@ public class PropertyForm {
 		return relatedValues;
 	}
 
-	public void setRelatedValues(Collection<RelatedValue> relatedValues) {
+	public void setRelatedValues(ArrayList<RelatedValue> relatedValues) {
 		this.relatedValues = relatedValues;
 	}
 

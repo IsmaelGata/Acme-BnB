@@ -30,6 +30,7 @@
 		<bean class="converters.InvoiceToStringConverter" />
 		<bean class="converters.LessorToStringConverter" />
 		<bean class="converters.PropertyToStringConverter" />
+		<bean class="converters.RelatedValueToStringConverter" />
 		<bean class="converters.SocialIdentityToStringConverter" />
 		<bean class="converters.TenantToStringConverter" />
 		
@@ -46,6 +47,7 @@
 		<bean class="converters.StringToInvoiceConverter" />
 		<bean class="converters.StringToLessorConverter" />
 		<bean class="converters.StringToPropertyConverter" />
+		<bean class="converters.StringToRelatedValueConverter" />
 		<bean class="converters.StringToSocialIdentityConverter" />
 		<bean class="converters.StringToTenantConverter" />
 	</util:list>

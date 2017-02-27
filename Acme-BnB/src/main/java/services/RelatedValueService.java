@@ -1,10 +1,12 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.transaction.Transactional;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -74,10 +76,15 @@ public class RelatedValueService {
 
 	//Other Business services
 
-	public void assignProperty(Collection<RelatedValue> relatedValues, Property property) {
+	public Collection<RelatedValue> assignProperty(Collection<RelatedValue> relatedValues, Property property) {
 		Assert.notNull(relatedValues);
+		Collection<RelatedValue> result = new ArrayList<RelatedValue>();
 		for (RelatedValue relatedValue : relatedValues) {
-			relatedValue.setProperty(property);
+			if(StringUtils.isNotBlank(relatedValue.getValue())) {
+				relatedValue.setProperty(property);
+				result.add(relatedValue);
+			}
 		}
+		return result;
 	}
 }

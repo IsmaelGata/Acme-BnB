@@ -51,7 +51,7 @@ public class PropertyService {
 		lessorService.findByPrincipal();
 
 		Collection<ExtraAttribute> extraAttributes = getDefaultExtraAttributes();
-		Collection<RelatedValue> relatedValues = new ArrayList<>();
+		ArrayList<RelatedValue> relatedValues = new ArrayList<>();
 		PropertyForm result = new PropertyForm();
 
 		for (ExtraAttribute extraAttribute : extraAttributes) {
@@ -61,6 +61,8 @@ public class PropertyService {
 		}
 		result.setExtraAttributes(extraAttributes);
 		result.setRelatedValues(relatedValues);
+		result.setId(0);
+		
 		return result;
 	}
 	public Collection<Property> findAll() {
@@ -82,9 +84,8 @@ public class PropertyService {
 		Property result = propertyRepository.save(property);
 
 		if (relatedValues != null) {
-			relatedValueService.assignProperty(relatedValues, result);
+			relatedValues = relatedValueService.assignProperty(relatedValues, result);
 			relatedValueService.saveAll(relatedValues);
-			result.setRelatedValues(relatedValues);
 		}
 
 		return result;
@@ -127,28 +128,12 @@ public class PropertyService {
 		result.setName(propertyForm.getName());
 		result.setDescription(propertyForm.getDescription());
 		result.setRate(propertyForm.getRate());
-
-		Collection<RelatedValue> resultRelatedValues = new ArrayList<>();
-
-		//Settings relatedValue
-
-		if (propertyForm.getRelatedValues() != null) {
-			for (RelatedValue relatedValue : propertyForm.getRelatedValues()) {
-				if (!propertyForm.getRelatedValues().contains(relatedValue) || relatedValue.getId() == 0) {
-					relatedValue.setProperty(result);
-					resultRelatedValues.add(relatedValue);
-				} else {
-					relatedValueService.delete(relatedValue);
-				}
-			}
-			validator.validate(propertyForm.getRelatedValues(), binding);
-		}
-
-		result.setRelatedValues(resultRelatedValues);
+		result.setRelatedValues(propertyForm.getRelatedValues());
 		//**********************************************
 
 		return result;
 	}
+	@SuppressWarnings("unchecked")
 	public PropertyForm conversionToFormObject(Property property) {
 		Assert.notNull(property);
 
@@ -159,7 +144,7 @@ public class PropertyService {
 		result.setDescription(property.getDescription());
 		result.setName(property.getName());
 		result.setRate(property.getRate());
-		result.setRelatedValues(property.getRelatedValues());
+		result.setRelatedValues((ArrayList) property.getRelatedValues());
 		Collection<ExtraAttribute> extraAttributes = new ArrayList<>();
 		for (RelatedValue relatedValue : property.getRelatedValues()) {
 			extraAttributes.add(relatedValue.getExtraAttribute());
