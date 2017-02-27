@@ -32,6 +32,16 @@ public class BookController extends AbstractController {
 
 		return result;
 	}
+	
+	@RequestMapping(value = "/booksByPorperty", method = RequestMethod.GET)
+	public ModelAndView listByProperty(@Valid int propertyId) {
+		ModelAndView result;
+		Collection<Book> books = bookService.findBooksByPropertyAndLessor(propertyId);
+
+		result = listModelAndView(books, null);
+
+		return result;
+	}
 
 	@RequestMapping(value = "/changeStatus", method = RequestMethod.GET)
 	public ModelAndView changeStatus(@Valid int bookId, @Valid String value) {

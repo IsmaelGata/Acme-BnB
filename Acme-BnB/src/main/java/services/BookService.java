@@ -93,6 +93,12 @@ public class BookService {
 		Lessor lessor = lessorService.findByPrincipal();
 		return bookRepository.findBooksByLessorAuthenticated(lessor.getId());
 	}
+	
+	
+	public Collection<Book> findBooksByPropertyAndLessor(int propertyId){
+		Lessor lessor = lessorService.findByPrincipal();
+		return bookRepository.findBooksByPropertyAndLessor(propertyId, lessor.getId());
+	}
 
 	public void changeStatus(Book book, Status status) {
 		Assert.notNull(book);

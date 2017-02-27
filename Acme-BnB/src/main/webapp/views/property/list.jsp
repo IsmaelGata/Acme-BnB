@@ -45,6 +45,11 @@
 	
 	<jstl:if test="${lessorId == row.lessor.id}">
 		<display:column>
+			<jstl:if test="${fn:length(row.books) >= 0}">
+					<acme:cancel url="book/booksByPorperty.do?propertyId=${row.id}" code="property.books"/>
+			</jstl:if>
+		</display:column>
+		<display:column>
 			<jstl:if test="${lessorId == row.lessor.id}">
 				<acme:cancel url="property/edit.do?propertyId=${row.id}" code="property.edit"/>
 			</jstl:if>

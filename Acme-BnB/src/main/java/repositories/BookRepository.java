@@ -14,6 +14,9 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
 
 	@Query("select p.books from Lessor l join l.properties p where l.id = ?1")
 	Collection<Book> findBooksByLessorAuthenticated(int id);
+	
+	@Query("select p.books from Lessor l join l.properties p where l.id = ?2 and p.id= ?1")
+	Collection<Book> findBooksByPropertyAndLessor(int propertyId, int lessorId);
 
 	//Dashboard
 
