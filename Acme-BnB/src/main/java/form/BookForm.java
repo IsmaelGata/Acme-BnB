@@ -14,11 +14,11 @@ import domain.CreditCard;
 public class BookForm {
 
 	//Attributes
-	private int 		idProperty;
+	private int			idProperty;
 	private Date		checkIn;
 	private Date		checkOut;
 	private boolean		smoker;
-	private CreditCard 	creditCard;
+	private CreditCard	creditCard;
 
 
 	//Constructor
@@ -27,66 +27,51 @@ public class BookForm {
 	}
 	//Getter & setter
 
-
 	public int getIdProperty() {
 		return idProperty;
 	}
-
 
 	public void setIdProperty(int idProperty) {
 		this.idProperty = idProperty;
 	}
 
-
 	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "MM/dd/yyyy HH:mm")
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	public Date getCheckIn() {
 		return checkIn;
 	}
-
 
 	public void setCheckIn(Date checkIn) {
 		this.checkIn = checkIn;
 	}
 
-
 	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "MM/dd/yyyy HH:mm")
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	public Date getCheckOut() {
 		return checkOut;
 	}
-
 
 	public void setCheckOut(Date checkOut) {
 		this.checkOut = checkOut;
 	}
 
-
 	public boolean isSmoker() {
 		return smoker;
 	}
 
-
 	public void setSmoker(boolean smoker) {
 		this.smoker = smoker;
 	}
-
 
 	@NotNull
 	public CreditCard getCreditCard() {
 		return creditCard;
 	}
 
-
 	public void setCreditCard(CreditCard creditCard) {
 		this.creditCard = creditCard;
 	}
-	
-	
-	
-
-	
 
 }

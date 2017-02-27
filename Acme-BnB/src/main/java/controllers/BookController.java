@@ -14,12 +14,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.BookService;
 import domain.Book;
 import domain.Status;
-import domain.Tenant;
 import form.BookForm;
-import form.TenantForm;
-import services.BookService;
 
 @Controller
 @RequestMapping("/book")
@@ -28,45 +26,47 @@ public class BookController extends AbstractController {
 	@Autowired
 	private BookService	bookService;
 
+
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create(@RequestParam int propertyId) {
 		ModelAndView result;
 		BookForm bookForm = new BookForm();
-		
+
 		bookForm.setIdProperty(propertyId);
-		
+
 		result = createEditModelAndView(bookForm);
 
 		return result;
 	}
-	
-	@RequestMapping(value="/create",method = RequestMethod.POST,params="save")
-	public ModelAndView save(@Valid BookForm bookForm, BindingResult binding){
+
+	@RequestMapping(value = "/create", method = RequestMethod.POST, params = "save")
+	public ModelAndView save(@Valid BookForm bookForm, BindingResult binding) {
 		ModelAndView result;
 		Book book;
-		
-		book=bookService.reconstruct(bookForm,binding);
-		if(binding.hasErrors()){
-			result = createEditModelAndView(bookForm, "lessor.creditCardPosibleBinding");
-		}else{
-			try{
-				if (bookService.checkCreditCard(bookForm.getCreditCard())) {
-					Boolean var = LuhnCheckDigit.LUHN_CHECK_DIGIT.isValid(bookForm.getCreditCard().getNumber());
-					if (var == false) {
-						throw new IllegalArgumentException("invalid credit card number");
-					}
+
+		book = bookService.reconstruct(bookForm, binding);
+		if (binding.hasErrors()) {
+			if (bookService.checkCreditCardBindingErrors(binding.getAllErrors().toString())) {
+				result = createEditModelAndView(bookForm, "book.creditCard.error");
+			} else {
+				result = createEditModelAndView(bookForm);
+			}
+
+		} else {
+			try {
+				Boolean var = LuhnCheckDigit.LUHN_CHECK_DIGIT.isValid(bookForm.getCreditCard().getNumber());
+				if (var == false) {
+					throw new IllegalArgumentException("invalid credit card number");
 				}
 				bookService.save(book);
-				result= new ModelAndView("redirect:/welcome/index.do");
-			}catch(Throwable oops){
-				result= createEditModelAndView(bookForm,"book.commit.error");
+				result = new ModelAndView("redirect:/welcome/index.do");
+			} catch (Throwable oops) {
+				result = createEditModelAndView(bookForm, "book.commit.error");
 			}
 		}
-		
+
 		return result;
 	}
-	
-	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
 		ModelAndView result;
@@ -76,7 +76,7 @@ public class BookController extends AbstractController {
 
 		return result;
 	}
-	
+
 	@RequestMapping(value = "/booksByPorperty", method = RequestMethod.GET)
 	public ModelAndView listByProperty(@Valid int propertyId) {
 		ModelAndView result;
@@ -126,24 +126,23 @@ public class BookController extends AbstractController {
 
 		return result;
 	}
-	
+
 	//Ancillary methods
-	
-	protected ModelAndView createEditModelAndView(BookForm bookForm){
-		ModelAndView result=createEditModelAndView(bookForm,null);
+
+	protected ModelAndView createEditModelAndView(BookForm bookForm) {
+		ModelAndView result = createEditModelAndView(bookForm, null);
 		return result;
 	}
-	
-	protected ModelAndView createEditModelAndView(BookForm bookForm,String message){
+
+	protected ModelAndView createEditModelAndView(BookForm bookForm, String message) {
 		ModelAndView result;
-		
-		result= new ModelAndView("book/create");
+
+		result = new ModelAndView("book/create");
 		result.addObject("bookForm", bookForm);
 		result.addObject("message", message);
 		result.addObject("RequestURI", "book/create.do");
-		
+
 		return result;
 	}
-	
 
 }

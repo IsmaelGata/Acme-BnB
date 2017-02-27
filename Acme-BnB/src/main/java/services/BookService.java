@@ -10,6 +10,7 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
+import repositories.BookRepository;
 import domain.Book;
 import domain.CreditCard;
 import domain.Lessor;
@@ -17,7 +18,6 @@ import domain.Property;
 import domain.Status;
 import domain.Tenant;
 import form.BookForm;
-import repositories.BookRepository;
 
 @Service
 @Transactional
@@ -31,8 +31,8 @@ public class BookService {
 	//Supported services
 
 	@Autowired
-	private PropertyService propertyService;
-	
+	private PropertyService			propertyService;
+
 	@Autowired
 	private LessorService			lessorService;
 
@@ -76,11 +76,12 @@ public class BookService {
 		Assert.notNull(book);
 		Tenant tenant = tenantService.findByPrincipal();
 		Assert.isTrue(tenant.equals(book.getTenant()));
+		Assert.isTrue(book.getCheckIn().before(book.getCheckOut()));
 
 		Book result = bookRepository.save(book);
 		return result;
 	}
-	
+
 	public Book update(Book book) {
 		Assert.notNull(book);
 		return bookRepository.save(book);
@@ -95,14 +96,13 @@ public class BookService {
 	}
 
 	//Other business methods
-	
-	public Collection<Book> findBooksByLessorAuthenticated(){
+
+	public Collection<Book> findBooksByLessorAuthenticated() {
 		Lessor lessor = lessorService.findByPrincipal();
 		return bookRepository.findBooksByLessorAuthenticated(lessor.getId());
 	}
-	
-	
-	public Collection<Book> findBooksByPropertyAndLessor(int propertyId){
+
+	public Collection<Book> findBooksByPropertyAndLessor(int propertyId) {
 		Lessor lessor = lessorService.findByPrincipal();
 		return bookRepository.findBooksByPropertyAndLessor(propertyId, lessor.getId());
 	}
@@ -123,26 +123,33 @@ public class BookService {
 		book.setStatus(status);
 		update(book);
 	}
-	
+
+
 	@Autowired
 	Validator	validator;
-	
+
+
 	public Book reconstruct(BookForm bookForm, BindingResult binding) {
 		Book result;
-		
-		Property property= propertyService.findOne(bookForm.getIdProperty());
-		
-		result= create(property);
+
+		Property property = propertyService.findOne(bookForm.getIdProperty());
+
+		result = create(property);
 		result.setCheckIn(bookForm.getCheckIn());
 		result.setCheckOut(bookForm.getCheckOut());
 		result.setSmoker(bookForm.isSmoker());
 		result.setCreditCard(bookForm.getCreditCard());
-		
-		if (checkCreditCard(bookForm.getCreditCard())) {
 
-			validator.validate(bookForm.getCreditCard(), binding);
+		validator.validate(bookForm.getCreditCard(), binding);
+
+		return result;
+	}
+
+	public Boolean checkCreditCardBindingErrors(String errors) {
+		Boolean result = false;
+		if (errors.contains("holderName") || errors.contains("brandName") || errors.contains("number") || errors.contains("expirationMonth") || errors.contains("expirationYear") || errors.contains("cvv")) {
+			result = true;
 		}
-		
 		return result;
 	}
 
@@ -171,7 +178,7 @@ public class BookService {
 
 		return bookRepository.averageDeniedRequestPerTenant();
 	}
-	
+
 	public boolean checkCreditCard(CreditCard creditCard) {
 		boolean result = true;
 

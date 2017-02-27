@@ -21,14 +21,18 @@
 
 		<form:hidden path="idProperty"/>
 	
+	<fieldset>
+		<legend><spring:message code="book.bookDetails"/></legend>
 		<acme:textbox code="book.checkIn" path="checkIn" />
 		<br/>
 		<acme:textbox code="book.checkOut" path="checkOut" />
 		<br/>
 		<acme:checkbox code="book.smoker" path="smoker" />
 		<br/>
+	</fieldset>
+	<br/>
 		
-		<fieldset>
+	<fieldset>
 		<legend><spring:message code="book.creditCardDetails"/></legend>
 		<br/>
 		<acme:textbox code="creditCard.holderName" path="creditCard.holderName" />
