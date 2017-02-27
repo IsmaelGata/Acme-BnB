@@ -11,6 +11,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 import javax.validation.Valid;
 
+import org.joda.time.Days;
+
 @Entity
 @Access(AccessType.PROPERTY)
 public class Lessor extends ComentatorActor {
@@ -37,6 +39,17 @@ public class Lessor extends ComentatorActor {
 
 	@Transient
 	public double getTotalFee() {
+		double total = 0.;
+		final long DAY_IN_MILLIS = 1000 * 60 * 60 * 24;
+		for(Property p: this.getProperties()){
+			for(Book b: p.getBooks()){
+				if(b.getStatus() == Status.PENDING){
+					int diffInDays = (int) ((b.getCheckIn().getTime() - b.getCheckOut().getTime())/ DAY_IN_MILLIS );
+					total += p.getRate()*Math.abs(diffInDays);
+				}
+			}
+		}
+		totalFee = total;
 		return totalFee;
 	}
 
