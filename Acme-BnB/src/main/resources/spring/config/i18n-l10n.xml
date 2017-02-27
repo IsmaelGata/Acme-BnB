@@ -33,7 +33,7 @@
 		<value>/views/profile/messages</value>
 		<value>/views/property/messages</value>
 		<value>/views/tenant/messages</value>
-		
+		<value>/views/finder/messages</value>
 	</util:list>
 
 </beans>

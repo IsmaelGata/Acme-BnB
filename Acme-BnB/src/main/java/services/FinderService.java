@@ -2,14 +2,18 @@
 package services;
 
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
 
-import repositories.FinderRepository;
 import domain.Finder;
+import domain.Tenant;
+import form.FinderForm;
+import repositories.FinderRepository;
 
 @Service
 @Transactional
@@ -35,6 +39,11 @@ public class FinderService {
 	}
 
 	// Simple CRUD methods
+	
+	public Finder create() {
+		Finder result = new Finder();
+		return result;
+	}
 
 	public Collection<Finder> findAll() {
 		return finderRepository.findAll();
@@ -59,6 +68,18 @@ public class FinderService {
 	}
 
 	// Other business methods
+	
+	public Finder reconstruct(FinderForm finderForm, BindingResult binding) {
+		Finder result= new Finder();
+		
+		result.setDestination(finderForm.getDestination());
+		result.setKeyWord(finderForm.getKeyWord());
+		result.setMaximum(finderForm.getMaximum());
+		result.setMinimun(finderForm.getMinimun());
+		result.setMoment(new Date(System.currentTimeMillis()-10));
+
+		return result;
+	}
 	
 	// Dashboard
 	
