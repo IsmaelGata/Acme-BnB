@@ -95,7 +95,7 @@ public class PropertyController extends AbstractController {
 	public ModelAndView lessorOwnProperties(@RequestParam(required = false) String editErrorMessage, @RequestParam(required = false) String deleteErrorMessage, @RequestParam(required = false) String createErrorMessage) {
 		ModelAndView result;
 		Lessor lessor = lessorService.findByPrincipal();
-		Collection<Property> properties = lessor.getProperties();
+		Collection<Property> properties = lessor.getListProperty();
 
 		result = new ModelAndView("property/ownProperties");
 		result.addObject("properties", properties);

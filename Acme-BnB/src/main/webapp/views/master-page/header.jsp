@@ -32,10 +32,13 @@
 <div>
 	<ul id="jMenu">
 		<!-- Do not forget the "fNiv" class for the first level links !! -->
-		<security:authorize access="hasRole('ADMIN')">
-			<li><a class="fNiv"><spring:message	code="master.page.administrator" /></a>
+		<security:authorize access="hasRole('ADMINISTRATOR')">
+			<li><a class="fNiv"><spring:message	code="master.page.administrator.dashboard" /></a>
 				<ul>
 					<li class="arrow"></li>
+					<li><a href="administrator/dashboardC.do"><spring:message code="master.page.administrator.dashboradC" /></a></li>
+					<li><a href="administrator/dashboardB.do"><spring:message code="master.page.administrator.dashboradB" /></a></li>
+					<li><a href="administrator/dashboardA.do"><spring:message code="master.page.administrator.dashboradA" /></a></li>
 				</ul>
 			</li>
 		</security:authorize>

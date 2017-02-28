@@ -49,8 +49,9 @@ public interface PropertyRepository extends JpaRepository<Property, Integer> {
 	 *            , id del arrendador
 	 * @return
 	 */
-	@Query("select p from Property p where p.lessor.id=?1 order by p.audits.size desc")
-	Collection<Property> getPropertyOrderAudits(int lessorId);
+	//@Query("select p from Property p where p.lessor.id=?1 order by p.audits.size desc")
+	@Query("select p.lessor.name, p from Property p order by p.audits.size desc")
+	Collection<Object[]> getPropertyOrderAudits();
 
 	/**
 	 * Devuelve un listado de propiedades, para el arrendador dado, ordenadas descendentemente según el número de solicitudes que tengan
@@ -59,8 +60,9 @@ public interface PropertyRepository extends JpaRepository<Property, Integer> {
 	 *            , id del arrendador
 	 * @return
 	 */
-	@Query("select p from Property p where p.lessor.id=?1 order by p.books.size desc")
-	Collection<Property> getPropertyOrderBook(int lessorId);
+	//@Query("select p from Property p where p.lessor.id=?1 order by p.books.size desc")
+	@Query("select p.lessor.name, p from Property p order by p.books.size desc")
+	Collection<Object[]> getPropertyOrderBook();
 
 	/**
 	 * Devuelve un listado de propiedades, para el arrendador dado, ordenadas descendentemente según el número de solicitudes aceptadas que tengan
@@ -69,8 +71,9 @@ public interface PropertyRepository extends JpaRepository<Property, Integer> {
 	 *            , id del arrendador
 	 * @return
 	 */
-	@Query("select p, (select count(b) from Book b where b.property = p and b.status = 1) as c from Property p where p.lessor.id=?1 order by c desc")
-	Collection<Object[]> getPropertyOrderBookAcepted(int lessorId);
+	//@Query("select p, (select count(b) from Book b where b.property = p and b.status = 1) as c from Property p where p.lessor.id=?1 order by c desc")
+	@Query("select p.lessor.name, p, (select count(b) from Book b where b.property = p and b.status = 1) as c from Property p order by c desc")
+	Collection<Object[]> getPropertyOrderBookAcepted();
 
 	/**
 	 * Devuelve un listado de propiedades, para el arrendador dado, ordenadas descendentemente según el número de solicitudes denegadas que tengan

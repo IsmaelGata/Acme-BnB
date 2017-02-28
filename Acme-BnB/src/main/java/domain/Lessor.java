@@ -41,7 +41,7 @@ public class Lessor extends ComentatorActor {
 	public double getTotalFee() {
 		double total = 0.;
 		final long DAY_IN_MILLIS = 1000 * 60 * 60 * 24;
-		for(Property p: this.getProperties()){
+		for(Property p: this.getListProperty()){
 			for(Book b: p.getBooks()){
 				if(b.getStatus() == Status.PENDING){
 					int diffInDays = (int) ((b.getCheckIn().getTime() - b.getCheckOut().getTime())/ DAY_IN_MILLIS );
@@ -60,17 +60,17 @@ public class Lessor extends ComentatorActor {
 
 	//RelationShips
 
-	private Collection<Property>	properties;
+	private Collection<Property>	listProperty;
 
 
 	@Valid
 	@OneToMany(mappedBy = "lessor", cascade = CascadeType.ALL)
-	public Collection<Property> getProperties() {
-		return properties;
+	public Collection<Property> getListProperty() {
+		return listProperty;
 	}
 
-	public void setProperties(Collection<Property> properties) {
-		this.properties = properties;
+	public void setListProperty(Collection<Property> listProperty) {
+		this.listProperty = listProperty;
 	}
 
 }
