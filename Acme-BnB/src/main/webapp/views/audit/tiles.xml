@@ -21,5 +21,10 @@
 		<put-attribute name="body" value="/views/audit/list.jsp" />
 	</definition>
 	
+	<definition name="audit/create" extends="master.page">	
+		<put-attribute name="title" value="Create an audit" />
+		<put-attribute name="body" value="/views/audit/register.jsp" />
+	</definition>
+	
 	
 </tiles-definitions>

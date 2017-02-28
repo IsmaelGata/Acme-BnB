@@ -77,7 +77,7 @@ public class PropertyController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/ownProperties", method = RequestMethod.GET)
-	public ModelAndView lessorOwnProperties(@RequestParam(required = false) String editErrorMessage, @RequestParam(required = false) String deleteErrorMessage) {
+	public ModelAndView lessorOwnProperties(@RequestParam(required = false) String editErrorMessage, @RequestParam(required = false) String deleteErrorMessage,@RequestParam(required = false) String createErrorMessage) {
 		ModelAndView result;
 		Lessor lessor = lessorService.findByPrincipal();
 		Collection<Property> properties = lessor.getProperties();
@@ -86,6 +86,7 @@ public class PropertyController extends AbstractController {
 		result.addObject("properties", properties);
 		result.addObject("RequestURI", "property/ownProperties.do");
 		result.addObject("editErrorMessage", editErrorMessage);
+		result.addObject("createErrorMessage", createErrorMessage);
 		result.addObject("deleteErrorMessage", deleteErrorMessage);
 		result.addObject("lessorId", lessor.getId());
 

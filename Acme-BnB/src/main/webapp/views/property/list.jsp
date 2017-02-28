@@ -52,6 +52,11 @@
 			<acme:cancel url="audit/list.do?propertyId=${row.id}" code="property.audit.list"/>
 		</display:column>
 	</security:authorize>
+	<security:authorize access="hasRole('AUDITOR')">
+		<display:column>
+			<acme:cancel url="audit/create.do?propertyId=${row.id}" code="property.audit.create"/>
+		</display:column>
+	</security:authorize>
 	<jstl:if test="${lessorId == row.lessor.id}">
 		<display:column>
 			<jstl:if test="${fn:length(row.books) >= 0}">
@@ -80,6 +85,12 @@
 <jstl:if test="${deleteErrorMessage != null}">
 	<spring:message code="${deleteErrorMessage}" var="deleteErrorM" />
 	<jstl:out value="${deleteErrorM}"/>
+	<br/>
+</jstl:if>
+
+<jstl:if test="${createErrorMessage != null}">
+	<spring:message code="${createErrorMessage}" var="createErrorM" />
+	<jstl:out value="${createErrorM}"/>
 	<br/>
 </jstl:if>
 

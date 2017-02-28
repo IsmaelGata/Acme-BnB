@@ -62,7 +62,9 @@
 		<security:intercept-url pattern="/actor/save.do" access="isAuthenticated()" /> 
 		
 		<!-- AUDIT -->
-		<security:intercept-url pattern="/audit/list.do" access="isAuthenticated()" /> 
+		<security:intercept-url pattern="/audit/list.do" access="isAuthenticated()" />
+		<security:intercept-url pattern="/audit/create.do" access="hasRole('AUDITOR')" />
+		 
 		
 		<!-- FINDER -->
 		<security:intercept-url pattern="/finder/*" access="hasRole('TENANT')" /> 

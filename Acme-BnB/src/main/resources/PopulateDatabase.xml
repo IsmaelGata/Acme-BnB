@@ -687,15 +687,6 @@
 	</bean>
 	
 	<bean id="audit2" class="domain.Audit">
-		<property name="moment" value="03/02/2017" />
-		<property name="text" value="Malos precios" />
-		<property name="attachments" value="https://www.tripadvisor.es/Hotel_Review-g644308-d2336444-Reviews-El_Berrocal-Cazalla_de_la_Sierra_Province_of_Seville_Andalucia.html" />
-		<property name="draft" value="false" />
-		<property name="auditor" ref="auditor1"/>
-		<property name="property" ref="property1"/>
-	</bean>
-	
-	<bean id="audit3" class="domain.Audit">
 		<property name="moment" value="14/02/2017" />
 		<property name="text" value="Vistas maravillosas aunque el ruido ambiental es algo molesto" />
 		<property name="attachments" value="https://www.idealista.com/inmueble/35327466/" />
@@ -704,7 +695,7 @@
 		<property name="property" ref="property2"/>
 	</bean>
 	
-	<bean id="audit4" class="domain.Audit">
+	<bean id="audit3" class="domain.Audit">
 		<property name="moment" value="14/02/2017" />
 		<property name="text" value="El equipamiento deja algo que desear" />
 		<property name="attachments" value="https://www.niumba.com/alquiler/andalucia/malaga/benalmadena-costa/754463" />
@@ -713,7 +704,7 @@
 		<property name="property" ref="property3"/>
 	</bean>
 	
-	<bean id="audit5" class="domain.Audit">
+	<bean id="audit4" class="domain.Audit">
 		<property name="moment" value="11/02/2017" />
 		<property name="text" value="El aire acondicionado no funciona correctamente" />
 		<property name="attachments" value="https://www.niumba.com/alquiler/andalucia/malaga/caleta-de-velez/867698" />
