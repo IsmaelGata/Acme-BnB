@@ -36,7 +36,7 @@
 		</jstl:if>
 
 		<jstl:if test="${!row.smoker}">
-			<spring:message code="book.smoker.true" var="smokerFalse" />
+			<spring:message code="book.smoker.false" var="smokerFalse" />
 			<jstl:out value="${smokerFalse}"></jstl:out>
 		</jstl:if>
 	</display:column>

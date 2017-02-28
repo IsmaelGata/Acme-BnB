@@ -7,5 +7,6 @@ import domain.Audit;
 
 @Repository
 public interface AuditRepository extends JpaRepository<Audit, Integer>{
+	
 
 }

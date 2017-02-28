@@ -47,6 +47,11 @@
 			<acme:cancel url="book/create.do?propertyId=${row.id}" code="property.book.create"/>
 		</display:column>
 	</security:authorize>
+	<security:authorize access="isAuthenticated()">
+		<display:column>
+			<acme:cancel url="audit/list.do?propertyId=${row.id}" code="property.audit.list"/>
+		</display:column>
+	</security:authorize>
 	<jstl:if test="${lessorId == row.lessor.id}">
 		<display:column>
 			<jstl:if test="${fn:length(row.books) >= 0}">

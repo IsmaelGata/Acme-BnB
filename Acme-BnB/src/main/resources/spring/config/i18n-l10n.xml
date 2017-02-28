@@ -34,6 +34,8 @@
 		<value>/views/property/messages</value>
 		<value>/views/tenant/messages</value>
 		<value>/views/finder/messages</value>
+		<value>/views/audit/messages</value>
+		
 	</util:list>
 
 </beans>
