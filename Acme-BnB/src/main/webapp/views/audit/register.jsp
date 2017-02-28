@@ -34,7 +34,9 @@
 		
 		<br/>
 		<br/>
-		<acme:submit code="audit.save" name="save"/>
+		<jstl:if test="${auditForm.draft == false}">
+			<acme:submit2 code="audit.save" name="save" confirmText="audit.submitConfirm"/>
+		</jstl:if>
 		
 		<acme:cancel code="audit.cancel" url="welcome/index.do"/>
 		

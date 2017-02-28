@@ -122,4 +122,12 @@ public class AuditService {
 	public Integer countPropertyAuditor(int idAuditor, int idProperty) {
 		return auditRepository.countPropertyAuditor(idAuditor, idProperty);
 	}
+
+	public Collection<Audit> getDefinitiveAudits(int propertyId) {
+		return auditRepository.getDefinitiveAudits(propertyId);
+	}
+
+	public Collection<Audit> getAuditsByAuditorAndProperty(int propertyId, Auditor auditor) {
+		return auditRepository.getAuditsByAuditorAndProperty(propertyId, auditor.getId());
+	}
 }

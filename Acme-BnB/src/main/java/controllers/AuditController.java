@@ -45,7 +45,7 @@ public class AuditController extends AbstractController {
 
 		try {
 			Auditor auditor = auditorService.findByPrincipal();
-			Collection<Audit> audits = propertyService.findOne(propertyId).getAudits();
+			Collection<Audit> audits = auditService.getAuditsByAuditorAndProperty(propertyId, auditor);
 			result = new ModelAndView("audit/list");
 			result.addObject("audits", audits);
 			result.addObject("RequestURI", "audit/list.do");
@@ -54,7 +54,7 @@ public class AuditController extends AbstractController {
 			result.addObject("auditorId", auditor.getId());
 
 		} catch (Throwable e) {
-			Collection<Audit> audits = propertyService.findOne(propertyId).getAudits();
+			Collection<Audit> audits = auditService.getDefinitiveAudits(propertyId);
 			result = new ModelAndView("audit/list");
 			result.addObject("audits", audits);
 			result.addObject("RequestURI", "audit/list.do");
