@@ -56,6 +56,7 @@
 					<li><a href="finder/register.do"><spring:message code="master.page.tenant.finder.create" /></a></li>
 				</ul>
 			</li>
+			<li><a href="book/listBooksTenant.do"><spring:message code="master.page.tenant.book.list" /></a></li>
 		</security:authorize>
 		
 		<security:authorize access="isAnonymous()">

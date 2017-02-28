@@ -67,6 +67,7 @@
 		<!-- BOOK -->
 		<security:intercept-url pattern="/book/list.do" access="hasRole('LESSOR')" /> 
 		<security:intercept-url pattern="/book/create.do" access="hasRole('TENANT')" /> 
+		<security:intercept-url pattern="/book/listBooksTenant.do" access="hasRole('TENANT')" />
 		<security:intercept-url pattern="/book/booksByPorperty.do" access="hasRole('LESSOR')" /> 
 		<security:intercept-url pattern="/book/changeStatus.do" access="hasRole('LESSOR')" /> 
 	

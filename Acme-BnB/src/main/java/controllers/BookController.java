@@ -14,10 +14,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.BookService;
 import domain.Book;
 import domain.Status;
+import domain.Tenant;
 import form.BookForm;
+import services.BookService;
+import services.TenantService;
 
 @Controller
 @RequestMapping("/book")
@@ -25,6 +27,9 @@ public class BookController extends AbstractController {
 
 	@Autowired
 	private BookService	bookService;
+	
+	@Autowired
+	private TenantService tenantService;
 
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
@@ -67,6 +72,19 @@ public class BookController extends AbstractController {
 
 		return result;
 	}
+	
+	@RequestMapping(value = "/listBooksTenant", method = RequestMethod.GET)
+	public ModelAndView listBooksTenant() {
+		ModelAndView result;
+		Tenant tenant= tenantService.findByPrincipal();
+
+		result = new ModelAndView("book/list");
+		result.addObject("books", tenant.getBooks());
+		result.addObject("RequestURI", "book/listBooksTenant.do");
+
+		return result;
+	}
+	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
 		ModelAndView result;
