@@ -1,28 +1,18 @@
 
 package form;
 
-import java.util.Date;
-
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
-
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import domain.CreditCard;
 
 public class AuditForm {
 
 	//Attributes
+	private int		id;
 	private int		idProperty;
 	private String	text;
 	private String	attachments;
 	private boolean	draft;
-
-
 
 
 	//Constructor
@@ -30,6 +20,14 @@ public class AuditForm {
 		super();
 	}
 	//Getter & setter
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public int getIdProperty() {
 		return idProperty;
@@ -66,8 +64,5 @@ public class AuditForm {
 	public void setDraft(boolean draft) {
 		this.draft = draft;
 	}
-	
-	
-
 
 }

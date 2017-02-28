@@ -31,18 +31,30 @@
 	<spring:message code="audit.attachments" var="attachments" />
 	<display:column property="attachments" title="${attachments}" />
 
-	<spring:message code="audit.draft" var="draft" />
-	<display:column title="${draft}">
-		<jstl:if test="${row.draft}">
-			<spring:message code="audit.draft.true" var="draftTrue" />
-			<jstl:out value="${draftTrue}"></jstl:out>
-		</jstl:if>
-
-		<jstl:if test="${!row.draft}">
-			<spring:message code="audit.draft.false" var="draftFalse" />
-			<jstl:out value="${draftFalse}"></jstl:out>
-		</jstl:if>
-	</display:column>
-
+	<security:authorize access="hasRole('AUDITOR')">
+		<display:column>
+			<jstl:if test="${row.draft == true && auditorId == row.auditor.id}">
+				<acme:cancel url="audit/edit.do?auditId=${row.id}" code="audit.edit"/>
+			</jstl:if>
+		</display:column>
+		
+		<display:column>
+			<jstl:if test="${row.draft == true && auditorId == row.auditor.id}">
+				<acme:cancel url="audit/delete.do?auditId=${row.id}" code="audit.delete"/>
+			</jstl:if>
+		</display:column>
+	</security:authorize>
 
 </display:table>
+
+<jstl:if test="${editErrorMessage != null}">
+	<br/>
+	<spring:message code="${editErrorMessage}" var="editErrorM" />
+	<p><font size="4" color="red"><jstl:out value="${editErrorM}"/></font></p>
+</jstl:if>
+
+<jstl:if test="${editErrorMessage != null}">
+	<br/>
+	<spring:message code="${deleteErrorMessage}" var="deleteErrorM" />
+	<p><font size="4" color="red"><jstl:out value="${deleteErrorM}"/></font></p>
+</jstl:if>

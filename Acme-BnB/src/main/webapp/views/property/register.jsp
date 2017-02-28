@@ -40,7 +40,12 @@
 			<form:hidden path="relatedValues[${vstatus.index}].id"/>
 			<form:hidden path="relatedValues[${vstatus.index}].extraAttribute"/>
 			<form:hidden path="relatedValues[${vstatus.index}].property"/>
-			<acme:textbox2 attributeName="${relatedValue.extraAttribute.name}" path="relatedValues[${vstatus.index}].value" />
+			<jstl:if test="${cookie['language'].value.equals('en')}">
+				<acme:textbox2 attributeName="${relatedValue.extraAttribute.name}" path="relatedValues[${vstatus.index}].value" />
+			</jstl:if>
+			<jstl:if test="${cookie['language'].value.equals('es')}">
+				<acme:textbox2 attributeName="${relatedValue.extraAttribute.spanishName}" path="relatedValues[${vstatus.index}].value" />
+			</jstl:if>
 			<br/>
 		</jstl:forEach>
 	</fieldset>

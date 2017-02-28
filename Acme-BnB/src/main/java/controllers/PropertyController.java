@@ -24,9 +24,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.AuditorService;
 import services.LessorService;
 import services.PropertyService;
 import services.RelatedValueService;
+import domain.Auditor;
 import domain.ExtraAttribute;
 import domain.Lessor;
 import domain.Property;
@@ -48,16 +50,29 @@ public class PropertyController extends AbstractController {
 	@Autowired
 	private RelatedValueService	relatedValueService;
 
+	@Autowired
+	private AuditorService		auditorService;
+
 
 	//Listing
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView list() {
+	public ModelAndView list(@RequestParam(required = false) String createAuditError) {
 		ModelAndView result;
 		Collection<Property> properties = propertyService.findAll();
 
-		result = new ModelAndView("property/list");
-		result.addObject("properties", properties);
-		result.addObject("RequestURI", "property/list.do");
+		try {
+			Auditor auditor = auditorService.findByPrincipal();
+			result = new ModelAndView("property/list");
+			result.addObject("properties", properties);
+			result.addObject("RequestURI", "property/list.do");
+			result.addObject("auditorId", auditor.getId());
+			result.addObject("createAuditError", createAuditError);
+
+		} catch (Throwable e) {
+			result = new ModelAndView("property/list");
+			result.addObject("properties", properties);
+			result.addObject("RequestURI", "property/list.do");
+		}
 
 		return result;
 	}
@@ -77,7 +92,7 @@ public class PropertyController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/ownProperties", method = RequestMethod.GET)
-	public ModelAndView lessorOwnProperties(@RequestParam(required = false) String editErrorMessage, @RequestParam(required = false) String deleteErrorMessage,@RequestParam(required = false) String createErrorMessage) {
+	public ModelAndView lessorOwnProperties(@RequestParam(required = false) String editErrorMessage, @RequestParam(required = false) String deleteErrorMessage, @RequestParam(required = false) String createErrorMessage) {
 		ModelAndView result;
 		Lessor lessor = lessorService.findByPrincipal();
 		Collection<Property> properties = lessor.getProperties();

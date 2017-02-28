@@ -20,6 +20,7 @@
 <form:form action="${RequestURI}" modelAttribute="auditForm">
 
 		<form:hidden path="idProperty"/>
+		<form:hidden path="id"/>
 	
 	<fieldset>
 		<legend><spring:message code="audit.auditDetails"/></legend>

@@ -64,6 +64,9 @@
 		<!-- AUDIT -->
 		<security:intercept-url pattern="/audit/list.do" access="isAuthenticated()" />
 		<security:intercept-url pattern="/audit/create.do" access="hasRole('AUDITOR')" />
+		<security:intercept-url pattern="/audit/save.do" access="hasRole('AUDITOR')" />
+		<security:intercept-url pattern="/audit/edit.do" access="hasRole('AUDITOR')" />
+		<security:intercept-url pattern="/audit/delete.do" access="hasRole('AUDITOR')" />
 		 
 		
 		<!-- FINDER -->

@@ -54,7 +54,15 @@
 	</security:authorize>
 	<security:authorize access="hasRole('AUDITOR')">
 		<display:column>
-			<acme:cancel url="audit/create.do?propertyId=${row.id}" code="property.audit.create"/>
+			<jstl:set var="demon" value="false"/>
+			<jstl:forEach items="${row.audits}" var="audit">
+				<jstl:if test="${audit.auditor.id == auditorId}">
+					<jstl:set var="demon" value="true"/>
+				</jstl:if>
+			</jstl:forEach>
+			<jstl:if test="${demon == false}">
+				<acme:cancel url="audit/create.do?propertyId=${row.id}" code="property.audit.create"/>
+			</jstl:if>
 		</display:column>
 	</security:authorize>
 	<jstl:if test="${lessorId == row.lessor.id}">
@@ -79,18 +87,24 @@
 
 <jstl:if test="${editErrorMessage != null}">
 	<spring:message code="${editErrorMessage}" var="editErrorM" />
-	<jstl:out value="${editErrorM}"/>
+	<p><font size="4" color="red"><jstl:out value="${editErrorM}"/></font></p>
 	<br/>
 </jstl:if>
 <jstl:if test="${deleteErrorMessage != null}">
 	<spring:message code="${deleteErrorMessage}" var="deleteErrorM" />
-	<jstl:out value="${deleteErrorM}"/>
+	<p><font size="4" color="red"><jstl:out value="${deleteErrorM}"/></font></p>
 	<br/>
 </jstl:if>
 
 <jstl:if test="${createErrorMessage != null}">
 	<spring:message code="${createErrorMessage}" var="createErrorM" />
-	<jstl:out value="${createErrorM}"/>
+	<p><font size="4" color="red"><jstl:out value="${createErrorM}"/></font></p>
+	<br/>
+</jstl:if>
+
+<jstl:if test="${createAuditError != null}">
+	<spring:message code="${createAuditError}" var="createAuditErr" />
+	<p><font size="4" color="red"><jstl:out value="${createAuditErr}"/></font></p>
 	<br/>
 </jstl:if>
 
