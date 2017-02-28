@@ -22,7 +22,6 @@
 <display:table name="audits" id="row" requestURI="${RequestURI}"
 	pagesize="5">
 
-	private boolean	draft;
 	<spring:message code="audit.moment" var="moment" />
 	<display:column property="moment" title="${moment}" />
 
