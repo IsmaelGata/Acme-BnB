@@ -7,9 +7,6 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.Valid;
@@ -79,7 +76,6 @@ public class Property extends DomainEntity {
 	private Lessor						lessor;
 	private Collection<Book>			books;
 	private Collection<RelatedValue>	relatedValues;
-	private Collection<Finder>			finders;
 
 
 	@Valid
@@ -122,14 +118,4 @@ public class Property extends DomainEntity {
 		this.relatedValues = relatedValues;
 	}
 
-	@Valid
-	@ManyToMany
-	@JoinTable(name = "finder_property", joinColumns = @JoinColumn(name = "property_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "finder_id", referencedColumnName = "id"))
-	public Collection<Finder> getFinders() {
-		return finders;
-	}
-
-	public void setFinders(Collection<Finder> finders) {
-		this.finders = finders;
-	}
 }

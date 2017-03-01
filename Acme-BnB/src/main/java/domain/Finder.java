@@ -7,6 +7,8 @@ import java.util.Date;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -23,8 +25,8 @@ public class Finder extends DomainEntity {
 
 	//Attributes
 	private String	destination;
-	private double	minimun;
-	private double	maximum;
+	private Double	minimun;
+	private Double	maximum;
 	private String	keyWord;
 	private Date	moment;
 
@@ -46,20 +48,20 @@ public class Finder extends DomainEntity {
 	}
 
 	@Min(0)
-	public double getMinimun() {
+	public Double getMinimun() {
 		return minimun;
 	}
 
-	public void setMinimun(double minimun) {
+	public void setMinimun(Double minimun) {
 		this.minimun = minimun;
 	}
 
 	@Min(1)
-	public double getMaximum() {
+	public Double getMaximum() {
 		return maximum;
 	}
 
-	public void setMaximum(double maximum) {
+	public void setMaximum(Double maximum) {
 		this.maximum = maximum;
 	}
 
@@ -88,7 +90,8 @@ public class Finder extends DomainEntity {
 
 
 	@Valid
-	@ManyToMany(mappedBy = "finders")
+	@ManyToMany
+	@JoinTable(name = "finder_property", joinColumns = @JoinColumn(name = "finder_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "property_id", referencedColumnName = "id"))
 	public Collection<Property> getListProperty() {
 		return listProperty;
 	}

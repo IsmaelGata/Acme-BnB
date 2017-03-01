@@ -5,15 +5,14 @@ import javax.validation.constraints.Min;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
-import org.hibernate.validator.constraints.URL;
 import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 
 public class FinderForm {
 
 	//Attributes
 	private String	destination;
-	private double	minimun;
-	private double	maximum;
+	private Double	minimun;
+	private Double	maximum;
 	private String	keyWord;
 
 
@@ -34,20 +33,20 @@ public class FinderForm {
 	}
 
 	@Min(0)
-	public double getMinimun() {
+	public Double getMinimun() {
 		return minimun;
 	}
 
-	public void setMinimun(double minimun) {
+	public void setMinimun(Double minimun) {
 		this.minimun = minimun;
 	}
 
 	@Min(1)
-	public double getMaximum() {
+	public Double getMaximum() {
 		return maximum;
 	}
 
-	public void setMaximum(double maximum) {
+	public void setMaximum(Double maximum) {
 		this.maximum = maximum;
 	}
 
@@ -59,7 +58,5 @@ public class FinderForm {
 	public void setKeyWord(String keyWord) {
 		this.keyWord = keyWord;
 	}
-	
-	
 
 }

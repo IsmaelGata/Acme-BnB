@@ -206,7 +206,7 @@
 				
 			</list>
 		</property>
-		<property name="properties">
+		<property name="listProperty">
 			<list>
 				
 			</list>
@@ -228,7 +228,7 @@
 				
 			</list>
 		</property>
-		<property name="properties">
+		<property name="listProperty">
 			<list>
 				
 			</list>
@@ -275,33 +275,6 @@
 		</property>
 	</bean>
 	
-	<!-- FINDER -->
-	
-	<bean id="finder1" class="domain.Finder">
-		<property name="destination" value="destino1" />
-		<property name="minimun" value="1.0" />
-		<property name="maximum" value="10.0" />
-		<property name="keyWord" value="chalet" />
-		<property name="moment" value="08/05/2017 00:00"/>
-		<property name="listProperty">
-			<list>
-			</list>
-		</property>
-	</bean>
-	
-	<bean id="finder2" class="domain.Finder">
-		<property name="destination" value="Seville" />
-		<property name="minimun" value="1.0" />
-		<property name="maximum" value="10.0" />
-		<property name="keyWord" value="vacaciones" />
-		<property name="moment" value="08/05/2017 00:00"/>
-		<property name="listProperty">
-			<list>
-				
-			</list>
-		</property>
-	</bean>
-	
 	<!-- PROPERTY -->
 	
 	<bean id="property1" class="domain.Property">
@@ -324,12 +297,6 @@
 			<list>
 			</list>
 		</property>
-		<property name="finders">
-			<list>
-				<ref bean="finder1"/>
-				<ref bean="finder2"/>
-			</list>
-		</property>
 	</bean>
 	
 	<bean id="property2" class="domain.Property">
@@ -350,11 +317,6 @@
 		</property>
 		<property name="relatedValues">
 			<list>
-			</list>
-		</property>
-		<property name="finders">
-			<list>
-				<ref bean="finder2"/>
 			</list>
 		</property>
 	</bean>
@@ -399,6 +361,34 @@
 		</property>
 		<property name="relatedValues">
 			<list>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- FINDER -->
+	
+	<bean id="finder1" class="domain.Finder">
+		<property name="destination" value="destino1" />
+		<property name="minimun" value="1.0" />
+		<property name="maximum" value="50.0" />
+		<property name="keyWord" value="chalet" />
+		<property name="moment" value="08/05/2017 00:00"/>
+		<property name="listProperty">
+			<list>
+				<ref bean="property1"/>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="finder2" class="domain.Finder">
+		<property name="destination" value="Seville" />
+		<property name="minimun" value="1.0" />
+		<property name="maximum" value="50.0" />
+		<property name="keyWord" value="piso" />
+		<property name="moment" value="08/05/2017 00:00"/>
+		<property name="listProperty">
+			<list>
+				<ref bean="property2"/>
 			</list>
 		</property>
 	</bean>
