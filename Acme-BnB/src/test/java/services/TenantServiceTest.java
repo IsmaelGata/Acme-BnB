@@ -25,7 +25,7 @@ import form.TenantForm;
 	"classpath:spring/datasource.xml", "classpath:spring/config/packages.xml"
 })
 @Transactional
-@TransactionConfiguration(defaultRollback = true)
+@TransactionConfiguration(defaultRollback = false)
 public class TenantServiceTest extends AbstractTest {
 
 	//Services under test

@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Validator;
 
 import repositories.PropertyRepository;
 import domain.Book;
@@ -101,12 +100,7 @@ public class PropertyService {
 		propertyRepository.delete(property);
 	}
 
-
 	//Other business methods
-
-	@Autowired
-	private Validator	validator;
-
 
 	public Property reconstruct(PropertyForm propertyForm, BindingResult binding) {
 		Assert.notNull(propertyForm);

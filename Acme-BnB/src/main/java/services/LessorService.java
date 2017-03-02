@@ -192,7 +192,7 @@ public class LessorService extends ComentableService {
 
 		if (checkCreditCard(lessorForm.getCreditCard())) {
 
-			validator.validate(lessorForm.getCreditCard(), binding);
+			//			validator.validate(lessorForm.getCreditCard(), binding);
 		}
 
 		return result;

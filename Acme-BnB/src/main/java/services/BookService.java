@@ -140,7 +140,7 @@ public class BookService {
 		result.setSmoker(bookForm.isSmoker());
 		result.setCreditCard(bookForm.getCreditCard());
 
-		validator.validate(bookForm.getCreditCard(), binding);
+		//		validator.validate(bookForm.getCreditCard(), binding);
 
 		return result;
 	}

@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.FinderService;
+import services.TenantService;
 import domain.Finder;
+import domain.Tenant;
 import form.FinderForm;
 
 @Controller
@@ -21,31 +23,36 @@ public class FinderController extends AbstractController {
 	@Autowired
 	private FinderService	finderService;
 
+	@Autowired
+	private TenantService	tenantService;
 
-	@RequestMapping(value = "/register", method = RequestMethod.GET)
-	public ModelAndView register() {
+
+	@RequestMapping(value = "/configure", method = RequestMethod.GET)
+	public ModelAndView configure() {
 		ModelAndView result;
-		FinderForm finderForm = new FinderForm();
+		Tenant tenant = tenantService.findByPrincipal();
+		FinderForm finderForm = finderService.convertoToFormObject(tenant.getFinder());
 		result = createEditModelAndView(finderForm);
+		result.addObject("properties", finderForm.getListProperties());
 
 		return result;
 	}
 
-	@RequestMapping(value = "/save", method = RequestMethod.POST, params = "save")
+	@RequestMapping(value = "/find", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid FinderForm finderForm, BindingResult binding) {
 		ModelAndView result;
 		Finder finder = new Finder();
 
-		//		finder = finderService.reconstruct(finderForm, binding);
+		finder = finderService.reconstruct(finderForm, binding);
 		if (binding.hasErrors()) {
 			result = createEditModelAndView(finderForm);
 		} else {
 			try {
-				finder = finderService.finderEngine(finderForm.getDestination(), finderForm.getMinimun(), finderForm.getMaximum(), finderForm.getKeyWord());
+				finder = finderService.finderEngine(finder);
 				finderService.save(finder);
-				result = new ModelAndView("property/list");
+				result = new ModelAndView("finder/configure");
 				result.addObject("properties", finder.getListProperty());
-				result.addObject("RequestURI", "property/list.do");
+				//				result.addObject("RequestURI", "finder/configure.do");
 
 			} catch (Throwable oops) {
 				result = createEditModelAndView(finderForm, "finder.commit.error");
@@ -65,10 +72,10 @@ public class FinderController extends AbstractController {
 	protected ModelAndView createEditModelAndView(FinderForm finderForm, String message) {
 		ModelAndView result;
 
-		result = new ModelAndView("finder/register");
+		result = new ModelAndView("finder/configure");
 		result.addObject("finderForm", finderForm);
 		result.addObject("message", message);
-		result.addObject("RequestURI", "finder/save.do");
+		result.addObject("RequestURI", "finder/find.do");
 		return result;
 	}
 

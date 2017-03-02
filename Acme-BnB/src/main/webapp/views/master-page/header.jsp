@@ -56,7 +56,7 @@
 			<li><a class="fNiv"><spring:message	code="master.page.tenant.finder" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="finder/register.do"><spring:message code="master.page.tenant.finder.create" /></a></li>
+					<li><a href="finder/configure.do"><spring:message code="master.page.tenant.finder.create" /></a></li>
 				</ul>
 			</li>
 			<li><a href="book/listBooksTenant.do"><spring:message code="master.page.tenant.book.list" /></a></li>
