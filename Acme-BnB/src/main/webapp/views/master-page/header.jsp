@@ -41,6 +41,12 @@
 					<li><a href="administrator/dashboardA.do"><spring:message code="master.page.administrator.dashboradA" /></a></li>
 				</ul>
 			</li>
+			<li><a class="fNiv"><spring:message	code="master.page.register" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="auditor/register.do"><spring:message code="master.page.auditor.register" /></a></li>
+				</ul>
+			</li>
 		</security:authorize>
 		
 		<security:authorize access="hasRole('LESSOR')">
@@ -72,6 +78,7 @@
 				</ul>
 			</li>
 		</security:authorize>
+
 		
 		<security:authorize access="permitAll">
 			<li><a class="fNiv"><spring:message	code="master.page.property" /></a>
