@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Validator;
 
 import repositories.PropertyRepository;
 import domain.Book;
@@ -19,6 +18,7 @@ import domain.ExtraAttribute;
 import domain.Lessor;
 import domain.Property;
 import domain.RelatedValue;
+import domain.Status;
 import form.PropertyForm;
 
 @Service
@@ -101,12 +101,7 @@ public class PropertyService {
 		propertyRepository.delete(property);
 	}
 
-
 	//Other business methods
-
-	@Autowired
-	private Validator	validator;
-
 
 	public Property reconstruct(PropertyForm propertyForm, BindingResult binding) {
 		Assert.notNull(propertyForm);
@@ -237,21 +232,25 @@ public class PropertyService {
 		return mapPropertyOrderBook;
 	}
 
-	public Map<String, Map<Integer, Collection<Property>>> getPropertyOrderBookAcepted() {
+	public Map<String, Map<Property, Integer>> getPropertyOrderBookAcepted() {
 		Collection<Object[]> propertyOrderBookAcepted = propertyRepository.getPropertyOrderBook();
-		Map<String, Map<Integer, Collection<Property>>> mapPropertyOrderBookAcepted = new HashMap<String, Map<Integer, Collection<Property>>>();
+		Map<String, Map<Property, Integer>> mapPropertyOrderBookAcepted = new HashMap<String, Map<Property, Integer>>();
 
 		for (Object[] o : propertyOrderBookAcepted) {
 			String name = o[0].toString();
 			if (!mapPropertyOrderBookAcepted.containsKey(name)) {
-				mapPropertyOrderBookAcepted.put(name, new HashMap<Integer, Collection<Property>>());
+				mapPropertyOrderBookAcepted.put(name, new HashMap<Property, Integer>());
 			}
 			Property property = (Property) o[1];
-			Integer count = (Integer) o[2];
-			if (!mapPropertyOrderBookAcepted.get(name).containsKey(count)) {
-				mapPropertyOrderBookAcepted.get(name).put(count, new ArrayList<Property>());
+			Integer count = 0;
+			for(Book b: property.getBooks()){
+				if(b.getStatus().equals(Status.ACEPTED)){
+					count++;
+				}
 			}
-			mapPropertyOrderBookAcepted.get(name).get(count).add(property);
+			if (!mapPropertyOrderBookAcepted.get(name).containsKey(property)) {
+				mapPropertyOrderBookAcepted.get(name).put(property, count);
+			}
 		}
 
 		return mapPropertyOrderBookAcepted;

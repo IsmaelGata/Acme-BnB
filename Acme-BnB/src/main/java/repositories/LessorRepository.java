@@ -19,16 +19,6 @@ public interface LessorRepository extends JpaRepository<Lessor, Integer> {
 	Lessor findByUserName(String username);
 
 	/**
-	 * Calcula la cantidad que debe pagar un arrendador si acepta todas las reservas que tiene
-	 * disponibles, esto es, cuyo status sea PENDING
-	 * 
-	 * @param lessorId, el id del arrendador
-	 * @return 
-	 */
-	@Query("select count(b)*(select f.amount from Fee f) from Book b where b.status=0 and b.property.lessor.id = ?1")
-	double feeToPayByLessorDone(int lessorId);
-
-	/**
 	 * Devuelve los inquilinos que han solicitado una reserva al arrendador dado.
 	 * (Se utiliza en el método doComment)
 	 * 

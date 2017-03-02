@@ -67,29 +67,6 @@ public class LessorServiceTest extends AbstractTest {
 		authenticate(null);
 	}
 
-	// Total Ammount to pay
-
-	//Positive test
-	@Test
-	public void calculateTotalAmountPositiveTest() {
-		authenticate("lessor1");
-		System.out.println(lessorService.calculateTotalAmount());
-		authenticate(null);
-	}
-
-	//Negative test
-	@Test
-	public void calculateTotalAmountNegativeTest() {
-		authenticate(null);
-		try {
-			System.out.println(lessorService.calculateTotalAmount());
-		} catch (Throwable e) {
-			System.out.println("calculateTotalAmountNegativeTest passed");
-		}
-
-		authenticate(null);
-	}
-
 	//Doing comment
 
 	//Positive test

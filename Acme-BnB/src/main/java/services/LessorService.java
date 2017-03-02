@@ -117,20 +117,6 @@ public class LessorService extends ComentableService {
 		return lessorRepository.getRequestersTenantsByLessor(lessor.getId());
 	}
 
-	/**
-	 * Calcula la cantidad total que debería abonar el arrendador si acepta todas las reservas que
-	 * tiene en curso (en estado PENDING) atendiendo al impuesto (FEE) que esté vigente en el momento
-	 * de aceptar la reserva.
-	 * 
-	 * @return cantidad total a pagar
-	 */
-	public double calculateTotalAmount() {
-		Lessor lessor = findByPrincipal();
-		double result = lessorRepository.feeToPayByLessorDone(lessor.getId());
-
-		return result;
-	}
-
 	public Comment doComment(ComentatorActor comentatorActor, Comment comment) {
 		Comment result = null;
 		Assert.notNull(comentatorActor);
@@ -192,7 +178,7 @@ public class LessorService extends ComentableService {
 
 		if (checkCreditCard(lessorForm.getCreditCard())) {
 
-			validator.validate(lessorForm.getCreditCard(), binding);
+			//			validator.validate(lessorForm.getCreditCard(), binding);
 		}
 
 		return result;

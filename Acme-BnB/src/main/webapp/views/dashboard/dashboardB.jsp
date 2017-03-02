@@ -86,20 +86,26 @@
 		<h2>
 			<jstl:out value="${item.key}"></jstl:out>
 		</h2>
-		<jstl:forEach items="${item.value}" var="item2">
-			<display:table name="${item2.value}" id="row"
-				requestURI="administrator/dashboardB" class="displaytag">
+
+
+		<display:table name="${item.value}" id="row"
+			requestURI="administrator/dashboardB" class="displaytag">
+			<jstl:forEach items="${item.value}" var="item2">
 				<spring:message code="dashboard.property" var="property" />
 				<display:column title="${property}">
-					<jstl:out value="${row.name}"></jstl:out>
+					<jstl:out value="${item2.key.name}"></jstl:out>
 				</display:column>
+
 				
-				<spring:message code="dashboard.numberOfBookAproved" var="numberOfBookAproved" />
+				<spring:message code="dashboard.numberOfBookAproved"
+					var="numberOfBookAproved" />
 				<display:column title="${numberOfBookAproved}">
-					<jstl:out value="${item2.key}"></jstl:out>
+					<jstl:out value="${count}"></jstl:out>
 				</display:column>
-			</display:table>
-		</jstl:forEach>
+
+			</jstl:forEach>
+
+		</display:table>
 		<br />
 	</jstl:forEach>
 </fieldset>

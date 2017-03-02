@@ -115,7 +115,7 @@ public class AdministratorController extends AbstractController {
 		//falta uno
 		Map<String, Collection<Property>> propertyOrderAudits = propertyService.getPropertyOrderAudits();
 		Map<String, Collection<Property>> propertyOrderBook = propertyService.getPropertyOrderAudits();
-		Map<String, Map<Integer, Collection<Property>>> propertyOrderBookAcepted = propertyService.getPropertyOrderBookAcepted();
+		Map<String, Map<Property, Integer>> propertyOrderBookAcepted = propertyService.getPropertyOrderBookAcepted();
 		
 
 		result = new ModelAndView("administrator/dashboardB");
