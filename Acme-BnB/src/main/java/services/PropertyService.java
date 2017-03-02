@@ -18,7 +18,6 @@ import domain.ExtraAttribute;
 import domain.Lessor;
 import domain.Property;
 import domain.RelatedValue;
-import domain.Status;
 import form.PropertyForm;
 
 @Service
@@ -232,25 +231,21 @@ public class PropertyService {
 		return mapPropertyOrderBook;
 	}
 
-	public Map<String, Map<Property, Integer>> getPropertyOrderBookAcepted() {
+	public Map<String, Map<Integer, Collection<Property>>> getPropertyOrderBookAcepted() {
 		Collection<Object[]> propertyOrderBookAcepted = propertyRepository.getPropertyOrderBook();
-		Map<String, Map<Property, Integer>> mapPropertyOrderBookAcepted = new HashMap<String, Map<Property, Integer>>();
+		Map<String, Map<Integer, Collection<Property>>> mapPropertyOrderBookAcepted = new HashMap<String, Map<Integer, Collection<Property>>>();
 
 		for (Object[] o : propertyOrderBookAcepted) {
 			String name = o[0].toString();
 			if (!mapPropertyOrderBookAcepted.containsKey(name)) {
-				mapPropertyOrderBookAcepted.put(name, new HashMap<Property, Integer>());
+				mapPropertyOrderBookAcepted.put(name, new HashMap<Integer, Collection<Property>>());
 			}
 			Property property = (Property) o[1];
-			Integer count = 0;
-			for(Book b: property.getBooks()){
-				if(b.getStatus().equals(Status.ACEPTED)){
-					count++;
-				}
+			Integer count = (Integer) o[2];
+			if (!mapPropertyOrderBookAcepted.get(name).containsKey(count)) {
+				mapPropertyOrderBookAcepted.get(name).put(count, new ArrayList<Property>());
 			}
-			if (!mapPropertyOrderBookAcepted.get(name).containsKey(property)) {
-				mapPropertyOrderBookAcepted.get(name).put(property, count);
-			}
+			mapPropertyOrderBookAcepted.get(name).get(count).add(property);
 		}
 
 		return mapPropertyOrderBookAcepted;
