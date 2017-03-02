@@ -5,17 +5,22 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
 
+import domain.Audit;
+import domain.Auditor;
+import domain.Book;
+import domain.Finder;
+import domain.SocialIdentity;
+import form.AuditorForm;
 import repositories.AuditorRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
-import domain.Audit;
-import domain.Auditor;
-import domain.SocialIdentity;
 
 @Service
 @Transactional
@@ -103,6 +108,47 @@ public class AuditorService {
 		Auditor result;
 
 		result = auditorRepository.findByUserName(username);
+
+		return result;
+	}
+	
+	public Auditor reconstruct(AuditorForm auditorForm, BindingResult binding) {
+		Auditor result;
+
+		Md5PasswordEncoder encoder = new Md5PasswordEncoder();
+		String hash = encoder.encodePassword(auditorForm.getPassword(), null);
+
+		result = new Auditor();
+
+		Authority authority = new Authority();
+		UserAccount userAccount = new UserAccount();
+
+		//Configuring authority & userAccount
+		authority.setAuthority("AUDITOR");
+		userAccount.addAuthority(authority);
+		result.setUserAccount(userAccount);
+
+		Collection<Audit> audits = new ArrayList<>();
+		result.setAudits(audits);
+
+		Collection<SocialIdentity> socialIdentities = new ArrayList<>();
+		result.setSocialIdentities(socialIdentities);
+
+		result.getUserAccount().setUsername(auditorForm.getUsername());
+		result.getUserAccount().setPassword(hash);
+
+		result.setName(auditorForm.getName());
+		result.setSurname(auditorForm.getSurname());
+		result.setEmail(auditorForm.getEmail());
+		result.setPhone(auditorForm.getPhone());
+		result.setPicture(auditorForm.getPicture());
+		result.setCompanyName(auditorForm.getCompanyName());
+
+		//Checking passwords and conditions
+		if (!auditorForm.getPassword().equals(auditorForm.getRepeatPassword())) {
+			result.getUserAccount().setPassword(null);
+		}
+
 
 		return result;
 	}

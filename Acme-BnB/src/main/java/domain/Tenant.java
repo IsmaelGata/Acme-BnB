@@ -8,6 +8,7 @@ import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.validation.Valid;
 
 @Entity
@@ -26,6 +27,7 @@ public class Tenant extends ComentatorActor {
 
 	//RelationShips
 	private Collection<Book>	books;
+	private Finder				finder;
 
 
 	@Valid
@@ -36,6 +38,16 @@ public class Tenant extends ComentatorActor {
 
 	public void setBooks(Collection<Book> books) {
 		this.books = books;
+	}
+
+	@Valid
+	@OneToOne(mappedBy = "tenant", cascade = CascadeType.ALL)
+	public Finder getFinder() {
+		return finder;
+	}
+
+	public void setFinder(Finder finder) {
+		this.finder = finder;
 	}
 
 }

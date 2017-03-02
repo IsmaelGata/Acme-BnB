@@ -19,7 +19,7 @@ import security.UserAccount;
 import domain.Book;
 import domain.ComentatorActor;
 import domain.Comment;
-import domain.Lessor;
+import domain.Finder;
 import domain.SocialIdentity;
 import domain.Tenant;
 import form.TenantForm;
@@ -40,6 +40,9 @@ public class TenantService extends ComentableService {
 
 	@Autowired
 	private AdministratorService	administratorService;
+
+	@Autowired
+	private FinderService			finderService;
 
 
 	//Constructor
@@ -67,11 +70,13 @@ public class TenantService extends ComentableService {
 
 	public Tenant save(Tenant tenant) {
 		Assert.notNull(tenant);
-
+		Finder finder = tenant.getFinder();
+		tenant.setFinder(null);
 		Tenant result = tenantRepository.save(tenant);
+		finder.setTenant(result);
+		finderService.save(finder);
 		return result;
 	}
-
 	@Deprecated
 	public void delete(Tenant tenant) {
 		Assert.notNull(tenant);
@@ -169,7 +174,12 @@ public class TenantService extends ComentableService {
 			result.getUserAccount().setPassword(null);
 		}
 
-		//		validator.validate(result, binding);
+		//Creating finder
+
+		Finder finder = new Finder();
+		finder.setTenant(result);
+		finder.setDestination("World");
+		result.setFinder(finder);
 
 		return result;
 	}

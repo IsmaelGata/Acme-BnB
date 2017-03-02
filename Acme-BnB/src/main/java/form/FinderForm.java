@@ -1,19 +1,24 @@
 
 package form;
 
+import java.util.Collection;
+
 import javax.validation.constraints.Min;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 
+import domain.Property;
+
 public class FinderForm {
 
 	//Attributes
-	private String	destination;
-	private Double	minimun;
-	private Double	maximum;
-	private String	keyWord;
+	private String					destination;
+	private Double					minimun;
+	private Double					maximum;
+	private String					keyWord;
+	private Collection<Property>	listProperties;
 
 
 	//Constructor
@@ -57,6 +62,14 @@ public class FinderForm {
 
 	public void setKeyWord(String keyWord) {
 		this.keyWord = keyWord;
+	}
+
+	public Collection<Property> getListProperties() {
+		return listProperties;
+	}
+
+	public void setListProperties(Collection<Property> listProperties) {
+		this.listProperties = listProperties;
 	}
 
 }

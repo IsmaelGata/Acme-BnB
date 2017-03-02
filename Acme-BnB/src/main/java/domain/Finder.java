@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
@@ -87,6 +88,7 @@ public class Finder extends DomainEntity {
 
 	//RelationShips
 	private Collection<Property>	listProperty;
+	private Tenant					tenant;
 
 
 	@Valid
@@ -98,6 +100,15 @@ public class Finder extends DomainEntity {
 
 	public void setListProperty(Collection<Property> listProperty) {
 		this.listProperty = listProperty;
+	}
+
+	@OneToOne(optional = false)
+	public Tenant getTenant() {
+		return tenant;
+	}
+
+	public void setTenant(Tenant tenant) {
+		this.tenant = tenant;
 	}
 
 }
