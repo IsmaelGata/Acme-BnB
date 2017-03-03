@@ -62,6 +62,9 @@
 		<!-- AUDITOR -->
 		<security:intercept-url pattern="/auditor/register.do" access="hasRole('ADMINISTRATOR')" /> 
 		
+		<!-- SOCIALIDENTITIES -->
+		<security:intercept-url pattern="/socialIdentity/*" access="isAuthenticated()" /> 
+		
 		<!-- PROPERTY -->
 		<security:intercept-url pattern="/property/list.do" access="permitAll" /> 
 		<security:intercept-url pattern="/property/moreInfo.do" access="permitAll" />

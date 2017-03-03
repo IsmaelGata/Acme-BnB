@@ -2,7 +2,9 @@
 package form;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.URL;
+import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 
 public class SocialIdentityForm {
 
@@ -28,6 +30,7 @@ public class SocialIdentityForm {
 	}
 
 	@NotBlank
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getNick() {
 		return nick;
 	}
@@ -37,6 +40,7 @@ public class SocialIdentityForm {
 	}
 
 	@NotBlank
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getNameSocialNetwork() {
 		return nameSocialNetwork;
 	}
@@ -47,6 +51,7 @@ public class SocialIdentityForm {
 
 	@NotBlank
 	@URL
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getURL() {
 		return URL;
 	}
