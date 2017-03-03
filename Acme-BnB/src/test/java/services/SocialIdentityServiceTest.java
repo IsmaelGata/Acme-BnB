@@ -39,7 +39,7 @@ public class SocialIdentityServiceTest extends AbstractTest {
 		socialIdentityForm.setNameSocialNetwork("Test");
 		socialIdentityForm.setNick("Test");
 		socialIdentityForm.setURL("http://www.testing.es");
-		SocialIdentity result = socialIdentityService.reconstruct(socialIdentityForm);
+		SocialIdentity result = socialIdentityService.reconstruct(socialIdentityForm,null);
 		socialIdentityService.save(result);
 
 		authenticate(null);
@@ -54,7 +54,7 @@ public class SocialIdentityServiceTest extends AbstractTest {
 			socialIdentityForm.setNameSocialNetwork("Test");
 			socialIdentityForm.setNick("Test");
 			socialIdentityForm.setURL("http://www.testing.es");
-			SocialIdentity result = socialIdentityService.reconstruct(socialIdentityForm);
+			SocialIdentity result = socialIdentityService.reconstruct(socialIdentityForm,null);
 			socialIdentityService.save(result);
 
 		} catch (IllegalArgumentException e) {
@@ -72,7 +72,7 @@ public class SocialIdentityServiceTest extends AbstractTest {
 		socialIdentityForm.setNameSocialNetwork("Test");
 		socialIdentityForm.setNick("Test");
 		socialIdentityForm.setURL("http://www.testing.es");
-		SocialIdentity result2 = socialIdentityService.reconstruct(socialIdentityForm);
+		SocialIdentity result2 = socialIdentityService.reconstruct(socialIdentityForm,null);
 		SocialIdentity result = socialIdentityService.save(result2);
 		socialIdentityService.delete(result);
 		authenticate(null);
@@ -87,7 +87,7 @@ public class SocialIdentityServiceTest extends AbstractTest {
 			socialIdentityForm.setNameSocialNetwork("Test");
 			socialIdentityForm.setNick("Test");
 			socialIdentityForm.setURL("http://www.testing.es");
-			SocialIdentity result2 = socialIdentityService.reconstruct(socialIdentityForm);
+			SocialIdentity result2 = socialIdentityService.reconstruct(socialIdentityForm,null);
 			SocialIdentity result = socialIdentityService.save(result2);
 			socialIdentityService.delete(result);
 		} catch (IllegalArgumentException e) {

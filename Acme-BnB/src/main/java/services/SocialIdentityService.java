@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
 
 import repositories.SocialIdentityRepository;
 import domain.Actor;
@@ -76,7 +77,7 @@ public class SocialIdentityService {
 
 	//Other business methods
 
-	public SocialIdentity reconstruct(SocialIdentityForm socialIdentityForm) {
+	public SocialIdentity reconstruct(SocialIdentityForm socialIdentityForm,BindingResult binding) {
 		SocialIdentity result = new SocialIdentity();
 
 		result.setNick(socialIdentityForm.getNick());
