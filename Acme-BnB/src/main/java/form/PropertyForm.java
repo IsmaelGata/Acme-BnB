@@ -20,7 +20,7 @@ public class PropertyForm {
 
 	private Integer						id;
 	private String						name;
-	private Double						rate;
+	private double						rate;
 	private String						description;
 	private String						address;
 	private Collection<ExtraAttribute>	extraAttributes;
@@ -56,11 +56,11 @@ public class PropertyForm {
 
 	@Min(0)
 	@NotNull
-	public Double getRate() {
+	public double getRate() {
 		return rate;
 	}
 
-	public void setRate(Double rate) {
+	public void setRate(double rate) {
 		this.rate = rate;
 	}
 

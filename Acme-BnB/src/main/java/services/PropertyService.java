@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.PropertyRepository;
 import domain.Book;
@@ -100,7 +101,12 @@ public class PropertyService {
 		propertyRepository.delete(property);
 	}
 
+
 	//Other business methods
+
+	@Autowired
+	private Validator	validator;
+
 
 	public Property reconstruct(PropertyForm propertyForm, BindingResult binding) {
 		Assert.notNull(propertyForm);
@@ -128,7 +134,14 @@ public class PropertyService {
 		result.setName(propertyForm.getName());
 		result.setDescription(propertyForm.getDescription());
 		result.setRate(propertyForm.getRate());
-		result.setRelatedValues(propertyForm.getRelatedValues());
+		for (RelatedValue relatedValue : propertyForm.getRelatedValues()) {
+			validator.validate(relatedValue, binding);
+		}
+
+		if (!binding.hasErrors()) {
+			result.setRelatedValues(propertyForm.getRelatedValues());
+		}
+
 		//**********************************************
 
 		return result;

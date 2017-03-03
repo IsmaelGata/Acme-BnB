@@ -46,6 +46,9 @@
 			<jstl:if test="${cookie['language'].value.equals('es')}">
 				<acme:textbox2 attributeName="${relatedValue.extraAttribute.spanishName}" path="relatedValues[${vstatus.index}].value" />
 			</jstl:if>
+			<jstl:if test="${cookie['language'].value == null}">
+				<acme:textbox2 attributeName="${relatedValue.extraAttribute.name}" path="relatedValues[${vstatus.index}].value" />
+			</jstl:if>
 			<br/>
 		</jstl:forEach>
 	</fieldset>
@@ -54,6 +57,11 @@
 		<acme:submit code="property.save" name="save"/>
 		
 		<acme:cancel code="property.cancel" url="welcome/index.do"/>
-		
-		
+
+<jstl:if test="${errorMessage != null}">
+<br/>
+	<spring:message code="property.binding.errors" var="error" />
+	<p style="color:red;"><jstl:out value="${error}"></jstl:out></p>
+</jstl:if>
+
 </form:form>
