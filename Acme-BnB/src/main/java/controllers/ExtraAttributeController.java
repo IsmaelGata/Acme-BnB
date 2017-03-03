@@ -1,6 +1,8 @@
 
 package controllers;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.ExtraAttributeService;
 import domain.ExtraAttribute;
+import domain.Type;
 
 @Controller
 @RequestMapping("/extraAttribute")
@@ -55,7 +58,7 @@ public class ExtraAttributeController extends AbstractController {
 
 	//Save
 
-	@RequestMapping(value = "/save", method = RequestMethod.GET)
+	@RequestMapping(value = "/save", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@RequestParam ExtraAttribute extraAttribute, BindingResult binding) {
 		ModelAndView result;
 
@@ -119,8 +122,12 @@ public class ExtraAttributeController extends AbstractController {
 		ModelAndView result;
 
 		result = new ModelAndView("extraAttribute/create");
+		ArrayList<Type> enumConstants = new ArrayList<>(Arrays.asList(Type.values()));
+
 		result.addObject("extraAttribute", extraAttribute);
 		result.addObject("errorMessage", message);
+		result.addObject("enumConstants", enumConstants);
+		result.addObject("RequestURI", "extraAttribute/save.do");
 
 		return result;
 	}

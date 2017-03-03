@@ -29,7 +29,19 @@
 	<display:column property="spanishName" title="${spanishName}" />
 	
 	<spring:message code="extraAttribute.type" var="type" />
-	<display:column property="type" title="${type}" />
+	<display:column>
+		<jstl:if test="${cookie['language'].value.equals('en')}">
+			<jstl:out value="${row.type.name}"></jstl:out>
+		</jstl:if>
+		
+		<jstl:if test="${cookie['language'].value.equals('es')}">
+			<jstl:out value="${row.type.spanishName}"></jstl:out>
+		</jstl:if>
+		
+		<jstl:if test="${cookie['language'].value == null}">
+			<jstl:out value="${row.type.name}"></jstl:out>
+		</jstl:if>
+	</display:column>
 	
 	<display:column>
 		<acme:cancel code="extraAttribute.edit" url="extraAttribute/edit.do?extraAttributeId=${row.id}"/>
@@ -40,3 +52,7 @@
 	</display:column>
 	
 </display:table>
+
+<br/>
+
+<acme:cancel code="extraAttribute.create" url="extraAttribute/create.do"/>
