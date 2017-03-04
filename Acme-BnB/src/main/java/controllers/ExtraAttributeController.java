@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -59,7 +61,7 @@ public class ExtraAttributeController extends AbstractController {
 	//Save
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@RequestParam ExtraAttribute extraAttribute, BindingResult binding) {
+	public ModelAndView save(@Valid ExtraAttribute extraAttribute, BindingResult binding) {
 		ModelAndView result;
 
 		if (binding.hasErrors()) {

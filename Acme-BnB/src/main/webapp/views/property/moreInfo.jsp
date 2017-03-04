@@ -33,10 +33,26 @@
 					<spring:message code="property.booleanFalse" var="varFalse"/>
 					<jstl:out value="${varFalse}"/>
 				</jstl:if>
+				
+				<jstl:if test="${relatedValue.value != 'true' && relatedValue.value != 'false'}">
+					<spring:message code="property.booleanError" var="booleanError"/>
+					<jstl:out value="${booleanError}"/>
+					<br/>
+				</jstl:if>
 			</jstl:if>
 			<jstl:if test="${relatedValue.extraAttribute.type != 'BOOLEAN'}">
-				<jstl:out value="${relatedValue.value}"/>
-			</jstl:if>
+				<jstl:if test="${relatedValue.extraAttribute.type == 'URL'}">
+					<a href="${relatedValue.value}"><jstl:out value="${relatedValue.value}"/></a>
+				</jstl:if>
+				
+				<jstl:if test="${relatedValue.extraAttribute.type == 'PICTURE'}">
+					<img src="${relatedValue.value}" style="width:304px;height:228px;">
+				</jstl:if>
+				
+				<jstl:if test="${relatedValue.extraAttribute.type != 'PICTURE' || relatedValue.extraAttribute.type == 'URL'}">
+					<jstl:out value="${relatedValue.value}"/>
+				</jstl:if>
+			</jstl:if>	
 			<br/>
 		</jstl:forEach>
 		

@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.AuditorService;
+import services.ExtraAttributeService;
 import services.LessorService;
 import services.PropertyService;
 import services.RelatedValueService;
@@ -42,16 +43,19 @@ public class PropertyController extends AbstractController {
 	//Supported services
 
 	@Autowired
-	private PropertyService		propertyService;
+	private PropertyService			propertyService;
 
 	@Autowired
-	private LessorService		lessorService;
+	private LessorService			lessorService;
 
 	@Autowired
-	private RelatedValueService	relatedValueService;
+	private RelatedValueService		relatedValueService;
 
 	@Autowired
-	private AuditorService		auditorService;
+	private AuditorService			auditorService;
+
+	@Autowired
+	private ExtraAttributeService	extraAttributeService;
 
 
 	//Listing
@@ -190,7 +194,7 @@ public class PropertyController extends AbstractController {
 		ModelAndView result;
 
 		if (propertyForm.getRelatedValues() == null) {
-			Collection<ExtraAttribute> extraAttributes = propertyService.getDefaultExtraAttributes();
+			Collection<ExtraAttribute> extraAttributes = extraAttributeService.findAll();
 			ArrayList<RelatedValue> relatedValues = new ArrayList<>();
 
 			for (ExtraAttribute extraAttribute : extraAttributes) {

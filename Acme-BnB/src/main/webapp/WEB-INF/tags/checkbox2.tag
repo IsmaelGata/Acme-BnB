@@ -23,7 +23,7 @@
 <%-- Attributes --%> 
  
 <%@ attribute name="path" required="true" %>
-<%@ attribute name="code" required="true" %>
+<%@ attribute name="attributeName" required="true" %>
 
 <%@ attribute name="readonly" required="false" %>
 <%@ attribute name="varConditions" required="false" %>
@@ -39,9 +39,7 @@
 <%-- Definition --%>
 
 <div>
-	<form:label path="${path}">
-		<spring:message code="${code}" />
-	</form:label>	
+	<jstl:out value="${attributeName}"/>	
 	<form:checkbox path="${path}"/>	
 	<form:errors path="${path}" cssClass="error" />
 </div>	

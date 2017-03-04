@@ -40,41 +40,21 @@
 			<form:hidden path="relatedValues[${vstatus.index}].id"/>
 			<form:hidden path="relatedValues[${vstatus.index}].extraAttribute"/>
 			<form:hidden path="relatedValues[${vstatus.index}].property"/>
-			
-			<jstl:if test="${relatedValue.extraAttribute.type == 'BOOLEAN'}">
-				<jstl:if test="${cookie['language'].value.equals('en')}">
-					<acme:textbox2 attributeName="${relatedValue.extraAttribute.name}" path="relatedValues[${vstatus.index}].value" />
-					<spring:message code="extraAttribute.boolean.explain" var="explain" />
-					<p style="color:blue;"><jstl:out value="${explain}"></jstl:out></p>
-				</jstl:if>
-				<jstl:if test="${cookie['language'].value.equals('es')}">
-					<acme:textbox2 attributeName="${relatedValue.extraAttribute.spanishName}" path="relatedValues[${vstatus.index}].value" />
-					<spring:message code="extraAttribute.boolean.explain" var="explain" />
-					<p style="color:blue;"><jstl:out value="${explain}"></jstl:out></p>
-				</jstl:if>
-				<jstl:if test="${cookie['language'].value == null}">
-					<acme:textbox2 attributeName="${relatedValue.extraAttribute.name}" path="relatedValues[${vstatus.index}].value" />
-					<spring:message code="extraAttribute.boolean.explain" var="explain" />
-					<p style="color:blue;"><jstl:out value="${explain}"></jstl:out></p>
-				</jstl:if>
+			<jstl:if test="${cookie['language'].value.equals('en')}">
+				<acme:textbox2 attributeName="${relatedValue.extraAttribute.name}" path="relatedValues[${vstatus.index}].value" />
 			</jstl:if>
-			<jstl:if test="${relatedValue.extraAttribute.type != 'BOOLEAN'}">
-				<jstl:if test="${cookie['language'].value.equals('en')}">
-					<acme:textbox2 attributeName="${relatedValue.extraAttribute.name}" path="relatedValues[${vstatus.index}].value" />
-				</jstl:if>
-				<jstl:if test="${cookie['language'].value.equals('es')}">
-					<acme:textbox2 attributeName="${relatedValue.extraAttribute.spanishName}" path="relatedValues[${vstatus.index}].value" />
-				</jstl:if>
-				<jstl:if test="${cookie['language'].value == null}">
-					<acme:textbox2 attributeName="${relatedValue.extraAttribute.name}" path="relatedValues[${vstatus.index}].value" />
-				</jstl:if>
+			<jstl:if test="${cookie['language'].value.equals('es')}">
+				<acme:textbox2 attributeName="${relatedValue.extraAttribute.spanishName}" path="relatedValues[${vstatus.index}].value" />
+			</jstl:if>
+			<jstl:if test="${cookie['language'].value == null}">
+				<acme:textbox2 attributeName="${relatedValue.extraAttribute.name}" path="relatedValues[${vstatus.index}].value" />
 			</jstl:if>
 			<br/>
 		</jstl:forEach>
 	</fieldset>
 	<br/>
 		
-		<acme:submit code="property.save" name="next"/>
+		<acme:submit code="property.save" name="save"/>
 		
 		<acme:cancel code="property.cancel" url="welcome/index.do"/>
 

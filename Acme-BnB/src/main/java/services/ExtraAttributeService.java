@@ -73,4 +73,12 @@ public class ExtraAttributeService {
 
 	//Other business methods
 
+	/***
+	 * Obtiene aquellos extraAttribute que no son los predefinidos por defecto
+	 * 
+	 * @return demás extra attributes
+	 */
+	public Collection<ExtraAttribute> getOtherExtraAttributes() {
+		return extraAttributeRepository.otherExtraAttributes();
+	}
 }

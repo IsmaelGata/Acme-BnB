@@ -40,6 +40,9 @@ public class PropertyService {
 	@Autowired
 	private RelatedValueService		relatedValueService;
 
+	@Autowired
+	private ExtraAttributeService	extraAttributeService;
+
 
 	//Constructor
 
@@ -52,7 +55,7 @@ public class PropertyService {
 	public PropertyForm create() {
 		lessorService.findByPrincipal();
 
-		Collection<ExtraAttribute> extraAttributes = getDefaultExtraAttributes();
+		Collection<ExtraAttribute> extraAttributes = extraAttributeService.findAll();
 		ArrayList<RelatedValue> relatedValues = new ArrayList<>();
 		PropertyForm result = new PropertyForm();
 
@@ -134,10 +137,14 @@ public class PropertyService {
 		result.setName(propertyForm.getName());
 		result.setDescription(propertyForm.getDescription());
 		result.setRate(propertyForm.getRate());
+		ArrayList<RelatedValue> aux = new ArrayList<>();
 		for (RelatedValue relatedValue : propertyForm.getRelatedValues()) {
-			validator.validate(relatedValue, binding);
+			if (!relatedValue.getValue().isEmpty()) {
+				validator.validate(relatedValue, binding);
+				aux.add(relatedValue);
+			}
 		}
-
+		propertyForm.setRelatedValues(aux);
 		if (!binding.hasErrors()) {
 			result.setRelatedValues(propertyForm.getRelatedValues());
 		}
@@ -173,8 +180,8 @@ public class PropertyService {
 	}
 
 	public PropertyForm assingDefaultRelatedValues(PropertyForm propertyForm) {
-		Collection<ExtraAttribute> defaultExtraAttributes = getDefaultExtraAttributes();
-		Collection<ExtraAttribute> defaultExtraAttributesCopy = getDefaultExtraAttributes();
+		Collection<ExtraAttribute> defaultExtraAttributes = extraAttributeService.findAll();
+		Collection<ExtraAttribute> defaultExtraAttributesCopy = extraAttributeService.findAll();
 		Collection<ExtraAttribute> propertyExtraAttributes = propertyForm.getExtraAttributes();
 		ArrayList<RelatedValue> relatedValues = new ArrayList<RelatedValue>(propertyForm.getRelatedValues());
 
@@ -251,7 +258,7 @@ public class PropertyService {
 		for (Object[] o : propertyOrderBookAcepted) {
 			String name = o[0].toString();
 			if (!mapPropertyOrderBookAcepted.containsKey(name)) {
-				mapPropertyOrderBookAcepted.put(name,  new ArrayList<Property>());
+				mapPropertyOrderBookAcepted.put(name, new ArrayList<Property>());
 			}
 			Property property = (Property) o[1];
 			mapPropertyOrderBookAcepted.get(name).add(property);
@@ -267,7 +274,7 @@ public class PropertyService {
 		for (Object[] o : propertyOrderBookDenied) {
 			String name = o[0].toString();
 			if (!mapPropertyOrderBookDenied.containsKey(name)) {
-				mapPropertyOrderBookDenied.put(name,  new ArrayList<Property>());
+				mapPropertyOrderBookDenied.put(name, new ArrayList<Property>());
 			}
 			Property property = (Property) o[1];
 			mapPropertyOrderBookDenied.get(name).add(property);
@@ -283,7 +290,7 @@ public class PropertyService {
 		for (Object[] o : propertyOrderBookPending) {
 			String name = o[0].toString();
 			if (!mapPropertyOrderBookPending.containsKey(name)) {
-				mapPropertyOrderBookPending.put(name,  new ArrayList<Property>());
+				mapPropertyOrderBookPending.put(name, new ArrayList<Property>());
 			}
 			Property property = (Property) o[1];
 			mapPropertyOrderBookPending.get(name).add(property);
