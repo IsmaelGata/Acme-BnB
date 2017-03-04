@@ -90,26 +90,105 @@
 
 		<display:table name="${item.value}" id="row"
 			requestURI="administrator/dashboardB" class="displaytag">
-			<jstl:forEach items="${item.value}" var="item2">
-				<spring:message code="dashboard.property" var="property" />
-				<display:column title="${property}">
-					<jstl:out value="${item2.key.name}"></jstl:out>
-				</display:column>
 
-				
-				<spring:message code="dashboard.numberOfBookAproved"
-					var="numberOfBookAproved" />
-				<display:column title="${numberOfBookAproved}">
-					<jstl:out value="${count}"></jstl:out>
-				</display:column>
+			<spring:message code="dashboard.property" var="property" />
+			<display:column title="${property}">
+				<jstl:out value="${row.name}"></jstl:out>
+			</display:column>
 
+			<jstl:set var="count" value="0"></jstl:set>
+			<jstl:forEach items="${row.books}" var="book">
+				<jstl:if test="${book.status.getName() == 'ACEPTED'}">
+					<jstl:set var="count" value="${count+1}"></jstl:set>
+				</jstl:if>
 			</jstl:forEach>
 
+			<spring:message code="dashboard.numberOfBookAproved"
+				var="numberOfBookAproved" />
+			<display:column title="${numberOfBookAproved}">
+				<jstl:out value="${count}"></jstl:out>
+			</display:column>
 		</display:table>
 		<br />
 	</jstl:forEach>
 </fieldset>
 
 <br />
+
+<fieldset>
+	<legend>
+		<b><spring:message
+				code="dashboard.listPropertiesSortedAccordingNumberOfDeniedBooksThatTheyHaveGot" /></b>
+	</legend>
+
+	<jstl:forEach items="${propertyOrderBookDenied}" var="item">
+		<h2>
+			<jstl:out value="${item.key}"></jstl:out>
+		</h2>
+
+
+		<display:table name="${item.value}" id="row"
+			requestURI="administrator/dashboardB" class="displaytag">
+
+			<spring:message code="dashboard.property" var="property" />
+			<display:column title="${property}">
+				<jstl:out value="${row.name}"></jstl:out>
+			</display:column>
+
+			<jstl:set var="count" value="0"></jstl:set>
+			<jstl:forEach items="${row.books}" var="book">
+				<jstl:if test="${book.status.getName() == 'DENIED'}">
+					<jstl:set var="count" value="${count+1}"></jstl:set>
+				</jstl:if>
+			</jstl:forEach>
+
+			<spring:message code="dashboard.numberOfBookDenied"
+				var="numberOfBookDenied" />
+			<display:column title="${numberOfBookDenied}">
+				<jstl:out value="${count}"></jstl:out>
+			</display:column>
+		</display:table>
+		<br />
+	</jstl:forEach>
+</fieldset>
+
+<br />
+
+<fieldset>
+	<legend>
+		<b><spring:message
+				code="dashboard.listPropertiesSortedAccordingNumberOfPendingBooksThatTheyHaveGot" /></b>
+	</legend>
+
+	<jstl:forEach items="${propertyOrderBookPending}" var="item">
+		<h2>
+			<jstl:out value="${item.key}"></jstl:out>
+		</h2>
+
+
+		<display:table name="${item.value}" id="row"
+			requestURI="administrator/dashboardB" class="displaytag">
+
+			<spring:message code="dashboard.property" var="property" />
+			<display:column title="${property}">
+				<jstl:out value="${row.name}"></jstl:out>
+			</display:column>
+
+			<jstl:set var="count" value="0"></jstl:set>
+			<jstl:forEach items="${row.books}" var="book">
+				<jstl:if test="${book.status.getName() == 'PENDING'}">
+					<jstl:set var="count" value="${count+1}"></jstl:set>
+				</jstl:if>
+			</jstl:forEach>
+
+			<spring:message code="dashboard.numberOfBookPending"
+				var="numberOfBookPending" />
+			<display:column title="${numberOfBookPending}">
+				<jstl:out value="${count}"></jstl:out>
+			</display:column>
+		</display:table>
+		<br />
+	</jstl:forEach>
+</fieldset>
 
 

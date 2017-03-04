@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.PropertyRepository;
 import domain.Book;
@@ -100,7 +101,12 @@ public class PropertyService {
 		propertyRepository.delete(property);
 	}
 
+
 	//Other business methods
+
+	@Autowired
+	private Validator	validator;
+
 
 	public Property reconstruct(PropertyForm propertyForm, BindingResult binding) {
 		Assert.notNull(propertyForm);
@@ -128,7 +134,14 @@ public class PropertyService {
 		result.setName(propertyForm.getName());
 		result.setDescription(propertyForm.getDescription());
 		result.setRate(propertyForm.getRate());
-		result.setRelatedValues(propertyForm.getRelatedValues());
+		for (RelatedValue relatedValue : propertyForm.getRelatedValues()) {
+			validator.validate(relatedValue, binding);
+		}
+
+		if (!binding.hasErrors()) {
+			result.setRelatedValues(propertyForm.getRelatedValues());
+		}
+
 		//**********************************************
 
 		return result;
@@ -231,31 +244,52 @@ public class PropertyService {
 		return mapPropertyOrderBook;
 	}
 
-	public Map<String, Map<Integer, Collection<Property>>> getPropertyOrderBookAcepted() {
-		Collection<Object[]> propertyOrderBookAcepted = propertyRepository.getPropertyOrderBook();
-		Map<String, Map<Integer, Collection<Property>>> mapPropertyOrderBookAcepted = new HashMap<String, Map<Integer, Collection<Property>>>();
+	public Map<String, Collection<Property>> getPropertyOrderBookAcepted() {
+		Collection<Object[]> propertyOrderBookAcepted = propertyRepository.getPropertyOrderBookAcepted();
+		Map<String, Collection<Property>> mapPropertyOrderBookAcepted = new HashMap<String, Collection<Property>>();
 
 		for (Object[] o : propertyOrderBookAcepted) {
 			String name = o[0].toString();
 			if (!mapPropertyOrderBookAcepted.containsKey(name)) {
-				mapPropertyOrderBookAcepted.put(name, new HashMap<Integer, Collection<Property>>());
+				mapPropertyOrderBookAcepted.put(name,  new ArrayList<Property>());
 			}
 			Property property = (Property) o[1];
-			Integer count = (Integer) o[2];
-			if (!mapPropertyOrderBookAcepted.get(name).containsKey(count)) {
-				mapPropertyOrderBookAcepted.get(name).put(count, new ArrayList<Property>());
-			}
-			mapPropertyOrderBookAcepted.get(name).get(count).add(property);
+			mapPropertyOrderBookAcepted.get(name).add(property);
 		}
 
 		return mapPropertyOrderBookAcepted;
 	}
 
-	public Collection<Object[]> getPropertyOrderBookDenied(int lessorId) {
-		return propertyRepository.getPropertyOrderBookDenied(lessorId);
+	public Map<String, Collection<Property>> getPropertyOrderBookDenied() {
+		Collection<Object[]> propertyOrderBookDenied = propertyRepository.getPropertyOrderBookDenied();
+		Map<String, Collection<Property>> mapPropertyOrderBookDenied = new HashMap<String, Collection<Property>>();
+
+		for (Object[] o : propertyOrderBookDenied) {
+			String name = o[0].toString();
+			if (!mapPropertyOrderBookDenied.containsKey(name)) {
+				mapPropertyOrderBookDenied.put(name,  new ArrayList<Property>());
+			}
+			Property property = (Property) o[1];
+			mapPropertyOrderBookDenied.get(name).add(property);
+		}
+
+		return mapPropertyOrderBookDenied;
 	}
 
-	public Collection<Object[]> getPropertyOrderBookPending(int lessorId) {
-		return propertyRepository.getPropertyOrderBookPending(lessorId);
+	public Map<String, Collection<Property>> getPropertyOrderBookPending() {
+		Collection<Object[]> propertyOrderBookPending = propertyRepository.getPropertyOrderBookPending();
+		Map<String, Collection<Property>> mapPropertyOrderBookPending = new HashMap<String, Collection<Property>>();
+
+		for (Object[] o : propertyOrderBookPending) {
+			String name = o[0].toString();
+			if (!mapPropertyOrderBookPending.containsKey(name)) {
+				mapPropertyOrderBookPending.put(name,  new ArrayList<Property>());
+			}
+			Property property = (Property) o[1];
+			mapPropertyOrderBookPending.get(name).add(property);
+		}
+
+		return mapPropertyOrderBookPending;
 	}
+
 }

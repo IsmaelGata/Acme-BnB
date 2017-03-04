@@ -82,8 +82,8 @@ public interface PropertyRepository extends JpaRepository<Property, Integer> {
 	 *            , id del arrendador
 	 * @return
 	 */
-	@Query("select p, (select count(b) from Book b where b.property = p and b.status = 2) as c from Property p where p.lessor.id=?1 order by c desc")
-	Collection<Object[]> getPropertyOrderBookDenied(int lessorId);
+	@Query("select  p.lessor.name, p, (select count(b) from Book b where b.property = p and b.status = 2) as c from Property p order by c desc")
+	Collection<Object[]> getPropertyOrderBookDenied();
 
 	/**
 	 * Devuelve un listado de propiedades, para el arrendador dado, ordenadas descendentemente según el número de solicitudes pendientes que tengan
@@ -92,6 +92,6 @@ public interface PropertyRepository extends JpaRepository<Property, Integer> {
 	 *            , id del arrendador
 	 * @return
 	 */
-	@Query("select p, (select count(b) from Book b where b.property = p and b.status = 0) as c from Property p where p.lessor.id=?1 order by c desc")
-	Collection<Object[]> getPropertyOrderBookPending(int lessorId);
+	@Query("select p.lessor.name, p, (select count(b) from Book b where b.property = p and b.status = 0) as c from Property p order by c desc")
+	Collection<Object[]> getPropertyOrderBookPending();
 }

@@ -114,14 +114,18 @@ public class AdministratorController extends AbstractController {
 		Integer maximumAuditsPerProperty = propertyService.getMaximumAuditsPerProperty();
 		//falta uno
 		Map<String, Collection<Property>> propertyOrderAudits = propertyService.getPropertyOrderAudits();
-		Map<String, Collection<Property>> propertyOrderBook = propertyService.getPropertyOrderAudits();
-		Map<String, Map<Property, Integer>> propertyOrderBookAcepted = propertyService.getPropertyOrderBookAcepted();
+		Map<String, Collection<Property>> propertyOrderBook = propertyService.getPropertyOrderBook();
+		Map<String, Collection<Property>> propertyOrderBookAcepted = propertyService.getPropertyOrderBookAcepted();
+		Map<String, Collection<Property>> propertyOrderBookDenied = propertyService.getPropertyOrderBookDenied();
+		Map<String, Collection<Property>> propertyOrderBookPending = propertyService.getPropertyOrderBookPending();
 		
 
 		result = new ModelAndView("administrator/dashboardB");
 		result.addObject("propertyOrderAudits", propertyOrderAudits);
 		result.addObject("propertyOrderBook", propertyOrderBook);
 		result.addObject("propertyOrderBookAcepted", propertyOrderBookAcepted);
+		result.addObject("propertyOrderBookDenied", propertyOrderBookDenied);
+		result.addObject("propertyOrderBookPending", propertyOrderBookPending);
 		return result;
 	}
 
