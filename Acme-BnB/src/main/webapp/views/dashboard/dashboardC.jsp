@@ -274,6 +274,7 @@
 				</jstl:when>
 				<jstl:otherwise>
 					<spring:message code="dashboard.max" var="title" />
+					<jstl:set var="i" value="3"></jstl:set>
 				</jstl:otherwise>
 			</jstl:choose>
 

@@ -24,8 +24,10 @@ import domain.Property;
 import domain.Tenant;
 import services.BookService;
 import services.FinderService;
+import services.InvoiceService;
 import services.LessorService;
 import services.PropertyService;
+import services.SocialIdentityService;
 import services.TenantService;
 
 @Controller
@@ -43,9 +45,15 @@ public class AdministratorController extends AbstractController {
 
 	@Autowired
 	private FinderService finderService;
-	
+
 	@Autowired
 	private PropertyService propertyService;
+	
+	@Autowired
+	private SocialIdentityService socialIdentityService;
+	
+	@Autowired
+	private InvoiceService invoiceService;
 
 	// Constructors -----------------------------------------------------------
 
@@ -112,15 +120,17 @@ public class AdministratorController extends AbstractController {
 		Double averageAuditsPerProperty = propertyService.getAverageAuditsPerProperty();
 		Integer minimumAuditsPerProperty = propertyService.getMinimumAuditsPerProperty();
 		Integer maximumAuditsPerProperty = propertyService.getMaximumAuditsPerProperty();
-		//falta uno
+		Object[] stadistictsPerProperty = { averageAuditsPerProperty, minimumAuditsPerProperty,
+				maximumAuditsPerProperty };
+		// falta uno
 		Map<String, Collection<Property>> propertyOrderAudits = propertyService.getPropertyOrderAudits();
 		Map<String, Collection<Property>> propertyOrderBook = propertyService.getPropertyOrderBook();
 		Map<String, Collection<Property>> propertyOrderBookAcepted = propertyService.getPropertyOrderBookAcepted();
 		Map<String, Collection<Property>> propertyOrderBookDenied = propertyService.getPropertyOrderBookDenied();
 		Map<String, Collection<Property>> propertyOrderBookPending = propertyService.getPropertyOrderBookPending();
-		
 
 		result = new ModelAndView("administrator/dashboardB");
+		result.addObject("stadistictsPerProperty", stadistictsPerProperty);
 		result.addObject("propertyOrderAudits", propertyOrderAudits);
 		result.addObject("propertyOrderBook", propertyOrderBook);
 		result.addObject("propertyOrderBookAcepted", propertyOrderBookAcepted);
@@ -130,34 +140,29 @@ public class AdministratorController extends AbstractController {
 	}
 
 	// Dashboard A
-	/*
-	 * @RequestMapping(value = "/dashboardA", method = RequestMethod.GET) public
-	 * ModelAndView dashboardA() { ModelAndView result; Object[]
-	 * masterClassStatisticsPerCook =
-	 * masterClassService.masterClassStatisticsPerCook(); Collection<Double>
-	 * avgLearningMaterialsPerMasterClass =
-	 * masterClassService.avgLearningMaterialsPerMasterClass(); int
-	 * promotedMasterClasses = masterClassService.promotedMasterClasses();
-	 * Collection<Cook> cooksOrderByCountOfHisPromotedMasterClasses =
-	 * cookService.cooksOrderByCountOfHisPromotedMasterClasses();
-	 * Collection<Object[]> avgOfPROMOTEDMasterClassesByCook =
-	 * masterClassService.avgOfPROMOTEDMasterClassesByCook();
-	 * Collection<Object[]> avgOfDEMOTEDMasterClassesByCook =
-	 * masterClassService.avgOfDEMOTEDMasterClassesByCook();
-	 * 
-	 * result = new ModelAndView("administrator/dashboardA");
-	 * result.addObject("masterClassStatisticsPerCook",
-	 * masterClassStatisticsPerCook);
-	 * result.addObject("avgLearningMaterialsPerMasterClass",
-	 * avgLearningMaterialsPerMasterClass);
-	 * result.addObject("promotedMasterClasses", promotedMasterClasses);
-	 * result.addObject("cooksOrderByCountOfHisPromotedMasterClasses",
-	 * cooksOrderByCountOfHisPromotedMasterClasses);
-	 * result.addObject("avgOfPROMOTEDMasterClassesByCook",
-	 * avgOfPROMOTEDMasterClassesByCook);
-	 * result.addObject("avgOfDEMOTEDMasterClassesByCook",
-	 * avgOfDEMOTEDMasterClassesByCook);
-	 * 
-	 * return result; }
-	 */
+
+	@RequestMapping(value = "/dashboardA", method = RequestMethod.GET)
+	public ModelAndView dashboardA() {
+		ModelAndView result;
+		Double averageSocialIdentitiesPerActor = socialIdentityService.getAverageSocialIdentitiesPerActor();
+		Integer minimumSocialIdentitiesPerActor = socialIdentityService.getMinimumSocialIdentitiesPerActor();
+		Integer maximumSocialIdentitiesPerActor = socialIdentityService.getMaximumSocialIdentitiesPerActor();
+		Object[] stadistictsSocialIdentityPerActor = { averageSocialIdentitiesPerActor, minimumSocialIdentitiesPerActor, maximumSocialIdentitiesPerActor};
+		
+		Double averageInvoicesIssuedToTenants = invoiceService.getAverageInvoicesIssuedToTenants();
+		Integer minimumInvoicesIssuedToTenants = invoiceService.getMinimumInvoicesIssuedToTenants();
+		Integer maximumInvoicesIssuedToTenants = invoiceService.getMaximumInvoicesIssuedToTenants();
+		Object[] stadistictsInvoicePerTenants = { averageInvoicesIssuedToTenants, minimumInvoicesIssuedToTenants, maximumInvoicesIssuedToTenants};
+		
+		Double totalAmountOfMoney = invoiceService.getTotalAmountOfMoney();
+		Double avgNumRequestWithAuditVsWithoutAudit = bookService.avgNumRequestWithAuditVsWithoutAudit();
+		
+		result = new ModelAndView("administrator/dashboardA");
+		result.addObject("stadistictsSocialIdentityPerActor", stadistictsSocialIdentityPerActor);
+		result.addObject("stadistictsInvoicePerTenants", stadistictsInvoicePerTenants);
+		result.addObject("totalAmountOfMoney", totalAmountOfMoney);
+		result.addObject("avgNumRequestWithAuditVsWithoutAudit", avgNumRequestWithAuditVsWithoutAudit);
+		return result;
+	}
+
 }

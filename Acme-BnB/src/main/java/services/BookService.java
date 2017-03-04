@@ -23,33 +23,32 @@ import form.BookForm;
 @Transactional
 public class BookService {
 
-	//Managed repository
+	// Managed repository
 
 	@Autowired
-	private BookRepository			bookRepository;
+	private BookRepository bookRepository;
 
-	//Supported services
-
-	@Autowired
-	private PropertyService			propertyService;
+	// Supported services
 
 	@Autowired
-	private LessorService			lessorService;
+	private PropertyService propertyService;
 
 	@Autowired
-	private TenantService			tenantService;
+	private LessorService lessorService;
 
 	@Autowired
-	private AdministratorService	administratorService;
+	private TenantService tenantService;
 
+	@Autowired
+	private AdministratorService administratorService;
 
-	//Constructor
+	// Constructor
 
 	public BookService() {
 		super();
 	}
 
-	//Simple CRUD methods
+	// Simple CRUD methods
 
 	public Book create(Property property) {
 		Tenant tenant = tenantService.findByPrincipal();
@@ -95,7 +94,7 @@ public class BookService {
 		bookRepository.delete(book);
 	}
 
-	//Other business methods
+	// Other business methods
 
 	public Collection<Book> findBooksByLessorAuthenticated() {
 		Lessor lessor = lessorService.findByPrincipal();
@@ -124,10 +123,8 @@ public class BookService {
 		update(book);
 	}
 
-
 	@Autowired
-	Validator	validator;
-
+	Validator validator;
 
 	public Book reconstruct(BookForm bookForm, BindingResult binding) {
 		Book result;
@@ -140,20 +137,21 @@ public class BookService {
 		result.setSmoker(bookForm.isSmoker());
 		result.setCreditCard(bookForm.getCreditCard());
 
-		//		validator.validate(bookForm.getCreditCard(), binding);
+		// validator.validate(bookForm.getCreditCard(), binding);
 
 		return result;
 	}
 
 	public Boolean checkCreditCardBindingErrors(String errors) {
 		Boolean result = false;
-		if (errors.contains("holderName") || errors.contains("brandName") || errors.contains("number") || errors.contains("expirationMonth") || errors.contains("expirationYear") || errors.contains("cvv")) {
+		if (errors.contains("holderName") || errors.contains("brandName") || errors.contains("number")
+				|| errors.contains("expirationMonth") || errors.contains("expirationYear") || errors.contains("cvv")) {
 			result = true;
 		}
 		return result;
 	}
 
-	//Dashboard
+	// Dashboard
 
 	public Double averageAcceptedRequestPerLessor() {
 		administratorService.findByPrincipal();
@@ -179,10 +177,18 @@ public class BookService {
 		return bookRepository.averageDeniedRequestPerTenant();
 	}
 
+	public Double avgNumRequestWithAuditVsWithoutAudit() {
+		administratorService.findByPrincipal();
+
+		return bookRepository.avgNumRequestWithAuditVsWithoutAudit();
+	}
+
 	public boolean checkCreditCard(CreditCard creditCard) {
 		boolean result = true;
 
-		if (creditCard.getBrandName().isEmpty() && creditCard.getCvv() == 0 && creditCard.getExpirationMonth() == 0 && creditCard.getExpirationYear() == 0 && creditCard.getHolderName().isEmpty() && creditCard.getNumber().isEmpty()) {
+		if (creditCard.getBrandName().isEmpty() && creditCard.getCvv() == 0 && creditCard.getExpirationMonth() == 0
+				&& creditCard.getExpirationYear() == 0 && creditCard.getHolderName().isEmpty()
+				&& creditCard.getNumber().isEmpty()) {
 			result = false;
 		}
 

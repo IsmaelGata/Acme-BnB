@@ -21,6 +21,39 @@
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<fieldset>
+	<legend>
+		<b><spring:message
+				code="dashboard.averageMaximumAndMinimunNumberOfAuditsPerProperty" /></b>
+	</legend>
+	<jstl:set var="i" value="0"></jstl:set>
+	<display:table name="${stadistictsPerProperty}" id="row"
+		requestURI="administrator/dashboardB" class="displaytag">
+		<spring:message code="dashboard.statistics" var="statistics" />
+		<display:column title="${statistics}">
+			<jstl:choose>
+				<jstl:when test="${i == 0}">
+					<spring:message code="dashboard.avg" var="title" />
+					<jstl:set var="i" value="1"></jstl:set>
+				</jstl:when>
+				<jstl:when test="${i == 1}">
+					<spring:message code="dashboard.min" var="title" />
+					<jstl:set var="i" value="2"></jstl:set>
+				</jstl:when>
+				<jstl:otherwise>
+					<spring:message code="dashboard.max" var="title" />
+					<jstl:set var="i" value="3"></jstl:set>
+				</jstl:otherwise>
+			</jstl:choose>
+
+			<fmt:formatNumber var="value" value="${row}" maxFractionDigits="2"></fmt:formatNumber>
+			<b><jstl:out value="${title}:"></jstl:out></b>
+			<jstl:out value="${value}"></jstl:out>
+		</display:column>
+	</display:table>
+</fieldset>
+
+<br/>
 
 <fieldset>
 	<legend>
