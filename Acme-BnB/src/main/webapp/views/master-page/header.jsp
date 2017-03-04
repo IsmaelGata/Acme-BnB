@@ -33,6 +33,7 @@
 	<ul id="jMenu">
 		<!-- Do not forget the "fNiv" class for the first level links !! -->
 		<security:authorize access="hasRole('ADMINISTRATOR')">
+			<li><a href="extraAttribute/list.do"><spring:message code="master.page.extraAttribute" /></a></li>
 			<li><a class="fNiv"><spring:message	code="master.page.administrator.dashboard" /></a>
 				<ul>
 					<li class="arrow"></li>
@@ -47,6 +48,8 @@
 					<li><a href="auditor/register.do"><spring:message code="master.page.auditor.register" /></a></li>
 				</ul>
 			</li>
+			
+			<li><a href="actor/edit.do"><spring:message code="master.page.edit.actor" /></a></li>
 		</security:authorize>
 		
 		<security:authorize access="hasRole('LESSOR')">
@@ -103,6 +106,7 @@
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="actor/edit.do"><spring:message code="master.page.edit.actor" /></a></li>
+					<li><a href="socialIdentity/list.do"><spring:message code="master.page.list.socialIdentity" /></a></li>
 					<li><a href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a></li>
 				</ul>
 			</li>

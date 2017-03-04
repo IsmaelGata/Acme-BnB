@@ -35,6 +35,7 @@
 		<value>/views/finder/messages</value>
 		<value>/views/audit/messages</value>
 		<value>/views/auditor/messages</value>
+		<value>/views/socialIdentity/messages</value>
 		<value>/views/dashboard/messages</value>
 	</util:list>
 

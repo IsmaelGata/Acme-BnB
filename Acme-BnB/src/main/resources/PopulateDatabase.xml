@@ -471,8 +471,8 @@
 	</bean>
 	
 	<bean id="extraAttribute8" class="domain.ExtraAttribute">
-		<property name="name" value="Distancia centro ciudad (km)" />
-		<property name="spanishName" value="Distance to city centre (km)" />
+		<property name="name" value="Distance to city centre (km)" />
+		<property name="spanishName" value="Distancia centro ciudad (km)" />
 		<property name="type" value="NUMBER" />
 		<property name="relatedValues">
 			<list>
@@ -481,8 +481,8 @@
 	</bean>
 	
 	<bean id="extraAttribute9" class="domain.ExtraAttribute">
-		<property name="name" value="Piscina" />
-		<property name="spanishName" value="Swimming pool" />
+		<property name="name" value="Swimming pool" />
+		<property name="spanishName" value="Piscina" />
 		<property name="type" value="BOOLEAN" />
 		<property name="relatedValues">
 			<list>

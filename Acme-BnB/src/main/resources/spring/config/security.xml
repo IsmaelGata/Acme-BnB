@@ -48,8 +48,22 @@
 		<security:intercept-url pattern="/lessor/register.do" access="isAnonymous()" /> 
 		<security:intercept-url pattern="/lessor/show.do" access="permitAll" /> 
 		
+		<!-- EXTRAATTRIBUTE -->
+		<security:intercept-url pattern="/extraAttribute/list.do" access="hasRole('ADMINISTRATOR')" />
+		<security:intercept-url pattern="/extraAttribute/create.do" access="hasRole('ADMINISTRATOR')" />
+		<security:intercept-url pattern="/extraAttribute/save.do" access="hasRole('ADMINISTRATOR')" />
+		<security:intercept-url pattern="/extraAttribute/edit.do" access="hasRole('ADMINISTRATOR')" />
+		<security:intercept-url pattern="/extraAttribute/delete.do" access="hasRole('ADMINISTRATOR')" /> 
+		
+		<!-- SOCIALIDENTITIES -->
+		<security:intercept-url pattern="/socialIdentity/*" access="isAuthenticated()" /> 
+		
+		
 		<!-- AUDITOR -->
 		<security:intercept-url pattern="/auditor/register.do" access="hasRole('ADMINISTRATOR')" /> 
+		
+		<!-- SOCIALIDENTITIES -->
+		<security:intercept-url pattern="/socialIdentity/*" access="isAuthenticated()" /> 
 		
 		<!-- PROPERTY -->
 		<security:intercept-url pattern="/property/list.do" access="permitAll" /> 

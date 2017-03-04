@@ -10,10 +10,16 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.Valid;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
+import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 
 @Entity
 @Access(AccessType.PROPERTY)
-@Table(uniqueConstraints = {@UniqueConstraint(name="Unicidad_ExtraAttribute_Property", columnNames = {"extraAttribute_id", "property_id"})})
+@Table(uniqueConstraints = {
+	@UniqueConstraint(name = "Unicidad_ExtraAttribute_Property", columnNames = {
+		"extraAttribute_id", "property_id"
+	})
+})
 public class RelatedValue extends DomainEntity {
 
 	//Attributes
@@ -30,6 +36,7 @@ public class RelatedValue extends DomainEntity {
 	//Getter & setter
 
 	@NotBlank
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getValue() {
 		return value;
 	}

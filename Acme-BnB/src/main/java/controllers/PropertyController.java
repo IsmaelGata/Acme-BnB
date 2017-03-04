@@ -128,7 +128,7 @@ public class PropertyController extends AbstractController {
 
 		Property property = propertyService.reconstruct(propertyForm, binding);
 		if (binding.hasErrors()) {
-			result = createEditModelAndView(propertyForm);
+			result = createEditModelAndView(propertyForm, "property.binding.errors");
 		} else {
 			try {
 				propertyService.save(property);
