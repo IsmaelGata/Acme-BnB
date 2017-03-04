@@ -37,6 +37,7 @@
 		<value>/views/auditor/messages</value>
 		<value>/views/socialIdentity/messages</value>
 		<value>/views/dashboard/messages</value>
+		<value>/views/invoice/messages</value>
 	</util:list>
 
 </beans>

@@ -131,6 +131,7 @@ public class BookController extends AbstractController {
 
 		return result;
 	}
+	
 
 	protected ModelAndView listModelAndView(Collection<Book> books, String message) {
 		ModelAndView result;

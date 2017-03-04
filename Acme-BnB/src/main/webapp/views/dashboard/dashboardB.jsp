@@ -53,34 +53,34 @@
 	</display:table>
 </fieldset>
 
-<br/>
+<br />
 
 <fieldset>
 	<legend>
 		<b><spring:message
 				code="dashboard.listPropertiesSortedAccordingNumberOfAuditsThatTheyHaveGot" /></b>
 	</legend>
-
-	<jstl:forEach items="${propertyOrderAudits}" var="item">
+	<jstl:forEach items="${propertyOrderBook}" var="item">
 		<h2>
 			<jstl:out value="${item.key}"></jstl:out>
 		</h2>
-		<display:table name="${item.value}" id="row"
+		<display:table name="${item.value}" id="rowTable"
 			requestURI="administrator/dashboardB" class="displaytag">
 			<spring:message code="dashboard.property" var="property" />
 			<display:column title="${property}">
-				<jstl:out value="${row.name}"></jstl:out>
+				<jstl:out value="${rowTable.name}"></jstl:out>
 			</display:column>
 			<spring:message code="dashboard.numberOfAudits" var="numberOfAudits" />
 			<display:column title="${numberOfAudits}">
-				<jstl:out value="${row.audits.size()}"></jstl:out>
+				<jstl:out value="${rowTable.audits.size()}"></jstl:out>
 			</display:column>
 		</display:table>
-		<br />
 	</jstl:forEach>
+
 </fieldset>
 
 <br />
+
 
 <fieldset>
 	<legend>

@@ -71,4 +71,19 @@
 		</display:column>
 	</security:authorize>
 
+	<security:authorize access="hasRole('TENANT')">
+		<display:column>
+			<jstl:if test="${row.status.name == 'ACEPTED' && row.invoice == null}">
+				<acme:cancel url="invoice/issueInvoice.do?bookId=${row.id}"
+					code="book.invoice" />
+			</jstl:if>
+		</display:column>
+		<display:column>
+			<jstl:if test="${row.invoice != null}">
+				<acme:cancel url="invoice/showInvoice.do?invoiceId=${row.invoice.id}"
+					code="book.showInvoice" />
+			</jstl:if>
+		</display:column>
+	</security:authorize>
+
 </display:table>
