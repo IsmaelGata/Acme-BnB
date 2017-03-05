@@ -41,9 +41,6 @@
 		</jstl:if>
 	</display:column>
 
-	<spring:message code="book.creditCard" var="creditCard" />
-	<display:column property="creditCard.number" title="${creditCard}" />
-
 	<jstl:if test="${cookie['language'].value.equals('en')}">
 		<spring:message code="book.status" var="status" />
 		<display:column title="${status}" property="status.name" />
@@ -56,24 +53,26 @@
 	<security:authorize access="hasRole('LESSOR')">
 
 		<display:column>
-			<jstl:if test="${row.status.name == 'PENDING'}">
-				<acme:cancel
-					url="book/changeStatus.do?bookId=${row.id}&value=ACEPTED"
-					code="book.acepted" />
+			<jstl:if test="${not empty lessor.creditCard.brandName && not empty lessor.creditCard.number != null}">
+				<jstl:if test="${row.status.name == 'PENDING'}">
+					<acme:cancel
+						url="book/changeStatus.do?bookId=${row.id}&value=ACEPTED"
+						code="book.accept" />
+				</jstl:if>
 			</jstl:if>
 		</display:column>
 		<display:column>
 			<jstl:if test="${row.status.name == 'PENDING'}">
 				<acme:cancel
 					url="book/changeStatus.do?bookId=${row.id}&value=DENIED"
-					code="book.denied" />
+					code="book.deny" />
 			</jstl:if>
 		</display:column>
 	</security:authorize>
 
 	<security:authorize access="hasRole('TENANT')">
 		<display:column>
-			<jstl:if test="${row.status.name == 'ACEPTED' && row.invoice == null}">
+			<jstl:if test="${row.status.name == 'ACCEPTED' && row.invoice == null}">
 				<acme:cancel url="invoice/issueInvoice.do?bookId=${row.id}"
 					code="book.invoice" />
 			</jstl:if>

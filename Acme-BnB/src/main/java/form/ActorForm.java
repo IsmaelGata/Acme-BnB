@@ -8,13 +8,16 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 
+import domain.CreditCard;
+
 public class ActorForm {
 
 	//Attributes
 
-	private String	phone;
-	private String	email;
-	private String	picture;
+	private String		phone;
+	private String		email;
+	private String		picture;
+	private CreditCard	creditCard;
 
 
 	//Constructor
@@ -24,7 +27,6 @@ public class ActorForm {
 
 	//getter & setter
 
-	
 	@NotBlank
 	@Email
 	@SafeHtml(whitelistType = WhiteListType.NONE)
@@ -56,6 +58,13 @@ public class ActorForm {
 	public void setPicture(String picture) {
 		this.picture = picture;
 	}
-	
-	
+
+	public CreditCard getCreditCard() {
+		return creditCard;
+	}
+
+	public void setCreditCard(CreditCard creditCard) {
+		this.creditCard = creditCard;
+	}
+
 }

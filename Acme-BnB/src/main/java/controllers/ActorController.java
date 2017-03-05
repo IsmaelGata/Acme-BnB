@@ -19,16 +19,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import domain.Actor;
-import form.ActorForm;
 import services.ActorService;
+import services.LessorService;
+import domain.Actor;
+import domain.Lessor;
+import form.ActorForm;
 
 @Controller
 @RequestMapping("/actor")
 public class ActorController extends AbstractController {
 
+	//Supported services
+
 	@Autowired
 	private ActorService	actorService;
+
+	@Autowired
+	private LessorService	lessorService;
 
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
@@ -36,13 +43,17 @@ public class ActorController extends AbstractController {
 		ModelAndView result;
 
 		Actor actor = actorService.findByPrincipal();
-		
+
 		ActorForm actorForm = new ActorForm();
 
 		actorForm.setEmail(actor.getEmail());
 		actorForm.setPhone(actor.getPhone());
 		actorForm.setPicture(actor.getPicture());
-		
+
+		if (actor.getUserAccount().getAuthorities().iterator().next().getAuthority().equals("LESSOR")) {
+			Lessor lessor = lessorService.findByPrincipal();
+			actorForm.setCreditCard(lessor.getCreditCard());
+		}
 		result = createEditModelAndView(actorForm);
 
 		return result;
@@ -51,15 +62,26 @@ public class ActorController extends AbstractController {
 	@RequestMapping(value = "/save", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid ActorForm actorForm, BindingResult binding) {
 		ModelAndView result = new ModelAndView();
-		Actor actor;
-		
-		actor = actorService.reconstruct(actorForm, binding);
+		Actor actor = actorService.findByPrincipal();
+		Lessor lessor = null;
+
+		if (actor.getUserAccount().getAuthorities().iterator().next().getAuthority().equals("LESSOR")) {
+			lessor = actorService.reconstructLessor(actorForm, binding);
+		} else {
+			actor = actorService.reconstruct(actorForm, binding);
+		}
+
 		if (binding.hasErrors()) {
-			result = createEditModelAndView(actorForm);
+			result = createEditModelAndView(actorForm, "lessor.commit.error");
 
 		} else {
 			try {
-				actorService.save(actor);
+				if (actor.getUserAccount().getAuthorities().iterator().next().getAuthority().equals("LESSOR")) {
+					lessorService.save(lessor);
+				} else {
+					actorService.save(actor);
+				}
+
 				result = new ModelAndView("redirect:/welcome/index.do");
 			} catch (Throwable oops) {
 				result = createEditModelAndView(actorForm, "actor.commit.error");

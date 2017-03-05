@@ -3,7 +3,7 @@ package domain;
 
 public enum Status {
 
-	PENDING("PENDING", "PENDIENTE"), ACEPTED("ACEPTED", "ACEPTADA"), DENIED("DENIED", "DENEGADA");
+	PENDING("PENDING", "PENDIENTE"), ACCEPTED("ACCEPTED", "ACEPTADA"), DENIED("DENIED", "DENEGADA");
 
 	private final String	name;
 	private final String	spanishName;

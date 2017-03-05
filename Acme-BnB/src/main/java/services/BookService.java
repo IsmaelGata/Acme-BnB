@@ -26,21 +26,22 @@ public class BookService {
 	// Managed repository
 
 	@Autowired
-	private BookRepository bookRepository;
+	private BookRepository			bookRepository;
 
 	// Supported services
 
 	@Autowired
-	private PropertyService propertyService;
+	private PropertyService			propertyService;
 
 	@Autowired
-	private LessorService lessorService;
+	private LessorService			lessorService;
 
 	@Autowired
-	private TenantService tenantService;
+	private TenantService			tenantService;
 
 	@Autowired
-	private AdministratorService administratorService;
+	private AdministratorService	administratorService;
+
 
 	// Constructor
 
@@ -115,7 +116,7 @@ public class BookService {
 		Assert.notNull(property);
 		Assert.isTrue(lessor.equals(property.getLessor()));
 
-		if (status.equals(Status.ACEPTED)) {
+		if (status.equals(Status.ACCEPTED)) {
 			Assert.notNull(lessor.getCreditCard());
 		}
 
@@ -123,8 +124,10 @@ public class BookService {
 		update(book);
 	}
 
+
 	@Autowired
-	Validator validator;
+	Validator	validator;
+
 
 	public Book reconstruct(BookForm bookForm, BindingResult binding) {
 		Book result;
@@ -144,8 +147,7 @@ public class BookService {
 
 	public Boolean checkCreditCardBindingErrors(String errors) {
 		Boolean result = false;
-		if (errors.contains("holderName") || errors.contains("brandName") || errors.contains("number")
-				|| errors.contains("expirationMonth") || errors.contains("expirationYear") || errors.contains("cvv")) {
+		if (errors.contains("holderName") || errors.contains("brandName") || errors.contains("number") || errors.contains("expirationMonth") || errors.contains("expirationYear") || errors.contains("cvv")) {
 			result = true;
 		}
 		return result;
@@ -186,9 +188,7 @@ public class BookService {
 	public boolean checkCreditCard(CreditCard creditCard) {
 		boolean result = true;
 
-		if (creditCard.getBrandName().isEmpty() && creditCard.getCvv() == 0 && creditCard.getExpirationMonth() == 0
-				&& creditCard.getExpirationYear() == 0 && creditCard.getHolderName().isEmpty()
-				&& creditCard.getNumber().isEmpty()) {
+		if (creditCard.getBrandName().isEmpty() && creditCard.getCvv() == 0 && creditCard.getExpirationMonth() == 0 && creditCard.getExpirationYear() == 0 && creditCard.getHolderName().isEmpty() && creditCard.getNumber().isEmpty()) {
 			result = false;
 		}
 

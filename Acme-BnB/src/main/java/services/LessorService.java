@@ -13,6 +13,10 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
+import repositories.LessorRepository;
+import security.Authority;
+import security.LoginService;
+import security.UserAccount;
 import domain.ComentatorActor;
 import domain.Comment;
 import domain.CreditCard;
@@ -21,10 +25,6 @@ import domain.Property;
 import domain.SocialIdentity;
 import domain.Tenant;
 import form.LessorForm;
-import repositories.LessorRepository;
-import security.Authority;
-import security.LoginService;
-import security.UserAccount;
 
 @Service
 @Transactional
@@ -117,7 +117,7 @@ public class LessorService extends ComentableService {
 		Assert.notNull(lessor);
 		return lessorRepository.getRequestersTenantsByLessor(lessor.getId());
 	}
-	
+
 	public Collection<Tenant> getRequestersTenantsWithoutIdByLessor(Lessor lessor) {
 		Assert.notNull(lessor);
 		return lessorRepository.getRequestersTenantsWithoutIdByLessor(lessor.getId());
@@ -182,10 +182,10 @@ public class LessorService extends ComentableService {
 
 		//		validator.validate(result, binding);
 
-		if (checkCreditCard(lessorForm.getCreditCard())) {
-
-			//			validator.validate(lessorForm.getCreditCard(), binding);
-		}
+		//		if (checkCreditCard(lessorForm.getCreditCard())) {
+		//
+		//						validator.validate(lessorForm.getCreditCard(), binding);
+		//		}
 
 		return result;
 	}

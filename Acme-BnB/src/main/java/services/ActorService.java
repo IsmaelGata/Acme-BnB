@@ -8,19 +8,28 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.ActorRepository;
 import security.LoginService;
 import security.UserAccount;
 import domain.Actor;
+import domain.Lessor;
 import form.ActorForm;
 
 @Service
 @Transactional
 public class ActorService {
 
+	//Managed repository
+
 	@Autowired
 	private ActorRepository	actorRepository;
+
+	//Supported services
+
+	@Autowired
+	private LessorService	lessorService;
 
 
 	public ActorService() {
@@ -93,4 +102,24 @@ public class ActorService {
 		return result;
 	}
 
+
+	@Autowired
+	private Validator	validator;
+
+
+	public Lessor reconstructLessor(ActorForm actorForm, BindingResult binding) {
+
+		Lessor result = lessorService.findByPrincipal();
+		if (lessorService.checkCreditCard(actorForm.getCreditCard())) {
+			validator.validate(actorForm.getCreditCard(), binding);
+			result.setCreditCard(actorForm.getCreditCard());
+		}
+		if (!binding.hasErrors()) {
+			result.setEmail(actorForm.getEmail());
+			result.setPhone(actorForm.getPhone());
+			result.setPicture(actorForm.getPicture());
+		}
+
+		return result;
+	}
 }

@@ -26,7 +26,8 @@
 	</script>
 
 <div>
-	<img src="images/logo.png" alt="Acme-BnB." />
+	
+	<a href="/Acme-BnB"><img src="images/logo.png" alt="Acme-BnB." /></a>
 </div>
 
 <div>

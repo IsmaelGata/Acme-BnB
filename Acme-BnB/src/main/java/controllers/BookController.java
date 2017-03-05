@@ -8,28 +8,34 @@ import javax.validation.Valid;
 import org.apache.commons.validator.routines.checkdigit.LuhnCheckDigit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.BookService;
+import services.LessorService;
+import services.TenantService;
 import domain.Book;
+import domain.Lessor;
 import domain.Status;
 import domain.Tenant;
 import form.BookForm;
-import services.BookService;
-import services.TenantService;
 
 @Controller
 @RequestMapping("/book")
 public class BookController extends AbstractController {
 
 	@Autowired
-	private BookService	bookService;
-	
+	private BookService		bookService;
+
 	@Autowired
-	private TenantService tenantService;
+	private TenantService	tenantService;
+
+	@Autowired
+	private LessorService	lessorService;
 
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
@@ -72,11 +78,11 @@ public class BookController extends AbstractController {
 
 		return result;
 	}
-	
+
 	@RequestMapping(value = "/listBooksTenant", method = RequestMethod.GET)
 	public ModelAndView listBooksTenant() {
 		ModelAndView result;
-		Tenant tenant= tenantService.findByPrincipal();
+		Tenant tenant = tenantService.findByPrincipal();
 
 		result = new ModelAndView("book/list");
 		result.addObject("books", tenant.getBooks());
@@ -84,7 +90,7 @@ public class BookController extends AbstractController {
 
 		return result;
 	}
-	
+
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
 		ModelAndView result;
@@ -111,9 +117,11 @@ public class BookController extends AbstractController {
 		Book book = bookService.findOne(bookId);
 		Collection<Book> books = bookService.findBooksByLessorAuthenticated();
 		try {
+			Lessor lessor = lessorService.findByPrincipal();
+			Assert.isTrue(lessorService.checkCreditCard(lessor.getCreditCard()));
 			Status status = null;
 			if ("ACEPTED".equals(value)) {
-				status = Status.ACEPTED;
+				status = Status.ACCEPTED;
 			} else if ("DENIED".equals(value)) {
 				status = Status.DENIED;
 			}
@@ -131,17 +139,28 @@ public class BookController extends AbstractController {
 
 		return result;
 	}
-	
 
 	protected ModelAndView listModelAndView(Collection<Book> books, String message) {
 		ModelAndView result;
 
-		result = new ModelAndView("book/list");
-		result.addObject("books", books);
-		if (message != null) {
-			result.addObject("message", message);
+		try {
+			Lessor lessor = lessorService.findByPrincipal();
+			result = new ModelAndView("book/list");
+			result.addObject("books", books);
+			if (message != null) {
+				result.addObject("message", message);
+			}
+			result.addObject("RequestURI", "book/list.do");
+			result.addObject("lessor", lessor);
+
+		} catch (Throwable e) {
+			result = new ModelAndView("book/list");
+			result.addObject("books", books);
+			if (message != null) {
+				result.addObject("message", message);
+			}
+			result.addObject("RequestURI", "book/list.do");
 		}
-		result.addObject("RequestURI", "book/list.do");
 
 		return result;
 	}

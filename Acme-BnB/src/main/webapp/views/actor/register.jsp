@@ -18,7 +18,8 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
 <form:form action="${RequestURI}" modelAttribute="actorForm">
-
+<%-- 	<security:intercept-url pattern="/banner/list.do" access="hasAnyRole('SPONSOR','ADMINISTRATOR')" /> --%>
+	
 	<fieldset >
 		<legend><spring:message code="actor.personalDataDetails"/></legend>
 		<br/>
@@ -28,7 +29,24 @@
 		<br/>
 		<acme:textbox code="actor.picture" path="picture" />
 	</fieldset>
-
+	<security:authorize access="hasRole('LESSOR')">
+		<br/>
+		<fieldset>
+			<legend><spring:message code="lessor.creditCardDetails"/></legend>
+			<br/>
+			<acme:textbox code="creditCard.holderName" path="creditCard.holderName" />
+			<br/>
+			<acme:textbox code="creditCard.brandName" path="creditCard.brandName" />
+			<br/>
+			<acme:textbox code="creditCard.number" path="creditCard.number" />
+			<br/>
+			<acme:textbox code="creditCard.expirationMonth" path="creditCard.expirationMonth" />
+			<br/>
+			<acme:textbox code="creditCard.expirationYear" path="creditCard.expirationYear" />
+			<br/>
+			<acme:textbox code="creditCard.cvv" path="creditCard.cvv" />
+		</fieldset>
+	 </security:authorize>
 		<br/>
 		<acme:submit code="actor.save" name="save"/>
 		
