@@ -13,17 +13,18 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
-import repositories.LessorRepository;
-import security.Authority;
-import security.LoginService;
-import security.UserAccount;
 import domain.ComentatorActor;
 import domain.Comment;
 import domain.CreditCard;
 import domain.Lessor;
 import domain.Property;
 import domain.SocialIdentity;
+import domain.Tenant;
 import form.LessorForm;
+import repositories.LessorRepository;
+import security.Authority;
+import security.LoginService;
+import security.UserAccount;
 
 @Service
 @Transactional
@@ -115,6 +116,11 @@ public class LessorService extends ComentableService {
 	public Collection<Integer> getRequestersTenantsByLessor(Lessor lessor) {
 		Assert.notNull(lessor);
 		return lessorRepository.getRequestersTenantsByLessor(lessor.getId());
+	}
+	
+	public Collection<Tenant> getRequestersTenantsWithoutIdByLessor(Lessor lessor) {
+		Assert.notNull(lessor);
+		return lessorRepository.getRequestersTenantsWithoutIdByLessor(lessor.getId());
 	}
 
 	public Comment doComment(ComentatorActor comentatorActor, Comment comment) {

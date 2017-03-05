@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import domain.Lessor;
+import domain.Tenant;
 
 @Repository
 public interface LessorRepository extends JpaRepository<Lessor, Integer> {
@@ -27,6 +28,16 @@ public interface LessorRepository extends JpaRepository<Lessor, Integer> {
 	 */
 	@Query("select distinct b.tenant.id from Book b where b.property.lessor.id = ?1")
 	Collection<Integer> getRequestersTenantsByLessor(int lessorId);
+	
+	/**
+	 * Devuelve los inquilinos que han solicitado una reserva al arrendador dado.
+	 * (Se utiliza en el método doComment)
+	 * 
+	 * @param lessorId, el id del arrendador
+	 * @return
+	 */
+	@Query("select distinct b.tenant from Book b where b.property.lessor.id = ?1")
+	Collection<Tenant> getRequestersTenantsWithoutIdByLessor(int lessorId);
 	
 	// Dashboard
 	

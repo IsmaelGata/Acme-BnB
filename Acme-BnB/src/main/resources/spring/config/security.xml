@@ -43,6 +43,8 @@
 		
 		<!-- TENANT -->
 		<security:intercept-url pattern="/tenant/register.do" access="isAnonymous()" /> 
+		<security:intercept-url pattern="/tenant/listByLessor.do" access="hasRole('LESSOR')" />
+		<security:intercept-url pattern="/tenant/doComment.do" access="hasRole('LESSOR')" /> 
 		
 		<!-- LESSOR -->
 		<security:intercept-url pattern="/lessor/register.do" access="isAnonymous()" /> 

@@ -81,6 +81,11 @@
 					<acme:cancel url="property/delete.do?propertyId=${row.id}" code="property.delete"/>
 			</jstl:if>
 		</display:column>
+		<display:column>
+			<jstl:if test="${fn:length(row.books) >= 0}">
+					<acme:cancel url="tenant/listByLessor.do?lessorId=${row.lessor.id}" code="property.tenant"/>
+			</jstl:if>
+		</display:column>
 	</jstl:if>
 	
 </display:table>
