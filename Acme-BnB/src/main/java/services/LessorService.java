@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -69,11 +70,17 @@ public class LessorService extends ComentableService {
 	public Lessor save(Lessor lessor) {
 		Assert.notNull(lessor);
 		Lessor result;
+		if (checkCreditCard(lessor.getCreditCard())) {
+			DateTime now = new DateTime().plusDays(7);
+			DateTime creditCardDate = DateTime.now().withYear(lessor.getCreditCard().getExpirationYear()).withMonthOfYear(lessor.getCreditCard().getExpirationMonth());
+
+			Assert.isTrue(creditCardDate.toDate().after(now.toDate()));
+		}
+
 		result = lessorRepository.save(lessor);
 
 		return result;
 	}
-
 	public void delete(Lessor lessor) {
 		Assert.notNull(lessor);
 

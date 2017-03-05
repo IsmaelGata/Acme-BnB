@@ -72,7 +72,7 @@ public class ActorController extends AbstractController {
 		}
 
 		if (binding.hasErrors()) {
-			result = createEditModelAndView(actorForm, "lessor.commit.error");
+			result = createEditModelAndView(actorForm);
 
 		} else {
 			try {
@@ -84,7 +84,11 @@ public class ActorController extends AbstractController {
 
 				result = new ModelAndView("redirect:/welcome/index.do");
 			} catch (Throwable oops) {
-				result = createEditModelAndView(actorForm, "actor.commit.error");
+				if (actor.getUserAccount().getAuthorities().iterator().next().getAuthority().equals("LESSOR")) {
+					result = createEditModelAndView(actorForm, "lessor.commit.error");
+				} else {
+					result = createEditModelAndView(actorForm, "actor.commit.error");
+				}
 			}
 		}
 

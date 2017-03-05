@@ -724,7 +724,7 @@
 		<property name="checkOut" value="20/03/2017" />
 		<property name="smoker" value="false" />
 		<property name="creditCard" ref="creditCard1" />
-		<property name="status" value="ACEPTED"/>
+		<property name="status" value="ACCEPTED"/>
 		<property name="invoice"><null /></property>
 		<property name="property" ref="property1"/>
 		<property name="tenant" ref="tenant1"/>
@@ -736,7 +736,7 @@
 		<property name="checkOut" value="15/05/2017" />
 		<property name="smoker" value="true" />
 		<property name="creditCard" ref="creditCard2" />
-		<property name="status" value="ACEPTED"/>
+		<property name="status" value="ACCEPTED"/>
 		<property name="invoice"><null /></property>
 		<property name="property" ref="property2"/>
 		<property name="tenant" ref="tenant2"/>

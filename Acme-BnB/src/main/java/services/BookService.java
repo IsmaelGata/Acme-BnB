@@ -3,6 +3,7 @@ package services;
 
 import java.util.Collection;
 
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -77,6 +78,11 @@ public class BookService {
 		Tenant tenant = tenantService.findByPrincipal();
 		Assert.isTrue(tenant.equals(book.getTenant()));
 		Assert.isTrue(book.getCheckIn().before(book.getCheckOut()));
+
+		DateTime now = new DateTime().plusDays(7);
+		DateTime creditCardDate = DateTime.now().withYear(book.getCreditCard().getExpirationYear()).withMonthOfYear(book.getCreditCard().getExpirationMonth());
+
+		Assert.isTrue(creditCardDate.toDate().after(now.toDate()));
 
 		Book result = bookRepository.save(book);
 		return result;
