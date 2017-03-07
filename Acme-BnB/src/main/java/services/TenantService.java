@@ -179,6 +179,8 @@ public class TenantService extends ComentableService {
 		Finder finder = new Finder();
 		finder.setTenant(result);
 		finder.setDestination("World");
+		finder.setMaximum(99999999999999.0);
+		finder.setMinimun(0.0);
 		result.setFinder(finder);
 
 		return result;
