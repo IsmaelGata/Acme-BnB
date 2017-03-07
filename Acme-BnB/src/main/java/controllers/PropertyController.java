@@ -193,7 +193,7 @@ public class PropertyController extends AbstractController {
 	protected ModelAndView createEditModelAndView(PropertyForm propertyForm, String message) {
 		ModelAndView result;
 
-		if (propertyForm.getRelatedValues() == null) {
+		if (propertyForm.getRelatedValues().isEmpty()) {
 			Collection<ExtraAttribute> extraAttributes = extraAttributeService.findAll();
 			ArrayList<RelatedValue> relatedValues = new ArrayList<>();
 
@@ -206,6 +206,16 @@ public class PropertyController extends AbstractController {
 			propertyForm.setRelatedValues(relatedValues);
 		} else if (propertyForm.getId() != 0) {
 			propertyForm = propertyService.assingDefaultRelatedValues(propertyForm);
+		} else if (propertyForm.getRelatedValues().size() < extraAttributeService.findAll().size()) {
+			Collection<ExtraAttribute> extraAttributes = extraAttributeService.concatExtraAttributes(propertyForm.getRelatedValues());
+			ArrayList<RelatedValue> relatedValuesBacked = new ArrayList<>(propertyForm.getRelatedValues());
+			for (ExtraAttribute extraAttribute : extraAttributes) {
+				RelatedValue relatedValue = relatedValueService.create();
+				relatedValue.setExtraAttribute(extraAttribute);
+				relatedValuesBacked.add(relatedValue);
+			}
+			//			propertyForm.setExtraAttributes(extraAttributes);
+			propertyForm.setRelatedValues(relatedValuesBacked);
 		}
 
 		result = new ModelAndView("property/create");
