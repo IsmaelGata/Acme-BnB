@@ -58,6 +58,12 @@ public class FinderService {
 	public void save(Finder finder) {
 		Assert.notNull(finder);
 		finder.setMoment(new Date());
+		if (finder.getId() == 0) {
+			finder.setMaximum(99999999999999.0);
+			finder.setMinimun(0.0);
+		} else if (finder.getMaximum() == null) {
+			finder.setMaximum(99999999999999.0);
+		}
 		finderRepository.save(finder);
 	}
 
@@ -75,8 +81,18 @@ public class FinderService {
 
 		result.setDestination(finderForm.getDestination());
 		result.setKeyWord(finderForm.getKeyWord());
-		result.setMaximum(finderForm.getMaximum());
-		result.setMinimun(finderForm.getMinimun());
+		if (finderForm.getMaximum() == null) {
+			result.setMaximum(99999999999999.0);
+		} else {
+			result.setMaximum(finderForm.getMaximum());
+		}
+
+		if (finderForm.getMinimun() == null) {
+			result.setMinimun(0.0);
+		} else {
+			result.setMinimun(finderForm.getMinimun());
+		}
+
 		result.setMoment(new Date(System.currentTimeMillis() - 10));
 
 		return result;

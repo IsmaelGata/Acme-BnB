@@ -17,31 +17,15 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
-<form:form action="${RequestURI}" modelAttribute="auditForm">
-
-		<form:hidden path="idProperty"/>
+<form:form action="${RequestURI}" modelAttribute="feeForm">
+		
 		<form:hidden path="id"/>
-	
-	<fieldset>
-		<legend><spring:message code="audit.auditDetails"/></legend>
-		<acme:textbox code="audit.text" path="text" />
-		<br/>
-		<acme:textbox code="audit.attachments" path="attachments" />
-		<br/>
-		<acme:checkbox code="audit.draft" path="draft" />
-		<br/>
-	</fieldset>
 		
-		<br/>
-		<br/>
-		<jstl:if test="${auditForm.draft == true}">
-			<acme:submit2 code="audit.save" name="save" confirmText="audit.submitConfirm"/>
-		</jstl:if>
+		<acme:textbox code="fee.amount" path="amount" />
+
+			<br/>
+		<acme:submit code="fee.save" name="save"/>
 		
-		<jstl:if test="${auditForm.id == 0}">
-			<acme:submit2 code="audit.save" name="save" confirmText="audit.submitConfirm"/>
-		</jstl:if>
-		
-		<acme:cancel code="audit.cancel" url="welcome/index.do"/>
+		<acme:cancel code="fee.cancel" url="welcome/index.do"/>
 		
 </form:form>

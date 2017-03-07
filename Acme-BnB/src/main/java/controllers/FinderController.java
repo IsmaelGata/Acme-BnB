@@ -46,6 +46,8 @@ public class FinderController extends AbstractController {
 		finder = finderService.reconstruct(finderForm, binding);
 		if (binding.hasErrors()) {
 			result = createEditModelAndView(finderForm);
+		} else if (finder.getMaximum() < finder.getMinimun()) {
+			result = createEditModelAndView(finderForm, "finder.commit.error");
 		} else {
 			try {
 				finder = finderService.finderEngine(finder);

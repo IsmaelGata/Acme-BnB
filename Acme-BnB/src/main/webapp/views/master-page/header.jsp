@@ -12,6 +12,7 @@
 
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
+<%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <script type="text/javascript">
 		function relativeRedir(loc) {	
@@ -35,6 +36,7 @@
 		<!-- Do not forget the "fNiv" class for the first level links !! -->
 		<security:authorize access="hasRole('ADMINISTRATOR')">
 			<li><a href="extraAttribute/list.do"><spring:message code="master.page.extraAttribute" /></a></li>
+			<li><a href="fee/edit.do"><spring:message code="master.page.fee" /></a></li>
 			<li><a class="fNiv"><spring:message	code="master.page.administrator.dashboard" /></a>
 				<ul>
 					<li class="arrow"></li>
@@ -119,3 +121,6 @@
 	<a href="?language=en">en</a> | <a href="?language=es">es</a>
 </div>
 
+<jstl:if test="${cookie.language.value == null || (cookie.language.value != 'en' && cookie.language.value != 'es')}">
+	<script type="text/javascript">window.location.replace('welcome/index.do?language=en');</script>
+</jstl:if>

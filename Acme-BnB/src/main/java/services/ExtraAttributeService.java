@@ -71,6 +71,18 @@ public class ExtraAttributeService {
 		extraAttributeRepository.delete(extraAttribute);
 	}
 
+	public Collection<ExtraAttribute> concatExtraAttributes(Collection<RelatedValue> relatedValues) {
+		Collection<ExtraAttribute> result = findAll();
+		Collection<ExtraAttribute> aux = new ArrayList<>();
+		for (RelatedValue relatedValue : relatedValues) {
+			aux.add(relatedValue.getExtraAttribute());
+		}
+
+		result.removeAll(aux);
+
+		return result;
+	}
+
 	//Other business methods
 
 	/***
