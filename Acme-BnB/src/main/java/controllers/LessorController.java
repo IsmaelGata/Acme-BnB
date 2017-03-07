@@ -40,6 +40,7 @@ public class LessorController extends AbstractController {
 
 		result = new ModelAndView("lessor/show");
 		result.addObject("lessor", lessor);
+		result.addObject("RequestURI", "lessor/show.do");
 
 		return result;
 	}

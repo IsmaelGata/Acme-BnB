@@ -37,3 +37,29 @@
 
 </div>
 
+<br><br>
+
+<div>
+	<display:table name="lessor.socialIdentities" id="row" requestURI="${RequestURI}"
+		pagesize="5">
+	
+		<spring:message code="socialIdentity.nick" var="nick" />
+		<display:column property="nick" title="${nick}" />
+	
+		<spring:message code="socialIdentity.nameSocialNetwork" var="nameSocialNetwork" />
+		<display:column property="nameSocialNetwork" title="${nameSocialNetwork}" />
+	
+		<spring:message code="socialIdentity.URL" var="URL" />
+		<display:column property="URL" title="${URL}" />
+	
+		<display:column>
+			<acme:cancel url="socialIdentity/edit.do?socialIdentityId=${row.id}" code="socialIdentity.edit"/>
+		</display:column>
+		
+		<display:column>
+			<acme:cancel url="socialIdentity/delete.do?socialIdentityId=${row.id}" code="socialIdentity.delete"/>
+		</display:column>
+		
+	</display:table>
+</div>
+

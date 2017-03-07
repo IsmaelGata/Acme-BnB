@@ -122,6 +122,7 @@ public class ActorController extends AbstractController {
 		result.addObject("socialIdentities", socialIdentities);
 
 		result.addObject("RequestURI", "actor/save.do");
+		result.addObject("SocialIdentitiesRequestURI", "actor/edit.do");
 
 		return result;
 	}
