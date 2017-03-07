@@ -1,5 +1,5 @@
 <%--
- * index.jsp
+ * eraseMe.jsp
  *
  * Copyright (C) 2017 Universidad de Sevilla
  * 
@@ -17,20 +17,37 @@
 <%@taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
+<%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<security:authorize access="hasRole('LESSOR')">
-	<jstl:if test="${totalFee >0}">
-		<spring:message code="welcome.greeting.totalFee" var="feeToPay"/>
-		<p><font size="4" color="red"><jstl:out value="${feeToPay}"/></font></p><b><jstl:out value="${totalFee}"></jstl:out>&euro;</b>
-	</jstl:if>
+
+<body style="text-align: justify;">
+	<p>
+		<spring:message code="welcome.erase.p1" />
+	</p>
+	<p>
+		<spring:message code="welcome.erase.p2" />
+	</p>
+	<p>
+		<spring:message code="welcome.erase.p3" />
+	</p>
+	<p>
+		<spring:message code="welcome.erase.p4" />
+	</p>
+	<p>
+		<spring:message code="welcome.erase.p5" />
+	</p>
 	
-	<jstl:if test="${!(totalFee >0)}">
-		<spring:message code="welcome.greeting.totalFeePaid" var="paid"/>
-		<p><font size="4" color="green"><jstl:out value="${paid}"/></font></p>
-	</jstl:if>
-		
-</security:authorize>
+	<p>
+		<spring:message code="welcome.erase.p6" />
+	</p>
+</body>
+<br>
+<br>
+<br>
+ <acme:cancel code="welcome.close" url="${backURI}" />
+ 
+	
 
-<p><spring:message code="welcome.greeting.prefix" /> ${name}<spring:message code="welcome.greeting.suffix" /></p>
 
-<p><spring:message code="welcome.welcome" /></p>
+
+</html>

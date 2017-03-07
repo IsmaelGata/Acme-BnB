@@ -34,6 +34,20 @@
 	
 	<jstl:if test="${showError == true}">
 		<div class="error">
+			<jstl:if test="${SPRING_SECURITY_LAST_EXCEPTION.message.equals('User is disabled')}">
+				<spring:message code="security.login.disabled" />
+				<br />
+				<spring:message code="security.login.disabled2" />
+			</jstl:if>
+			
+			<jstl:if test="${SPRING_SECURITY_LAST_EXCEPTION.message.equals('Bad credentials')}">
+				<spring:message code="security.login.failed" />
+			</jstl:if>
+		</div>
+	</jstl:if>
+	
+	<jstl:if test="${showError == true}">
+		<div class="error">
 			<spring:message code="security.login.failed" />
 		</div>
 	</jstl:if>

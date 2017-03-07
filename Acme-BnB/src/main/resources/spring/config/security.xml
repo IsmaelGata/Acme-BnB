@@ -38,8 +38,10 @@
 
 		<security:intercept-url pattern="/security/login.do" access="permitAll" /> 
 		<security:intercept-url pattern="/security/loginFailure.do" access="permitAll" /> 
-
 		<security:intercept-url pattern="/welcome/index.do" access="permitAll" />
+		<security:intercept-url access="permitAll" pattern="/welcome/cookies.do"/>
+		<security:intercept-url access="permitAll" pattern="/welcome/conditions.do"/>
+		<security:intercept-url access="permitAll" pattern="/welcome/eraseMe.do"/>
 		
 		<!-- TENANT -->
 		<security:intercept-url pattern="/tenant/register.do" access="isAnonymous()" /> 
