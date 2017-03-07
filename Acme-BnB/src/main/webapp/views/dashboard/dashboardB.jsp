@@ -58,6 +58,27 @@
 <fieldset>
 	<legend>
 		<b><spring:message
+				code="dashboard.extraAttributesOrderByUse" /></b>
+	</legend>
+	<display:table name="${extraAttributesOrderByUse}" id="row"
+		requestURI="administrator/dashboardB" class="displaytag">
+		
+		<jstl:if test="${cookie['language'].value.equals('en')}">
+			<spring:message code="dashboard.attributes" var="attributes" />
+			<display:column property="name" title="${attributes}"/>
+		</jstl:if>
+		
+		<jstl:if test="${cookie['language'].value.equals('es')}">
+			<spring:message code="dashboard.attributes" var="attributes" />
+			<display:column property="spanishName" title="${attributes}"/>
+		</jstl:if>
+			
+	</display:table>
+</fieldset>
+<br/>
+<fieldset>
+	<legend>
+		<b><spring:message
 				code="dashboard.listPropertiesSortedAccordingNumberOfAuditsThatTheyHaveGot" /></b>
 	</legend>
 	<jstl:forEach items="${propertyOrderBook}" var="item">

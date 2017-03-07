@@ -81,4 +81,10 @@ public class ExtraAttributeService {
 	public Collection<ExtraAttribute> getOtherExtraAttributes() {
 		return extraAttributeRepository.otherExtraAttributes();
 	}
+
+	//DashBoard
+
+	public Collection<ExtraAttribute> extraAttributesOrderByUse() {
+		return extraAttributeRepository.extraAttributesOrderByUse();
+	}
 }

@@ -1,11 +1,11 @@
-/* AdministratorController.java
- *
+/*
+ * AdministratorController.java
+ * 
  * Copyright (C) 2017 Universidad de Sevilla
  * 
- * The use of this project is hereby constrained to the conditions of the 
- * TDG Licence, a copy of which you may download from 
+ * The use of this project is hereby constrained to the conditions of the
+ * TDG Licence, a copy of which you may download from
  * http://www.tdg-seville.info/License.html
- * 
  */
 
 package controllers;
@@ -19,41 +19,47 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import domain.Lessor;
-import domain.Property;
-import domain.Tenant;
 import services.BookService;
+import services.ExtraAttributeService;
 import services.FinderService;
 import services.InvoiceService;
 import services.LessorService;
 import services.PropertyService;
 import services.SocialIdentityService;
 import services.TenantService;
+import domain.ExtraAttribute;
+import domain.Lessor;
+import domain.Property;
+import domain.Tenant;
 
 @Controller
 @RequestMapping("/administrator")
 public class AdministratorController extends AbstractController {
 
 	@Autowired
-	private LessorService lessorService;
+	private LessorService			lessorService;
 
 	@Autowired
-	private BookService bookService;
+	private BookService				bookService;
 
 	@Autowired
-	private TenantService tenantService;
+	private TenantService			tenantService;
 
 	@Autowired
-	private FinderService finderService;
+	private FinderService			finderService;
 
 	@Autowired
-	private PropertyService propertyService;
-	
+	private PropertyService			propertyService;
+
 	@Autowired
-	private SocialIdentityService socialIdentityService;
-	
+	private SocialIdentityService	socialIdentityService;
+
 	@Autowired
-	private InvoiceService invoiceService;
+	private InvoiceService			invoiceService;
+
+	@Autowired
+	private ExtraAttributeService	extraAttributeService;
+
 
 	// Constructors -----------------------------------------------------------
 
@@ -68,11 +74,15 @@ public class AdministratorController extends AbstractController {
 
 		Double averageAcceptedRequestPerLessor = bookService.averageAcceptedRequestPerLessor();
 		Double averageDeniedRequestPerLessor = bookService.averageDeniedRequestPerLessor();
-		Object[] averageLessor = { averageAcceptedRequestPerLessor, averageDeniedRequestPerLessor };
+		Object[] averageLessor = {
+			averageAcceptedRequestPerLessor, averageDeniedRequestPerLessor
+		};
 
 		Double averageAcceptedRequestPerTenant = bookService.averageAcceptedRequestPerTenant();
 		Double averageDeniedRequestPerTenant = bookService.averageDeniedRequestPerTenant();
-		Object[] averageTenant = { averageAcceptedRequestPerTenant, averageDeniedRequestPerTenant };
+		Object[] averageTenant = {
+			averageAcceptedRequestPerTenant, averageDeniedRequestPerTenant
+		};
 
 		Collection<Lessor> lessorsWithMoreAcceptedRequests = lessorService.getLessorsWithMoreAcceptedRequests();
 		Collection<Lessor> lessorsWithMoreDeniedRequests = lessorService.getLessorsWithMoreDeniedRequests();
@@ -80,19 +90,17 @@ public class AdministratorController extends AbstractController {
 		Collection<Tenant> tenantsWithMoreAcceptedRequests = tenantService.getTenantsWithMoreAcceptedRequests();
 		Collection<Tenant> tenantsWithMoreDeniedRequests = tenantService.getTenantsWithMoreDeniedRequests();
 		Collection<Tenant> tenantsWithMorePendingRequests = tenantService.getTenantsWithMorePendingRequests();
-		Collection<Lessor> lessorsWithMaximumRatioOfApprovedRequests = lessorService
-				.getLessorsWithMaximumRatioOfApprovedRequests();
-		Collection<Lessor> lessorsWithMinimumRatioOfApprovedRequests = lessorService
-				.getLessorsWithMinimumRatioOfApprovedRequests();
-		Collection<Tenant> tenantsWithMaximumRatioOfApprovedRequests = tenantService
-				.getTenantsWithMaximumRatioOfApprovedRequests();
-		Collection<Tenant> tenantsWithMinimumRatioOfApprovedRequests = tenantService
-				.getTenantsWithMinimumRatioOfApprovedRequests();
+		Collection<Lessor> lessorsWithMaximumRatioOfApprovedRequests = lessorService.getLessorsWithMaximumRatioOfApprovedRequests();
+		Collection<Lessor> lessorsWithMinimumRatioOfApprovedRequests = lessorService.getLessorsWithMinimumRatioOfApprovedRequests();
+		Collection<Tenant> tenantsWithMaximumRatioOfApprovedRequests = tenantService.getTenantsWithMaximumRatioOfApprovedRequests();
+		Collection<Tenant> tenantsWithMinimumRatioOfApprovedRequests = tenantService.getTenantsWithMinimumRatioOfApprovedRequests();
 		Double averageResultsPerFinder = finderService.getAverageResultsPerFinder();
 		Integer minimumResultsPerFinder = finderService.getMinimumResultsPerFinder();
 		Integer maximumResultsPerFinder = finderService.getMaximumResultsPerFinder();
 
-		Object[] stadistictsPerFinder = { averageResultsPerFinder, minimumResultsPerFinder, maximumResultsPerFinder };
+		Object[] stadistictsPerFinder = {
+			averageResultsPerFinder, minimumResultsPerFinder, maximumResultsPerFinder
+		};
 
 		result = new ModelAndView("administrator/dashboardC");
 		result.addObject("averageLessor", averageLessor);
@@ -120,14 +128,16 @@ public class AdministratorController extends AbstractController {
 		Double averageAuditsPerProperty = propertyService.getAverageAuditsPerProperty();
 		Integer minimumAuditsPerProperty = propertyService.getMinimumAuditsPerProperty();
 		Integer maximumAuditsPerProperty = propertyService.getMaximumAuditsPerProperty();
-		Object[] stadistictsPerProperty = { averageAuditsPerProperty, minimumAuditsPerProperty,
-				maximumAuditsPerProperty };
+		Object[] stadistictsPerProperty = {
+			averageAuditsPerProperty, minimumAuditsPerProperty, maximumAuditsPerProperty
+		};
 		// falta uno
 		Map<String, Collection<Property>> propertyOrderAudits = propertyService.getPropertyOrderAudits();
 		Map<String, Collection<Property>> propertyOrderBook = propertyService.getPropertyOrderBook();
 		Map<String, Collection<Property>> propertyOrderBookAcepted = propertyService.getPropertyOrderBookAcepted();
 		Map<String, Collection<Property>> propertyOrderBookDenied = propertyService.getPropertyOrderBookDenied();
 		Map<String, Collection<Property>> propertyOrderBookPending = propertyService.getPropertyOrderBookPending();
+		Collection<ExtraAttribute> extraAttributesOrderByUse = extraAttributeService.extraAttributesOrderByUse();
 
 		result = new ModelAndView("administrator/dashboardB");
 		result.addObject("stadistictsPerProperty", stadistictsPerProperty);
@@ -136,6 +146,7 @@ public class AdministratorController extends AbstractController {
 		result.addObject("propertyOrderBookAcepted", propertyOrderBookAcepted);
 		result.addObject("propertyOrderBookDenied", propertyOrderBookDenied);
 		result.addObject("propertyOrderBookPending", propertyOrderBookPending);
+		result.addObject("extraAttributesOrderByUse", extraAttributesOrderByUse);
 		return result;
 	}
 
@@ -147,16 +158,20 @@ public class AdministratorController extends AbstractController {
 		Double averageSocialIdentitiesPerActor = socialIdentityService.getAverageSocialIdentitiesPerActor();
 		Integer minimumSocialIdentitiesPerActor = socialIdentityService.getMinimumSocialIdentitiesPerActor();
 		Integer maximumSocialIdentitiesPerActor = socialIdentityService.getMaximumSocialIdentitiesPerActor();
-		Object[] stadistictsSocialIdentityPerActor = { averageSocialIdentitiesPerActor, minimumSocialIdentitiesPerActor, maximumSocialIdentitiesPerActor};
-		
+		Object[] stadistictsSocialIdentityPerActor = {
+			averageSocialIdentitiesPerActor, minimumSocialIdentitiesPerActor, maximumSocialIdentitiesPerActor
+		};
+
 		Double averageInvoicesIssuedToTenants = invoiceService.getAverageInvoicesIssuedToTenants();
 		Integer minimumInvoicesIssuedToTenants = invoiceService.getMinimumInvoicesIssuedToTenants();
 		Integer maximumInvoicesIssuedToTenants = invoiceService.getMaximumInvoicesIssuedToTenants();
-		Object[] stadistictsInvoicePerTenants = { averageInvoicesIssuedToTenants, minimumInvoicesIssuedToTenants, maximumInvoicesIssuedToTenants};
-		
+		Object[] stadistictsInvoicePerTenants = {
+			averageInvoicesIssuedToTenants, minimumInvoicesIssuedToTenants, maximumInvoicesIssuedToTenants
+		};
+
 		Double totalAmountOfMoney = invoiceService.getTotalAmountOfMoney();
 		Double avgNumRequestWithAuditVsWithoutAudit = bookService.avgNumRequestWithAuditVsWithoutAudit();
-		
+
 		result = new ModelAndView("administrator/dashboardA");
 		result.addObject("stadistictsSocialIdentityPerActor", stadistictsSocialIdentityPerActor);
 		result.addObject("stadistictsInvoicePerTenants", stadistictsInvoicePerTenants);
