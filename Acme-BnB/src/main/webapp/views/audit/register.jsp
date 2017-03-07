@@ -34,7 +34,11 @@
 		
 		<br/>
 		<br/>
-		<jstl:if test="${auditForm.draft == false}">
+		<jstl:if test="${auditForm.draft == true}">
+			<acme:submit2 code="audit.save" name="save" confirmText="audit.submitConfirm"/>
+		</jstl:if>
+		
+		<jstl:if test="${auditForm.id == 0}">
 			<acme:submit2 code="audit.save" name="save" confirmText="audit.submitConfirm"/>
 		</jstl:if>
 		
