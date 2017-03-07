@@ -10,6 +10,8 @@
 
 package controllers;
 
+import java.util.Collection;
+
 import javax.validation.Valid;
 
 import org.apache.commons.validator.routines.checkdigit.LuhnCheckDigit;
@@ -21,7 +23,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.CommentService;
 import services.LessorService;
+import domain.Comment;
 import domain.Lessor;
 import form.LessorForm;
 
@@ -31,15 +35,20 @@ public class LessorController extends AbstractController {
 
 	@Autowired
 	private LessorService	lessorService;
+	
+	@Autowired
+	private CommentService	commentService;
 
 
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
 	public ModelAndView show(@RequestParam int lessorId) {
 		ModelAndView result;
 		Lessor lessor = lessorService.findOne(lessorId);
+		Collection<Comment> comments = commentService.findByLessor(lessorId);
 
 		result = new ModelAndView("lessor/show");
 		result.addObject("lessor", lessor);
+		result.addObject("comments", comments);
 		result.addObject("RequestURI", "lessor/show.do");
 
 		return result;

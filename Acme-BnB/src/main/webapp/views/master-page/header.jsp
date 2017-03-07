@@ -12,6 +12,7 @@
 
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
+<%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <script type="text/javascript">
 		function relativeRedir(loc) {	
@@ -120,3 +121,6 @@
 	<a href="?language=en">en</a> | <a href="?language=es">es</a>
 </div>
 
+<jstl:if test="${cookie.language.value == null || (cookie.language.value != 'en' && cookie.language.value != 'es')}">
+	<script type="text/javascript">window.location.replace('welcome/index.do?language=en');</script>
+</jstl:if>

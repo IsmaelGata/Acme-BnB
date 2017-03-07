@@ -58,7 +58,7 @@ public class ActorService {
 	}
 
 	//Other business methods
-
+	
 	public Actor findByPrincipal() {
 		Actor result;
 		UserAccount userAccount;

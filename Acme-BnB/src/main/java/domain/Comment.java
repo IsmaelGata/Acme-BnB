@@ -100,6 +100,7 @@ public class Comment extends DomainEntity {
 
 
 	@Valid
+	@NotNull
 	@ManyToOne(optional = true)
 	public ComentatorActor getAuthor() {
 		return author;

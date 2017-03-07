@@ -41,8 +41,14 @@
 	<security:authorize access="hasRole('LESSOR')">
 		<display:column>
 			<acme:cancel
-				url="tenant/doComment.do?tenantId=${row.id}"
-				code="tenant.comment" />
+				url="tenant/show.do?tenantId=${row.id}"
+				code="tenant.show" />
+		</display:column>
+	
+		<display:column>
+			<acme:cancel
+				url="comment/create.do?comentableId=${row.id}&comentableType=Tenant"
+				code="tenant.newComment" />
 		</display:column>
 	</security:authorize>
 

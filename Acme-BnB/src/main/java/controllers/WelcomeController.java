@@ -34,51 +34,81 @@ public class WelcomeController extends AbstractController {
 
 	@Autowired
 	private ActorService actorService;
-	
+
 	@Autowired
 	private LessorService lessorService;
-	
+
 	// Constructors -----------------------------------------------------------
-	
+
 	public WelcomeController() {
 		super();
 	}
-		
-	// Index ------------------------------------------------------------------		
+
+	// Index ------------------------------------------------------------------
 
 	@RequestMapping(value = "/index")
 	public ModelAndView index() {
 		ModelAndView result;
 		SimpleDateFormat formatter;
 		String moment;
-		
+
 		double totalFee = 0.0;
 		UserAccount userAccount;
 		SecurityContext context;
 		Authentication authentication;
 		context = SecurityContextHolder.getContext();
 		Object principal;
-		if(context != null){
+		if (context != null) {
 			authentication = context.getAuthentication();
-			if(authentication != null){
+			if (authentication != null) {
 				principal = authentication.getPrincipal();
-				if(principal instanceof UserAccount){
+				if (principal instanceof UserAccount) {
 					userAccount = (UserAccount) principal;
 					Lessor lessor = lessorService.findByUserAccount(userAccount);
-					if(lessor != null){
+					if (lessor != null) {
 						totalFee = lessor.getTotalFee();
 					}
 				}
 			}
 		}
-		
-		
+
 		formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		moment = formatter.format(new Date());
-				
+
 		result = new ModelAndView("welcome/index");
 		result.addObject("totalFee", totalFee);
 		result.addObject("moment", moment);
+
+		return result;
+	}
+
+	@RequestMapping(value = "/cookies")
+	public ModelAndView cookies() {
+
+		ModelAndView result;
+
+		result = new ModelAndView("welcome/cookies");
+		result.addObject("backURI", "/welcome/index.do");
+
+		return result;
+	}
+
+	@RequestMapping(value = "/conditions")
+	public ModelAndView conditions() {
+		ModelAndView result;
+
+		result = new ModelAndView("welcome/conditions");
+		result.addObject("backURI", "/welcome/index.do");
+
+		return result;
+	}
+
+	@RequestMapping(value = "/eraseMe")
+	public ModelAndView eraseMe() {
+		ModelAndView result;
+
+		result = new ModelAndView("welcome/eraseMe");
+		result.addObject("backURI", "/welcome/index.do");
 
 		return result;
 	}

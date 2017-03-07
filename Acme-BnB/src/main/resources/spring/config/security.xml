@@ -38,13 +38,15 @@
 
 		<security:intercept-url pattern="/security/login.do" access="permitAll" /> 
 		<security:intercept-url pattern="/security/loginFailure.do" access="permitAll" /> 
-
 		<security:intercept-url pattern="/welcome/index.do" access="permitAll" />
+		<security:intercept-url access="permitAll" pattern="/welcome/cookies.do"/>
+		<security:intercept-url access="permitAll" pattern="/welcome/conditions.do"/>
+		<security:intercept-url access="permitAll" pattern="/welcome/eraseMe.do"/>
 		
 		<!-- TENANT -->
 		<security:intercept-url pattern="/tenant/register.do" access="isAnonymous()" /> 
 		<security:intercept-url pattern="/tenant/listByLessor.do" access="hasRole('LESSOR')" />
-		<security:intercept-url pattern="/tenant/doComment.do" access="hasRole('LESSOR')" /> 
+		<security:intercept-url pattern="/tenant/show.do" access="permitAll" /> 
 		
 		<!-- LESSOR -->
 		<security:intercept-url pattern="/lessor/register.do" access="isAnonymous()" /> 
@@ -111,6 +113,10 @@
 		<!-- INVOICE -->
 		<security:intercept-url pattern="/invoice/issueInvoice.do" access="hasRole('TENANT')" /> 
 		<security:intercept-url pattern="/invoice/showInvoice.do" access="hasRole('TENANT')" />
+		
+		<!-- COMMENT -->
+		<security:intercept-url pattern="/comment/create.do" access="hasAnyRole('TENANT', 'LESSOR')" />
+		<security:intercept-url pattern="/comment/save.do" access="hasAnyRole('TENANT', 'LESSOR')" /> 
 	
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
 

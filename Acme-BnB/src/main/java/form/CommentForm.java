@@ -10,11 +10,12 @@ public class CommentForm {
 
 	//Attributes
 
-	private int		id;
-	private String	title;
-	private String	text;
-	private int		stars;
-	private int		comentableId;
+	private int			id;
+	private String		title;
+	private String		text;
+	private Integer		stars;
+	private int			comentableId;
+	private String		comentableType;
 
 
 	//Constructor
@@ -51,11 +52,11 @@ public class CommentForm {
 
 	@Min(0)
 	@Max(5)
-	public int getStars() {
+	public Integer getStars() {
 		return stars;
 	}
 
-	public void setStars(int stars) {
+	public void setStars(Integer stars) {
 		this.stars = stars;
 	}
 
@@ -66,5 +67,14 @@ public class CommentForm {
 
 	public void setComentableId(int comentableId) {
 		this.comentableId = comentableId;
+	}
+	
+	@NotBlank
+	public String getComentableType() {
+		return comentableType;
+	}
+
+	public void setComentableType(String comentableType) {
+		this.comentableType = comentableType;
 	}
 }

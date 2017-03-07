@@ -19,23 +19,43 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.CommentService;
+import services.LessorService;
+import services.TenantService;
+import domain.Comment;
 import domain.Lessor;
 import domain.Tenant;
 import form.TenantForm;
-import services.LessorService;
-import services.TenantService;
 
 @Controller
 @RequestMapping("/tenant")
 public class TenantController extends AbstractController {
 
 	@Autowired
-	private TenantService tenantService;
+	private TenantService	tenantService;
 	
 	@Autowired
-	private LessorService lessorService;
+	private LessorService	lessorService;
+	
+	@Autowired
+	private CommentService	commentService;
+	
+	@RequestMapping(value = "/show", method = RequestMethod.GET)
+	public ModelAndView show(@RequestParam int tenantId) {
+		ModelAndView result;
+		Tenant tenant = tenantService.findOne(tenantId);
+		Collection<Comment> comments = commentService.findByTenant(tenantId);
+
+		result = new ModelAndView("tenant/show");
+		result.addObject("tenant", tenant);
+		result.addObject("comments", comments);
+		result.addObject("RequestURI", "tenant/show.do");
+
+		return result;
+	}
 
 	// Listing
 	@RequestMapping(value = "/listByLessor", method = RequestMethod.GET)
@@ -49,19 +69,6 @@ public class TenantController extends AbstractController {
 
 		return result;
 	}
-	
-	// Listing
-//		@RequestMapping(value = "/commentDo", method = RequestMethod.GET)
-//		public ModelAndView list(@Valid int lessorId) {
-//			ModelAndView result;
-//			Lessor lessor = lessorService.findOne(lessorId);
-//			Collection<Tenant> tenants = lessorService.getRequestersTenantsWithoutIdByLessor(lessor);
-//			result = new ModelAndView("tenant/list");
-//			result.addObject("tenants", tenants);
-//			result.addObject("RequestURI", "tenant/listByLessor.do?lessorId="+lessorId);
-//
-//			return result;
-//		}
 
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public ModelAndView register() {
