@@ -18,6 +18,7 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <display:table name="books" id="row" requestURI="${RequestURI}"
 	pagesize="5">
@@ -30,7 +31,7 @@
 	
 	<spring:message code="book.creditcardNumber" var="cCN" />
 	<display:column title="${cCN}" >
-		<jstl:out value="${row.creditCard.number }"></jstl:out>
+		<jstl:out value="************${fn:substring(row.creditCard.number, 12, 16)}"></jstl:out>
 	</display:column>
 
 	<spring:message code="book.smoker" var="smoker" />

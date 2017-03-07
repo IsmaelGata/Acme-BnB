@@ -55,7 +55,7 @@
 		
 		<br/>
 		
-	<h2>Social identities</h2>		
+	<h2><spring:message code="actor.socialIdentities" /></h2>		
 		
 	<display:table name="socialIdentities" id="row" requestURI="${SocialIdentitiesRequestURI}"
 	pagesize="5">

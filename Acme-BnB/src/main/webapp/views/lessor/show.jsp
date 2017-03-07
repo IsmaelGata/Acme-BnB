@@ -39,6 +39,8 @@
 
 <br><br>
 
+<h2><spring:message code="lessor.socialIdentities" /></h2>	
+
 <div>
 	<display:table name="lessor.socialIdentities" id="row" requestURI="${RequestURI}"
 		pagesize="5">
