@@ -35,6 +35,7 @@
 		<!-- Do not forget the "fNiv" class for the first level links !! -->
 		<security:authorize access="hasRole('ADMINISTRATOR')">
 			<li><a href="extraAttribute/list.do"><spring:message code="master.page.extraAttribute" /></a></li>
+			<li><a href="fee/edit.do"><spring:message code="master.page.fee" /></a></li>
 			<li><a class="fNiv"><spring:message	code="master.page.administrator.dashboard" /></a>
 				<ul>
 					<li class="arrow"></li>

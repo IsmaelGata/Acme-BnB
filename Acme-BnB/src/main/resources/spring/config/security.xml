@@ -61,6 +61,10 @@
 		<security:intercept-url pattern="/socialIdentity/*" access="isAuthenticated()" /> 
 		
 		
+		<!-- FEE -->
+		<security:intercept-url pattern="/fee/edit.do" access="hasRole('ADMINISTRATOR')" />
+		<security:intercept-url pattern="/fee/save.do" access="hasRole('ADMINISTRATOR')" /> 
+		
 		<!-- AUDITOR -->
 		<security:intercept-url pattern="/auditor/register.do" access="hasRole('ADMINISTRATOR')" /> 
 		

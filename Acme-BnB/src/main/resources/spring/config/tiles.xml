@@ -36,6 +36,7 @@
 		<value>/views/auditor/tiles.xml</value>
 		<value>/views/socialIdentity/tiles.xml</value>
 		<value>/views/dashboard/tiles.xml</value>
+		<value>/views/fee/tiles.xml</value>
 		<value>/views/invoice/tiles.xml</value>
 	</util:list>
 

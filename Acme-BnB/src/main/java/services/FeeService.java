@@ -5,9 +5,13 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.BindingResult;
 
-import repositories.FeeRepository;
+import domain.Book;
 import domain.Fee;
+import domain.Property;
+import form.FeeForm;
+import repositories.FeeRepository;
 
 @Service
 @Transactional
@@ -21,7 +25,7 @@ public class FeeService {
 	}
 	
 	public Fee create(){
-		return null;
+		return new Fee();
 	}
 	
 
@@ -43,5 +47,12 @@ public class FeeService {
 	}
 	
 	//Other business methods
+	public Fee reconstruct(FeeForm feeForm, BindingResult binding) {
+		
 
+		Fee result= findOne(feeForm.getId());
+		result.setAmount(feeForm.getAmount());
+
+		return result;
+	}
 }
