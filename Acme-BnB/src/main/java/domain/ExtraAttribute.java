@@ -44,6 +44,7 @@ public class ExtraAttribute extends DomainEntity {
 		this.name = name;
 	}
 
+	@NotBlank
 	public String getSpanishName() {
 		return spanishName;
 	}

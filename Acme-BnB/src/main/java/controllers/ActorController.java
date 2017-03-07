@@ -10,6 +10,8 @@
 
 package controllers;
 
+import java.util.Collection;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +19,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.ActorService;
 import services.LessorService;
 import domain.Actor;
 import domain.Lessor;
+import domain.SocialIdentity;
 import form.ActorForm;
 
 @Controller
@@ -39,7 +43,7 @@ public class ActorController extends AbstractController {
 
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView edit() {
+	public ModelAndView edit(@RequestParam(required = false) String correctMessage, @RequestParam(required = false) String editErrorMessage, @RequestParam(required = false) String deleteErrorMessage) {
 		ModelAndView result;
 
 		Actor actor = actorService.findByPrincipal();
@@ -55,6 +59,9 @@ public class ActorController extends AbstractController {
 			actorForm.setCreditCard(lessor.getCreditCard());
 		}
 		result = createEditModelAndView(actorForm);
+		result.addObject("correctMessage", correctMessage);
+		result.addObject("editErrorMessage", editErrorMessage);
+		result.addObject("deleteErrorMessage", deleteErrorMessage);
 
 		return result;
 	}
@@ -82,7 +89,8 @@ public class ActorController extends AbstractController {
 					actorService.save(actor);
 				}
 
-				result = new ModelAndView("redirect:/welcome/index.do");
+				result = new ModelAndView("redirect:/actor/edit.do");
+				result.addObject("correctMessage", "actor.edit.correct");
 			} catch (Throwable oops) {
 				if (actor.getUserAccount().getAuthorities().iterator().next().getAuthority().equals("LESSOR")) {
 					result = createEditModelAndView(actorForm, "lessor.commit.error");
@@ -108,6 +116,11 @@ public class ActorController extends AbstractController {
 		result = new ModelAndView("actor/edit");
 		result.addObject("actorForm", actorForm);
 		result.addObject("message", message);
+
+		Actor actor = actorService.findByPrincipal();
+		Collection<SocialIdentity> socialIdentities = actor.getSocialIdentities();
+		result.addObject("socialIdentities", socialIdentities);
+
 		result.addObject("RequestURI", "actor/save.do");
 
 		return result;

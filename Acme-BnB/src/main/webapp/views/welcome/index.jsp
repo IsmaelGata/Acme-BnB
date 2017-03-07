@@ -19,8 +19,16 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
 <security:authorize access="hasRole('LESSOR')">
-	<p>
-		<spring:message code="welcome.greeting.totalFee" />${totalFee}</p>
+	<jstl:if test="${totalFee >0}">
+		<spring:message code="welcome.greeting.totalFee" var="feeToPay"/>
+		<p><font size="4" color="red"><jstl:out value="${feeToPay}"/></font></p><b><jstl:out value="${totalFee}"></jstl:out>&euro;</b>
+	</jstl:if>
+	
+	<jstl:if test="${!(totalFee >0)}">
+		<spring:message code="welcome.greeting.totalFeePaid" var="paid"/>
+		<p><font size="4" color="green"><jstl:out value="${paid}"/></font></p>
+	</jstl:if>
+		
 </security:authorize>
 
 <p>

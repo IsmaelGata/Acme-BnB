@@ -17,7 +17,7 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
-<form:form action="${requestURI}" modelAttribute="auditorForm">
+<form:form action="${requestURI}" modelAttribute="auditorForm" onclick="">
 	
 	<fieldset >
 		<legend><spring:message code="auditor.userAccountDetails"/></legend>

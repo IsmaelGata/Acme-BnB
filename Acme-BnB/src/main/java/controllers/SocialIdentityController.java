@@ -23,14 +23,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import domain.Actor;
-import domain.Lessor;
-import domain.Property;
-import domain.SocialIdentity;
-import form.PropertyForm;
-import form.SocialIdentityForm;
 import services.ActorService;
 import services.SocialIdentityService;
+import domain.Actor;
+import domain.SocialIdentity;
+import form.SocialIdentityForm;
 
 @Controller
 @RequestMapping("/socialIdentity")
@@ -39,23 +36,23 @@ public class SocialIdentityController extends AbstractController {
 	//Supported services
 
 	@Autowired
-	private SocialIdentityService		socialIdentityService;
-	
+	private SocialIdentityService	socialIdentityService;
+
 	@Autowired
-	private ActorService				actorService;
+	private ActorService			actorService;
+
 
 	//Listing
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
-        ModelAndView result;
-        	Actor actor= actorService.findByPrincipal();
-            Collection<SocialIdentity> socialIdentities = actor.getSocialIdentities();
-            result = new ModelAndView("socialIdentity/list");
-            result.addObject("socialIdentities", socialIdentities);	
-            result.addObject("RequestURI", "socialIdentity/list.do");	
-            return result;
+		ModelAndView result;
+		Actor actor = actorService.findByPrincipal();
+		Collection<SocialIdentity> socialIdentities = actor.getSocialIdentities();
+		result = new ModelAndView("socialIdentity/list");
+		result.addObject("socialIdentities", socialIdentities);
+		result.addObject("RequestURI", "socialIdentity/list.do");
+		return result;
 	}
-
 
 	//Create
 
@@ -81,7 +78,7 @@ public class SocialIdentityController extends AbstractController {
 		} else {
 			try {
 				socialIdentityService.save(socialIdentity);
-				result = new ModelAndView("redirect:/socialIdentity/list.do");
+				result = new ModelAndView("redirect:/actor/edit.do");
 			} catch (Throwable oops) {
 				result = createEditModelAndView(socialIdentityForm, "socialIdentity.save.error");
 			}
@@ -104,7 +101,7 @@ public class SocialIdentityController extends AbstractController {
 
 			result = createEditModelAndView(socialIdentityForm);
 		} catch (Throwable e) {
-			result = new ModelAndView("redirect:/socialIdentity/list.do");
+			result = new ModelAndView("redirect:/actor/edit.do");
 			result.addObject("editErrorMessage", "socialIdentity.edit.error");
 		}
 
@@ -119,14 +116,14 @@ public class SocialIdentityController extends AbstractController {
 
 		try {
 			SocialIdentity socialIdentity = socialIdentityService.findOne(socialIdentityId);
-			
+
 			Actor actor = actorService.findByPrincipal();
 			Assert.isTrue(socialIdentity.getActor().equals(actor));
-			
+
 			socialIdentityService.delete(socialIdentity);
-			result = new ModelAndView("redirect:/socialIdentity/list.do");
+			result = new ModelAndView("redirect:/actor/edit.do");
 		} catch (Throwable e) {
-			result = new ModelAndView("redirect:/socialIdentity/list.do");
+			result = new ModelAndView("redirect:/actor/edit.do");
 			result.addObject("deleteErrorMessage", "socialIdentity.delete.error");
 		}
 		return result;

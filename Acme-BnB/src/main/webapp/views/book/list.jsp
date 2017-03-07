@@ -27,6 +27,11 @@
 
 	<spring:message code="book.checkOut" var="checkOut" />
 	<display:column property="checkOut" title="${checkOut}" />
+	
+	<spring:message code="book.creditcardNumber" var="cCN" />
+	<display:column title="${cCN}" >
+		<jstl:out value="${row.creditCard.number }"></jstl:out>
+	</display:column>
 
 	<spring:message code="book.smoker" var="smoker" />
 	<display:column title="${smoker}">
