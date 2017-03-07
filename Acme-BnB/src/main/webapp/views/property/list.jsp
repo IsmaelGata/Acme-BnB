@@ -35,7 +35,7 @@
 	<spring:message code="property.address" var="address" />
 	<display:column property="address" title="${address}" />
 	
-	<spring:message code="property.address" var="books" />
+	<spring:message code="property.books" var="books" />
 	<display:column title="books" sortable="true">
 		<jstl:out value="${fn:length(row.books)}"></jstl:out>
 	</display:column>
