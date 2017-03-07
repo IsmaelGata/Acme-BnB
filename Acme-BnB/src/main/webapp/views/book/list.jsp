@@ -31,7 +31,8 @@
 	
 	<spring:message code="book.creditcardNumber" var="cCN" />
 	<display:column title="${cCN}" >
-		<jstl:out value="************${fn:substring(row.creditCard.number, 12, 16)}"></jstl:out>
+		<jstl:set var="ccnl" value="${fn:length(row.creditCard.number) }"></jstl:set>
+		<jstl:out value="************${fn:substring(row.creditCard.number, ccnl-4, ccnl)}"></jstl:out>
 	</display:column>
 
 	<spring:message code="book.smoker" var="smoker" />
