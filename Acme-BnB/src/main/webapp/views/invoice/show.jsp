@@ -18,6 +18,7 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <div>
 	<b><spring:message code="invoice.moment" />:</b>
@@ -36,7 +37,8 @@
 	<jstl:out value="${invoice.totalAmount}"></jstl:out>
 	
 	<br /> <b><spring:message code="invoice.creditCard" />:</b>
-	<jstl:out value="${invoice.creditCard.number}"></jstl:out>
+	<jstl:set var="ccnl" value="${fn:length(invoice.creditCard.number) }"></jstl:set>
+	<jstl:out value="************${fn:substring(invoice.creditCard.number, ccnl-4, ccnl)}"></jstl:out>
 </div>
 
 <br/>
