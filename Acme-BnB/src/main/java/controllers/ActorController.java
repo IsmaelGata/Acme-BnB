@@ -23,8 +23,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.ActorService;
+import services.CommentService;
 import services.LessorService;
 import domain.Actor;
+import domain.Comment;
 import domain.Lessor;
 import domain.SocialIdentity;
 import form.ActorForm;
@@ -40,6 +42,9 @@ public class ActorController extends AbstractController {
 
 	@Autowired
 	private LessorService	lessorService;
+	
+	@Autowired
+	private CommentService 	commentService;
 
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
@@ -119,10 +124,12 @@ public class ActorController extends AbstractController {
 
 		Actor actor = actorService.findByPrincipal();
 		Collection<SocialIdentity> socialIdentities = actor.getSocialIdentities();
+		Collection<Comment> comments = commentService.findByPrincipal();
 		result.addObject("socialIdentities", socialIdentities);
+		result.addObject("comments", comments);
 
 		result.addObject("RequestURI", "actor/save.do");
-		result.addObject("SocialIdentitiesRequestURI", "actor/edit.do");
+		result.addObject("EditRequestURI", "actor/edit.do");
 
 		return result;
 	}

@@ -52,13 +52,14 @@
 		<acme:submit code="actor.save" name="save"/>
 		
 		<acme:cancel code="actor.cancel" url="welcome/index.do"/>
+</form:form>
 		
-		<br/>
+<br/>
 		
-	<h2><spring:message code="actor.socialIdentities" /></h2>		
-		
-	<display:table name="socialIdentities" id="row" requestURI="${SocialIdentitiesRequestURI}"
-	pagesize="5">
+<h2><spring:message code="actor.socialIdentities" /></h2>		
+	
+<display:table name="socialIdentities" id="row" requestURI="${EditRequestURI}"
+pagesize="5">
 
 	<spring:message code="socialIdentity.nick" var="nick" />
 	<display:column property="nick" title="${nick}" />
@@ -78,6 +79,41 @@
 	</display:column>
 	
 </display:table>
+
+<acme:cancel url="socialIdentity/create.do" code="actor.newSocialIdentity"/>	
+
+<br><br>
+
+<h2><spring:message code="actor.comments" /></h2>
+
+<display:table name="comments" id="row" requestURI="${EditRequestURI}" pagesize="5">
+
+	<spring:message code="actor.comment.title" var="title" />
+	<display:column property="title" title="${title}" />
+
+	<spring:message code="actor.comment.moment" var="moment" />
+	<display:column property="moment" title="${moment}" />
+
+	<spring:message code="actor.comment.text" var="text" />
+	<display:column property="text" title="${text}" />
+	
+	<spring:message code="actor.comment.stars" var="stars" />
+	<display:column property="stars" title="${stars}" />
+
+	<spring:message code="actor.comment.author" var="authorVar" />
+	<display:column title="${authorVar}">
+		<jstl:out value="${row.author.name} ${row.author.surname}"></jstl:out>
+	</display:column>
+	
+</display:table>
+
+<security:authorize access="hasRole('TENANT')">
+	<acme:cancel url="comment/create.do?comentableId=0&comentableType=Tenant" code="actor.newComment" />
+</security:authorize>
+
+<security:authorize access="hasRole('LESSOR')">
+	<acme:cancel url="comment/create.do?comentableId=0&comentableType=Lessor" code="actor.newComment" />
+</security:authorize>
 
 <jstl:if test="${editErrorMessage != null}">
 	<spring:message code="${editErrorMessage}" var="editErrorM" />
@@ -102,9 +138,3 @@
 	<p><font size="4" color="red"><jstl:out value="${createErrorM}"/></font></p>
 	<br/>
 </jstl:if>
-
-<br/>
-		
-<acme:cancel url="socialIdentity/create.do" code="socialIdentity.create"/>	
-		
-</form:form>
