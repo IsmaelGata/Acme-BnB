@@ -86,6 +86,7 @@ public class ExtraAttributeController extends AbstractController {
 		try {
 			ExtraAttribute extraAttribute = extraAttributeService.findOne(extraAttributeId);
 			Assert.notNull(extraAttribute);
+			Assert.isTrue(!extraAttribute.getName().equals("City"));
 			result = createEditModelAndView(extraAttribute);
 		} catch (Throwable e) {
 			result = new ModelAndView("redirect:/extraAttribute/list.do");
@@ -103,6 +104,7 @@ public class ExtraAttributeController extends AbstractController {
 		try {
 			ExtraAttribute extraAttribute = extraAttributeService.findOne(extraAttributeId);
 			Assert.notNull(extraAttribute);
+			Assert.isTrue(!extraAttribute.getName().equals("City"));
 			extraAttributeService.delete(extraAttribute);
 
 			result = new ModelAndView("redirect:/extraAttribute/list.do");

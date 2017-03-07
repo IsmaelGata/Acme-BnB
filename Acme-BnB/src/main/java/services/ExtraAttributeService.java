@@ -68,6 +68,7 @@ public class ExtraAttributeService {
 		Assert.notNull(extraAttribute);
 		administratorService.findByPrincipal();
 
+		Assert.isTrue(!extraAttribute.getName().equals("City"));
 		extraAttributeRepository.delete(extraAttribute);
 	}
 
