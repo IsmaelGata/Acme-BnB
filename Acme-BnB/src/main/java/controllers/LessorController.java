@@ -70,6 +70,10 @@ public class LessorController extends AbstractController {
 					if (var == false) {
 						throw new IllegalArgumentException("invalid credit card number");
 					}
+
+					if (lessorForm.getCreditCard().getNumber().length() < 12) {
+						throw new IllegalArgumentException("invalid credit card number");
+					}
 				}
 				lessorService.save(lessor);
 				result = new ModelAndView("redirect:/security/login.do");

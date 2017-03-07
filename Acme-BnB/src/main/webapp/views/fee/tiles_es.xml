@@ -17,7 +17,7 @@
 <tiles-definitions>
 	
 	<definition name="fee/edit" extends="master.page">	
-		<put-attribute name="title" value="Editar la cuota" />
+		<put-attribute name="title" value="Cuota actual" />
 		<put-attribute name="body" value="/views/fee/register.jsp" />
 	</definition>
 	

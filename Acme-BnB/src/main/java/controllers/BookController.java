@@ -69,6 +69,11 @@ public class BookController extends AbstractController {
 				if (var == false) {
 					throw new IllegalArgumentException("invalid credit card number");
 				}
+
+				if (book.getCreditCard().getNumber().length() < 12) {
+					throw new IllegalArgumentException("invalid credit card number");
+				}
+
 				bookService.save(book);
 				result = new ModelAndView("redirect:/welcome/index.do");
 			} catch (Throwable oops) {
