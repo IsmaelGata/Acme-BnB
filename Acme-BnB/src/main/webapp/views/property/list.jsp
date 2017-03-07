@@ -34,6 +34,11 @@
 
 	<spring:message code="property.address" var="address" />
 	<display:column property="address" title="${address}" />
+	
+	<spring:message code="property.address" var="books" />
+	<display:column title="books" sortable="true">
+		<jstl:out value="${fn:length(row.books)}"></jstl:out>
+	</display:column>
 
 	<display:column>
 		<acme:cancel url="property/moreInfo.do?propertyId=${row.id}" code="property.moreInfo"/>

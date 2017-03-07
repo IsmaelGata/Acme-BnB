@@ -42,7 +42,7 @@ public class FinderController extends AbstractController {
 	public ModelAndView save(@Valid FinderForm finderForm, BindingResult binding) {
 		ModelAndView result;
 		Finder finder = new Finder();
-
+		
 		finder = finderService.reconstruct(finderForm, binding);
 		if (binding.hasErrors()) {
 			result = createEditModelAndView(finderForm);
