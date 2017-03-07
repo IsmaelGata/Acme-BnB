@@ -26,6 +26,7 @@
 		<value>/views/actor/messages</value>
 		<value>/views/administrator/messages</value>
 		<value>/views/book/messages</value>
+		<value>/views/comment/messages</value>
 		<value>/views/creditCard/messages</value>
 		<value>/views/extraAttribute/messages</value>
 		<value>/views/lessor/messages</value>
@@ -37,6 +38,7 @@
 		<value>/views/auditor/messages</value>
 		<value>/views/socialIdentity/messages</value>
 		<value>/views/dashboard/messages</value>
+		<value>/views/fee/messages</value>
 		<value>/views/invoice/messages</value>
 	</util:list>
 
