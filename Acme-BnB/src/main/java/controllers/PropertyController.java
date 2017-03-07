@@ -62,7 +62,7 @@ public class PropertyController extends AbstractController {
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list(@RequestParam(required = false) String createAuditError) {
 		ModelAndView result;
-		Collection<Property> properties = propertyService.findAll();
+		Collection<Property> properties = propertyService.findAllOrderByBooksSizeDesc();
 
 		try {
 			Auditor auditor = auditorService.findByPrincipal();

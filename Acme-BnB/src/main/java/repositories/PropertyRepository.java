@@ -16,6 +16,8 @@ public interface PropertyRepository extends JpaRepository<Property, Integer> {
 	@Query("select ea from ExtraAttribute ea where ea.name in ('Country', 'Province', 'State', 'City', 'Capacity')")
 	Collection<ExtraAttribute> getDefaultExtraAttributes();
 
+	@Query("select p from Property p order by p.books.size desc")
+	public Collection<Property> findAllOrderByBooksSizeDesc();
 	//Dashboard
 
 	/**

@@ -74,6 +74,10 @@ public class PropertyService {
 		return propertyRepository.findAll();
 	}
 
+	public Collection<Property> findAllOrderByBooksSizeDesc() {
+		return propertyRepository.findAllOrderByBooksSizeDesc();
+	}
+
 	public Property findOne(int propertyId) {
 		return propertyRepository.findOne(propertyId);
 
