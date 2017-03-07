@@ -11,8 +11,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 import javax.validation.Valid;
 
-import org.joda.time.Days;
-
 @Entity
 @Access(AccessType.PROPERTY)
 public class Lessor extends ComentatorActor {
