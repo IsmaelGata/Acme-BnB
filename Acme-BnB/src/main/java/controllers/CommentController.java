@@ -56,7 +56,8 @@ public class CommentController extends AbstractController {
 				
 				commentService.save(comment);
 				
-				result = new ModelAndView("redirect:/");
+				result = new ModelAndView("redirect:/" + comment.getComentableType().toLowerCase() + 
+						"/show.do?" + comment.getComentableType().toLowerCase() + "Id=" + comment.getComentableId());
 			} catch (Throwable oops) {
 				result = createEditModelAndView(commentForm, "comment.create.error");
 			}
