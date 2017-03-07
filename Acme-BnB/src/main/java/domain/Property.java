@@ -7,6 +7,7 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.Valid;
@@ -99,7 +100,7 @@ public class Property extends DomainEntity {
 	}
 
 	@Valid
-	@OneToMany(mappedBy = "property")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "property")
 	public Collection<Book> getBooks() {
 		return books;
 	}
