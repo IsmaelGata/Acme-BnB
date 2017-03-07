@@ -79,21 +79,23 @@ public class FinderService {
 		Tenant tenant = tenantService.findByPrincipal();
 		Finder result = tenant.getFinder();
 
-		result.setDestination(finderForm.getDestination());
-		result.setKeyWord(finderForm.getKeyWord());
-		if (finderForm.getMaximum() == null) {
-			result.setMaximum(99999999999999.0);
-		} else {
-			result.setMaximum(finderForm.getMaximum());
-		}
+		if (!binding.hasErrors()) {
+			result.setDestination(finderForm.getDestination());
+			result.setKeyWord(finderForm.getKeyWord());
+			if (finderForm.getMaximum() == null) {
+				result.setMaximum(99999999999999.0);
+			} else {
+				result.setMaximum(finderForm.getMaximum());
+			}
 
-		if (finderForm.getMinimun() == null) {
-			result.setMinimun(0.0);
-		} else {
-			result.setMinimun(finderForm.getMinimun());
-		}
+			if (finderForm.getMinimun() == null) {
+				result.setMinimun(0.0);
+			} else {
+				result.setMinimun(finderForm.getMinimun());
+			}
 
-		result.setMoment(new Date(System.currentTimeMillis() - 10));
+			result.setMoment(new Date(System.currentTimeMillis() - 10));
+		}
 
 		return result;
 	}
